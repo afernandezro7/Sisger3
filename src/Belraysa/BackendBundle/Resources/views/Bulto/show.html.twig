@@ -1,0 +1,35 @@
+<div class="tiles">
+    <a style="color: white" href="{{ path('bulto_etiqueta') }}?id={{ entity.id }}">
+        {% set peso = entity.getPesoKg() %}
+        {% set vol = entity.getVolumenM3() %}
+        {% set desc = '' %}
+
+        {% for m in entity.mercancias %}
+            {% set desc = desc ~ m.getDescripcion() ~ '. ' %}
+        {% endfor %}
+
+        {% set descTitle = desc %}
+
+        {% if desc|length > 12 %}
+            {% set desc = desc[:13] ~ ' ' ~ desc[13:] %}
+        {% endif %}
+        {% if desc|length > 24 %}
+            {% set desc = desc[:26] ~ ' ' ~ desc[26:] %}
+        {% endif %}
+        {% if desc|length > 36 %}
+            {% set desc = desc[:39] ~ ' ' ~ desc[39:] %}
+        {% endif %}
+
+        {% if desc|length > 52 %}
+            {% set desc = desc[:50] ~ '...' %}
+        {% endif %}
+
+        <div title="Exportar etiqueta" class="tile bg-green" style="height: 145px; width: 145px !important;">
+            <div class="tile-body">
+                <label style="margin-bottom: 0">Peso: {{ peso }} kg</label>
+                <label style="margin-bottom: 0">Vol: {{ vol }} m3</label>
+                <label title="{{ descTitle }}" style="margin-bottom: 0"> {{ desc }}</label>
+            </div>
+        </div>
+    </a>
+</div>

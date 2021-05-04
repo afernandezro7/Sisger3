@@ -1,0 +1,72 @@
+<form action="{{ path('contenedor_update', { 'id': entity.id }) }}" role="form" id="editContenedor"
+      method="post" {{ form_enctype(edit_form) }}
+      class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Mes</label></div>
+        <div class="col-sm-10">
+            <div class="input-group date date-picker" data-date="{{ 'now' | date('m') + 1 }}/{{ 'now' | date('Y') }}"
+                 data-date-format="mm/yyyy"
+                 data-date-viewmode="years" data-date-minviewmode="months">
+                <input value="{{ entity.mes.numero }}/{{ entity.mes.anno.nombre }}" disabled required="required" name="mes" type="text" class="form-control">
+												<span class="input-group-btn">
+												<button class="btn default" type="button"><i class="fa fa-calendar"></i>
+                                                </button>
+												</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">C&oacute;digo</label>
+        </div>
+        <div class="col-sm-10">
+
+            {{ form_widget(edit_form.codigo, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(edit_form.codigo) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Sello</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(edit_form.sello, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(edit_form.sello) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Tipo</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(edit_form.tipo, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', }}
+            ) }}
+            {{ form_errors(edit_form.tipo) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Volumen</label></div>
+        <div class="col-md-10">
+            <div class="input-inline">
+                {{ form_widget(edit_form.volumenM3, {'attr' : {'class' : 'form-control' }}
+                ) }}
+                {{ form_errors(edit_form.volumenM3) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Peso Max.</label></div>
+        <div class="col-md-10">
+            <div class="input-inline">
+                {{ form_widget(edit_form.maxPesoKg, {'attr' : {'class' : 'form-control' }}
+                ) }}
+                {{ form_errors(edit_form.maxPesoKg) }}
+            </div>
+        </div>
+    </div>
+
+
+    {{ form(edit_form) }}
+</form>

@@ -1,0 +1,49 @@
+<form action="{{ path('cash_create') }}" id="newCash" method="post" {{ form_enctype(form_cash) }}
+      class="form-horizontal">
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Nombre</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form_cash.name, {'attr' : {'class' : 'form-control','placeholder':'Nombre' }}) }}
+            {{ form_errors(form_cash.name) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Saldo</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form_cash.balance, {'attr' : {'class' : 'form-control','placeholder':'Saldo' }}) }}
+            {{ form_errors(form_cash.balance) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Espacios</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form_cash.workspaces, {'attr' : {'class' : 'form-control select2me', 'style': 'width:100%' }}) }}
+            {{ form_errors(form_cash.workspaces) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">M&eacute;todos de pago</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form_cash.metodosPago, {'attr' : {'class' : 'form-control select2me', 'style': 'width:100%' }}) }}
+            {{ form_errors(form_cash.metodosPago) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4 simple-checkbox">
+            {{ form_widget(form_cash.enabled, {'attr':{'class':'minimal' }}) }}
+            {{ form_errors(form_cash.enabled) }}
+            <label for="item-enabled">Activo</label>
+        </div>
+    </div>
+    {{ form_rest(form_cash) }}
+    <!-- /.box-footer -->
+</form>

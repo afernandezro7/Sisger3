@@ -1,0 +1,30 @@
+traspaso:
+    path:     /
+    defaults: { _controller: "BackendBundle:Traspaso:index" }
+
+traspaso_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Traspaso:show" }
+
+traspaso_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Traspaso:new" }
+
+traspaso_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Traspaso:create" }
+    requirements: { _method: post }
+
+traspaso_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Traspaso:edit" }
+
+traspaso_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Traspaso:update" }
+    requirements: { _method: post|put }
+
+traspaso_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Traspaso:delete" }
+

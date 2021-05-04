@@ -1,0 +1,75 @@
+contenedor:
+    path:     /
+    defaults: { _controller: "BackendBundle:Contenedor:index" }
+
+contenedor_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Contenedor:show" }
+
+contenedor_manifiesto:
+    path:     /{id}/manifiesto
+    defaults: { _controller: "BackendBundle:Contenedor:show" }
+
+contenedor_show_1:
+    path:     /manifiestoPreview
+    defaults: { _controller: "BackendBundle:Contenedor:show1" }
+
+contenedor_agregar_hbls:
+    path:     /{id}/agregarHBLS
+    defaults: { _controller: "BackendBundle:Contenedor:agregarHBLS" }
+
+contenedor_agregar_hbls2:
+    path:     /{id}/agregarHBLS
+    defaults: { _controller: "BackendBundle:Contenedor:agregarHBLS" }
+
+contenedor_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Contenedor:new" }
+
+contenedor_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Contenedor:create" }
+    requirements: { _method: post }
+
+contenedor_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Contenedor:edit" }
+
+contenedor_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Contenedor:update" }
+    requirements: { _method: post|put }
+
+contenedor_edit_manifiesto:
+    path:     /{id}/edit_manifiesto
+    defaults: { _controller: "BackendBundle:Contenedor:editManifiesto" }
+
+contenedor_update_manifiesto:
+    path:     /{id}/update_manifiesto
+    defaults: { _controller: "BackendBundle:Contenedor:updateManifiesto" }
+    requirements: { _method: post|put }
+
+contenedor_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Contenedor:delete" }
+
+
+contenedor_filter:
+    path:     /filtrar
+    defaults: { _controller: "BackendBundle:Contenedor:filtrar" }
+
+contenedor_cerrar:
+    path:     /{id}/cerrar
+    defaults: { _controller: "BackendBundle:Contenedor:cerrar" }
+
+contenedor_manifiesto_1:
+    path:     /{id}/manifiestoV1
+    defaults: { _controller: "BackendBundle:Contenedor:manifiestoV1" }
+
+contenedor_manifiesto_2:
+    path:     /{id}/manifiestoV2
+    defaults: { _controller: "BackendBundle:Contenedor:manifiestoV2" }
+
+contenedor_manifiesto_3:
+    path:     /{id}/manifiestoV3
+    defaults: { _controller: "BackendBundle:Contenedor:manifiestoV3" }

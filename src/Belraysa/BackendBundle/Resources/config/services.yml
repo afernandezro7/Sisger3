@@ -1,0 +1,9 @@
+parameters:
+#    backend.example.class: Belraysa\BackendBundle\Example
+
+services:
+#    backend.example:
+#        class: %backend.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    bulto_service:
+        class: Belraysa\BackendBundle\Services\BultoService

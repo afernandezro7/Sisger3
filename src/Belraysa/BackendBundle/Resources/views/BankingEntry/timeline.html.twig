@@ -1,0 +1,171 @@
+{% set layout = "BackendBundle::" ~ ws.getName() ~ ".html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link href="{{ asset('bundles/backend/admin/pages/css/timeline-old.css') }}" rel="stylesheet" type="text/css"/>
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}{{ entity.type }} | {{ entity.name }}{% endblock %}
+  {% block breadtitle %} <h1>{{ entity.type }} | {{ entity.name }}</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li><a href="{{ path('banking', { 'ws': ws.getName() }) }}">Entidades
+                Bancarias</a></li>
+        <li class="active">{{ entity.type }} | {{ entity.name }} (TIMELINE)</li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            {% if entradas|length > 0 %}
+                <ul class="timeline">
+                    {% for date in entradas %}
+                        {% for entrada in date %}
+                            {% set color = {'Ingreso':'timeline-green', 'Egreso': 'timeline-red'} %}
+                            {% set icon = {'Ingreso':'fa fa-arrow-down', 'Egreso': 'fa fa-arrow-up' } %}
+                            {% if entrada.credit > 0 %}{% set tipo = 'Ingreso' %}{% else %}{% set tipo = 'Egreso' %}{% endif %}
+                            {% if entrada.recibo %}
+                                {% set naturaleza = 'Recibo' %}
+                                {% set sisgerCode = entrada.recibo.sisgerCode %}
+                                {% set photo = entrada.recibo.usuario.photo %}
+                            {% elseif entrada.origenTraspaso %}
+                                {% set naturaleza = 'Origen Traspaso' %}
+                                {% set sisgerCode = entrada.origenTraspaso.sisgerCode %}
+                                {% set photo = entrada.origenTraspaso.user.photo %}
+                            {% elseif entrada.destinoTraspaso %}
+                                {% set naturaleza = 'Destino Traspaso' %}
+                                {% set sisgerCode = entrada.destinoTraspaso.sisgerCode %}
+                                {% set photo = entrada.destinoTraspaso.user.photo %}
+                            {% elseif entrada.extra %}
+                                {% set naturaleza = 'Extra' %}
+                                {% set sisgerCode = entrada.extra.sisgerCode %}
+                                {% set photo = entrada.extra.usuario.photo %}
+                            {% elseif entrada.ajuste %}
+                                {% set naturaleza = 'Ajuste' %}
+                                {% set sisgerCode = entrada.ajuste.sisgerCode %}
+                                {% set photo = '' %}
+                            {% endif %}
+                            <li class="{{ color[tipo] }}">
+                                <div class="timeline-time">
+								<span class="date">
+								{{ entrada.getDate()|date('d/m/Y') }} </span>
+                                    <span class="time">
+								{{ entrada.getDate()|date('H:i') }} </span>
+                                </div>
+                                <div class="timeline-icon">
+                                    <i class="{{ icon[tipo] }}"></i>
+                                </div>
+                                <div class="timeline-body">
+                                    <h2 {% if entrada.isActivo() == false %}style="text-decoration: line-through" {% endif %}>{{ sisgerCode }}</h2>
+                                    <div class="timeline-content">
+                                        {% if workspace.currentWorkspace.name == 'G-BRS' or (naturaleza == 'Recibo' and entrada.recibo.workspace.id == workspace.currentWorkspace.id) %}
+                                            <img class="timeline-img pull-left"
+                                                 src="{{ asset('uploads/usersPhotos/'~photo) }}" alt="">
+                                        {% endif %}
+                                        <p {% if entrada.isActivo() == false %}style="text-decoration: line-through" {% endif %}>
+                                            {{ tipo }}
+                                            registrado {% if naturaleza == 'Recibo' %} por el entorno {{ entrada.recibo.workspace.name }}{% endif %} {% if naturaleza == 'Origen Traspaso' or naturaleza == 'Destino Traspaso' %} por concepto de Traspaso {% endif %} {% if naturaleza == 'Extra' %} por concepto de Operaci&oacute;n Extra {% endif %}{% if naturaleza == 'Ajuste' %} por concepto de Ajuste {% endif %}
+                                            {% if workspace.currentWorkspace.name == 'G-BRS' or (naturaleza == 'Recibo' and entrada.recibo.workspace.id == workspace.currentWorkspace.id) %}
+                                                <br>
+                                                <i class="fa fa-plus"></i>&nbsp;Cr&eacute;dito: ${{ entrada.credit }}
+                                                <br>
+                                                <i class="fa fa-minus"></i>&nbsp;D&eacute;bito: ${{ entrada.debit }}
+                                                <br>
+                                                <b>Balance: ${{ entrada.balance }}</b>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                No se han efectuado movimientos en la entidad
+            {% endif %}
+        </div>
+    </div>
+    <!-- END PAGE CONTENT-->
+{% endblock %}
+    {% block javascript_inline %}
+        <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
+                type="text/javascript"></script>
+
+        <script src="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+        <script src="{{ asset('bundles/backend/lte/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+
+        <script>
+            var table = $('#table');
+
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": true,
+                "newestOnTop": false,
+                "progressBar": false,
+                "rtl": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "showDuration": 300,
+                "hideDuration": 1000,
+                "timeOut": 10000,
+                "extendedTimeOut": 1000,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+            {% for flashMessage in app.session.flashbag.get('danger') %}
+            lanzarError("{{ flashMessage }}");
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+            lanzarOk("{{ flashMessage }}");
+            {% endfor %}
+
+            function lanzarOk(mensaje) {
+                Command: toastr["success"](mensaje);
+            }
+
+            function lanzarError(mensaje) {
+                Command: toastr["error"](mensaje);
+            }
+
+            /* SPARKLINE CHARTS
+             * ----------------
+             * Create a inline charts with spark line
+             */
+
+            //-----------------
+            //- SPARKLINE BAR -
+            //-----------------
+            $('.sparkbar').each(function () {
+                var $this = $(this);
+                $this.sparkline('html', {
+                    type: 'bar',
+                    height: $this.data('height') ? $this.data('height') : '30',
+                    barColor: $this.data('color'),
+                    defaultPixelsPerValue: 3,
+                    width: "auto",
+                    composite: !1,
+                    tagValuesAttribute: "values",
+                    tagOptionsPrefix: "spark",
+                    enableTagOptions: !1,
+                    enableHighlight: !0,
+                    highlightLighten: 1.4,
+                    tooltipSkipNull: !0,
+                    tooltipPrefix: "",
+                    tooltipSuffix: " USD",
+                    disableHiddenCheck: !1,
+                    numberFormatter: !1,
+                    numberDigitGroupCount: 3,
+                    numberDigitGroupSep: " ",
+                    numberDecimalMark: ".",
+                    disableTooltips: !1,
+                    disableInteraction: !1
+                });
+            });
+
+        </script>
+
+    {% endblock %}

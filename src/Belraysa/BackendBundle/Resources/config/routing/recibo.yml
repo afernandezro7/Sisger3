@@ -1,0 +1,107 @@
+recibo:
+    path:     /{ws}/index
+    defaults: { _controller: "BackendBundle:Recibo:index" }
+
+recibo_all:
+    path:     /all
+    defaults: { _controller: "BackendBundle:Recibo:indexAll" }
+
+recibo_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Recibo:show" }
+
+recibo_new_income:
+    path:     /{idReply}/new_income
+    defaults: { _controller: "BackendBundle:Recibo:newIncome" }
+
+recibo_new_expendation:
+    path:     /new_expendation
+    defaults: { _controller: "BackendBundle:Recibo:newExpendation" }
+
+recibo_new_cost:
+    path:     /{idReply}/new_cost
+    defaults: { _controller: "BackendBundle:Recibo:newCost" }
+
+recibo_reply:
+    path:     /expediente/{idReply}/recibos
+    defaults: { _controller: "BackendBundle:Recibo:indexByReply" }
+
+recibo_export_reply:
+    path:     /{idReply}/export_recibos
+    defaults: { _controller: "BackendBundle:Recibo:exportByReply" }
+
+recibo_create_income:
+    path:     /create_income
+    defaults: { _controller: "BackendBundle:Recibo:createIncome" }
+    requirements: { _method: post }
+
+recibo_create_expendation:
+    path:     /create_expendation
+    defaults: { _controller: "BackendBundle:Recibo:createExpendation" }
+    requirements: { _method: post }
+
+recibo_create_cost:
+    path:     /create_cost
+    defaults: { _controller: "BackendBundle:Recibo:createCost" }
+    requirements: { _method: post }
+
+recibo_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Recibo:edit" }
+
+recibo_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Recibo:update" }
+    requirements: { _method: post|put }
+
+recibo_cancel:
+    path:     /cancel
+    defaults: { _controller: "BackendBundle:Recibo:cancel" }
+
+recibo_activate:
+    path:     /{id}/activate
+    defaults: { _controller: "BackendBundle:Recibo:activate" }
+
+getRecibos:
+    path:     /getRecibos
+    defaults: { _controller: "BackendBundle:Recibo:getRecibos" }
+
+recibo_generate_pdf:
+    path:     /invoice/{reciboId}/pdf
+    defaults: { _controller: "BackendBundle:Recibo:generateReciboPDF" }
+
+generate_recibo_report:
+    path:     /generate_recibo_report
+    defaults: { _controller: "BackendBundle:Recibo:generateReport" }
+
+generate_expendations_report:
+    path:     /generate_expenditures_report
+    defaults: { _controller: "BackendBundle:Recibo:generateExpendationsReport" }
+
+generate_recibo_report_by_ws:
+    path:     /{ws}/generate_recibo_report_by_ws
+    defaults: { _controller: "BackendBundle:Recibo:generateReportByWs" }
+
+recibo_filter_by_ws:
+    path:     /{ws}/filtrar
+    defaults: { _controller: "BackendBundle:Recibo:filtrarPorWS" }
+
+recibo_filter:
+    path:     /filtrar
+    defaults: { _controller: "BackendBundle:Recibo:filtrar" }
+
+recibo_filter_tree_by_ws:
+    path:      /{month}/{year}/{usuario}/{ws}/filtrar_tree
+    defaults: { _controller: "BackendBundle:Recibo:filtrarTreePorWS" }
+
+recibo_egresos:
+    path:     /{ws}/egresos
+    defaults: { _controller: "BackendBundle:Recibo:egresos" }
+
+recibo_salvar_egresos:
+    path:     /egresos/save
+    defaults: { _controller: "BackendBundle:Recibo:salvarEgresos" }
+
+recibo_salvar:
+    path:     /save
+    defaults: { _controller: "BackendBundle:Recibo:salvarRecibos" }

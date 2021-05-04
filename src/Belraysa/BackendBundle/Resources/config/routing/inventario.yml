@@ -1,0 +1,34 @@
+inventario:
+    path:     /{ws}/index
+    defaults: { _controller: "BackendBundle:Inventario:index" }
+
+inventario_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Inventario:new" }
+
+inventario_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Inventario:create" }
+    requirements: { _method: post }
+
+inventario_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Inventario:edit" }
+
+inventario_update:
+    path:     /update
+    defaults: { _controller: "BackendBundle:Inventario:update" }
+    requirements: { _method: post|put }
+
+inventario_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Inventario:delete" }
+
+inventario_batch_delete:
+    path: /{ws}/inventario_batch_delete
+    defaults: { _controller: "BackendBundle:Inventario:batchDelete" }
+    requirements: { _method: post }
+
+inventario_filter:
+    path:     /filter
+    defaults: { _controller: "BackendBundle:Inventario:filter" }

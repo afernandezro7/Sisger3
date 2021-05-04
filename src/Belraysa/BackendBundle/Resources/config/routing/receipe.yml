@@ -1,0 +1,83 @@
+receipe:
+    path:     /{ws}/index
+    defaults: { _controller: "BackendBundle:Receipe:index" }
+
+receipe_all:
+    path:     /all
+    defaults: { _controller: "BackendBundle:Receipe:indexAll" }
+
+receipe_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Receipe:show" }
+
+receipe_new_income:
+    path:     /{idReply}/new_income
+    defaults: { _controller: "BackendBundle:Receipe:newIncome" }
+
+receipe_new_expendation:
+    path:     /new_expendation
+    defaults: { _controller: "BackendBundle:Receipe:newExpendation" }
+
+receipe_new_cost:
+    path:     /{idReply}/new_cost
+    defaults: { _controller: "BackendBundle:Receipe:newCost" }
+
+receipe_reply:
+    path:     /{idReply}/receipes
+    defaults: { _controller: "BackendBundle:Receipe:indexByReply" }
+
+receipe_export_reply:
+    path:     /{idReply}/export_receipes
+    defaults: { _controller: "BackendBundle:Receipe:exportByReply" }
+
+receipe_create_income:
+    path:     /create_income
+    defaults: { _controller: "BackendBundle:Receipe:createIncome" }
+    requirements: { _method: post }
+
+receipe_create_expendation:
+    path:     /create_expendation
+    defaults: { _controller: "BackendBundle:Receipe:createExpendation" }
+    requirements: { _method: post }
+
+receipe_create_cost:
+    path:     /create_cost
+    defaults: { _controller: "BackendBundle:Receipe:createCost" }
+    requirements: { _method: post }
+
+receipe_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Receipe:edit" }
+
+receipe_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Receipe:update" }
+    requirements: { _method: post|put }
+
+receipe_cancel:
+    path:     /{id}/cancel
+    defaults: { _controller: "BackendBundle:Receipe:cancel" }
+
+receipe_activate:
+    path:     /{id}/activate
+    defaults: { _controller: "BackendBundle:Receipe:activate" }
+
+getReceipes:
+    path:     /getReceipes
+    defaults: { _controller: "BackendBundle:Receipe:getReceipes" }
+
+receipe_generate_pdf:
+    path:     /invoice/{receipeId}/pdf
+    defaults: { _controller: "BackendBundle:Receipe:generateReceipePDF" }
+
+generate_receipe_report:
+    path:     /generate_receipe_report
+    defaults: { _controller: "BackendBundle:Receipe:generateReport" }
+
+generate_expendations_report:
+    path:     /generate_expenditures_report
+    defaults: { _controller: "BackendBundle:Receipe:generateExpendationsReport" }
+
+generate_receipe_report_by_ws:
+    path:     /{ws}/generate_receipe_report_by_ws
+    defaults: { _controller: "BackendBundle:Receipe:generateReportByWs" }

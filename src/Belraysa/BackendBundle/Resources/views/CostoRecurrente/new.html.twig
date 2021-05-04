@@ -1,0 +1,136 @@
+<form onsubmit="startPageLoading();" action="{{ path('costorecurrente_create') }}" role="form" id="newReceipe" method="post" {{ form_enctype(form) }}
+      class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Fecha</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.fecha, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.fecha) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Importe</label>
+
+        <div class="col-sm-10">
+            <div class="input-inline">
+                {{ form_widget(form.importe, {'attr' : {'class' : 'form-control' }}
+                ) }}
+                {{ form_errors(form.importe) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Pagu&eacute; a</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.pagueA, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.pagueA) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>La suma de</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.suma, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.suma) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Conceptos</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.inventarios, {'attr' : {'class' : 'form-control select2 multiple','style':'width: 100%;', 'multiple':'multiple' }}
+            ) }}
+            {{ form_errors(form.inventarios) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Detalles</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.detalles, {'attr' : {'class' : 'form-control ' }}) }}
+            {{ form_errors(form.detalles) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>M&eacute;todo de pago</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.metodoPago, {'attr' : {'class' : 'form-control select2','style':'width: 100%;', 'onchange':'updateBanking();' }}
+            ) }}
+            {{ form_errors(form.metodoPago) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Cuenta</label>
+
+        <div class="col-sm-10">
+
+
+            <select id="belraysa_backendbundle_costorecurrente_banking" name="receptor" class="form-control select2"
+                    style="width: 100%">
+             
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Expediente</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.expediente, {'attr' : {'class' : 'form-control select2' }}
+            ) }}
+
+            {{ form_errors(form.expediente) }}
+        </div>
+    </div>
+     {% if app.user.firma %}
+     <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4 simple-checkbox">
+           <input type="checkbox" class="minimal" name="firmar"></input>
+            <label for="item-enabled">Firmar</label>
+        </div>
+    </div>
+    {% endif %}
+    {{ form_rest(form) }}
+</form>
+<script>
+    $(".select2").select2();
+    updateBanking();
+
+    function updateBanking() {
+        startPageLoading();
+        var pm = document.getElementById('belraysa_backendbundle_costorecurrente_metodoPago');
+        pm = pm[pm.selectedIndex].label;
+
+        var url = '{{ path('banking_payment') }}',
+            method = 'post';
+        $.ajax({
+            data: {'pm': pm},
+            type: method,
+            url: url,
+            success: function (response) {
+                var opciones = '';
+                for (i = 0; i < response.length; i++) {
+                    //        alert(response);
+                    opciones = opciones +
+                        '<option value = "' + response[i].id + '">' + response[i].name + '</option>';
+                }
+                $('#belraysa_backendbundle_costorecurrente_banking').html(opciones);
+                stopPageLoading();
+            }
+        });
+    }
+
+
+</script>
+

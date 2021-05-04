@@ -1,0 +1,42 @@
+{% block belraysa_backendbundle_precioventalider_label %}
+{% endblock %}
+    {% block belraysa_backendbundle_precioventalider_errors %}{% endblock %}
+
+    {% block belraysa_backendbundle_precioventalider_widget %}
+        <div class="form-group col-sm-10">
+
+
+            <div class="col-sm-1"><label class="control-label"><span style="color: red"
+                                                                     class="required">*&nbsp;</span>L&iacute;der</label></div>
+            <div class="col-sm-5">
+                {{ form_widget(form.cliente, {'attr' : {'class' : 'form-control select2me','style':'width:100%', 'onchange':'clientSelected()' }}) }}
+                {{ form_errors(form.cliente) }}
+            </div>
+
+            <div class="col-sm-1"><label class="control-label">Precio</label></div>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <div class="input-group-addon box-default">
+                        <span class="fa fa-usd"></span>
+                    </div>
+                    {{ form_widget(form.precio, {'attr' : {'class' : 'form-control','placeholder':'Precio' }}) }}
+                    {{ form_errors(form.precio) }}
+                </div>
+            </div>
+
+
+        </div>
+    {% endblock %}
+<script>
+    $("#belraysa_backendbundle_precioventalider_precio").TouchSpin({
+        buttondown_class: 'btn btn-default',
+        buttonup_class: 'btn btn-default',
+        min: 0,
+        max: '9 999 999',
+        step: 0.01,
+        decimals: 2,
+        boostat: 5,
+        maxboostedstep: 10,
+        prefix: '$'
+    });
+</script>

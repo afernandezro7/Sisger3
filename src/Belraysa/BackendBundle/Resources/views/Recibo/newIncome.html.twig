@@ -1,0 +1,158 @@
+<form action="{{ path('receipe_create_income') }}" role="form" id="newReceipe" method="post" {{ form_enctype(form) }}
+      class="form-horizontal">
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Fecha de creaci&oacute;n</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.creationDate, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.creationDate) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Importe</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.importe, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(form.importe) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Recib&iacute; de</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.recibide, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.recibide) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">La suma de</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.suma, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.suma) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Concepto</label>
+
+        <div class="col-sm-10">
+            <select name="concept[]" class="select2 multiple" style="width: 100%" multiple>
+                {% for service in services %}
+                    <option value="{{ service.name }}">{{ service.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">M&eacute;todo de pago</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.paymentMethod, {'attr' : {'class' : 'form-control select2','style':'width: 100%;', 'onchange':'updateBanking();' }}
+            ) }}
+            {{ form_errors(form.paymentMethod) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Receptor</label>
+
+        <div class="col-sm-10">
+
+            <select id="belraysa_backendbundle_receipe_banking" name="receptor" class="form-control select2"
+                    style="width: 100%">
+
+                {% for banking in workspace.bankings %}
+                    <option value="{{ banking.id }}"> {{ banking.name }} </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Expediente</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.refExpediente, {'attr' : {'class' : 'form-control', 'placeholder': entity.reply.sisgerCode }}
+            ) }}
+
+            {{ form_errors(form.refExpediente) }}
+        </div>
+    </div>
+
+    <input type="hidden" value="{{ entity.reply }}" name="idReply">
+    {{ form_rest(form) }}
+</form>
+<script>
+    $(".select2").select2();
+    var now = new Date();
+    $('#belraysa_backendbundle_receipe_creationDate').datepicker('setDate', now);
+    $('#belraysa_backendbundle_receipe_creationDate').datepicker('setEndDate', now);
+    updateBanking();
+    function updateBanking() {
+        var pm = document.getElementById('belraysa_backendbundle_receipe_paymentMethod');
+        pm = pm[pm.selectedIndex].label;
+        if (pm != "Seleccione un elemento de la lista") {
+            if (pm == "Efectivo") {
+                $('#belraysa_backendbundle_receipe_banking').html('\
+            {% for banking in workspace.bankings %}\
+            {% if banking.type == "Caja Menuda" %}\
+            <option value = "{{ banking.id}}"> {{ banking.name }} </option>\
+            {% endif %}\
+            {% endfor %}')
+            } else if (pm == "Cheque") {
+                $('#belraysa_backendbundle_receipe_banking').html('\
+            {% for banking in workspace.bankings %}\
+            {% if banking.type == "Caja Menuda" %}\
+            <option value = "{{ banking.id}}"> {{ banking.name }} </option>\
+            {% endif %}\
+            {% endfor %}')
+            } else if (pm == "PF") {
+                $('#belraysa_backendbundle_receipe_banking').html('\
+            {% for banking in workspace.bankings %}\
+            {% if banking.type == "PF" %}\
+            <option value = "{{ banking.id}}"> {{ banking.name }} </option>\
+            {% endif %}\
+            {% endfor %}')
+            } else {
+                $('#belraysa_backendbundle_receipe_banking').html('\
+            {% for banking in workspace.bankings %}\
+            {% if banking.type == "Banco" %}\
+            <option value = "{{ banking.id}}"> {{ banking.name }} </option>\
+            {% endif %}\
+            {% endfor %}')
+            }
+        }
+    }
+
+</script>
+<script>
+    /*
+     $("#newReceipe").submit(function (event) {
+
+     event.preventDefault();
+
+     loading();
+     $('#loading').html('<div class="se-pre-con"></div>');
+
+     var $form = $(this),
+     url = $form.attr('action'),
+     method = $form.attr('method');
+     $('#myModalHorizontal1').modal('hide');
+     $.ajax({
+     data: $(this).serialize(),
+     type: method,
+     url: url,
+     success: function (response) {
+     $('#loading').hide();
+     if (response) {
+     if (response[0] + response[1] + response[2] + response[3] + response[4] == '<form') {
+     $('#putContentHere').html(response);
+     $('#myModalHorizontal1').modal('show');
+     }
+     }
+     }
+     });
+     });*/
+</script>

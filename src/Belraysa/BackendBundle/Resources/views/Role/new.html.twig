@@ -1,0 +1,11 @@
+<form action="{{ path('role_create') }}" role="form" id="newRole" method="post" {{ form_enctype(form) }} class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Nombre</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.name, {'attr' : {'class' : 'form-control','placeholder':'Nombre' }}) }}
+            {{ form_errors(form.name) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+</form>

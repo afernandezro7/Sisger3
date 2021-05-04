@@ -1,0 +1,97 @@
+client:
+    path:     /
+    defaults: { _controller: "BackendBundle:Client:index" }
+
+client_pdf:
+    path:     /pdf
+    defaults: { _controller: "BackendBundle:Client:pdf" }
+
+client_xls:
+    path:     /xls
+    defaults: { _controller: "BackendBundle:Client:xls" }
+
+client_filter:
+    path:     /filter
+    defaults: { _controller: "BackendBundle:Client:filter" }
+
+client_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Client:show" }
+
+client_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Client:new" }
+
+client_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Client:create" }
+    requirements: { _method: post }
+
+client_create1:
+    path:     /create_full
+    defaults: { _controller: "BackendBundle:Client:create1" }
+    requirements: { _method: post }
+
+client_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Client:edit" }
+
+client_edit1:
+    path:     /{id}/edit1
+    defaults: { _controller: "BackendBundle:Client:edit1" }
+
+client_edit2:
+    path:     /{id}/edit2
+    defaults: { _controller: "BackendBundle:Client:edit2" }
+
+client_edit3:
+    path:     /{id}/edit3
+    defaults: { _controller: "BackendBundle:Client:edit3" }
+
+client_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Client:update" }
+    requirements: { _method: post|put }
+
+client_update_1:
+    path:     /{id}/update_lbrs
+    defaults: { _controller: "BackendBundle:Client:update1" }
+    requirements: { _method: post|put }
+
+client_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Client:delete" }
+
+client_batch_delete:
+    path: /client_batch_delete
+    defaults: { _controller: "BackendBundle:Client:batchDelete" }
+    requirements: { _method: post }
+
+client_data:
+    path:     /client_data
+    defaults: { _controller: "BackendBundle:Client:getData" }
+
+getClients:
+    path:     /getClients
+    defaults: { _controller: "BackendBundle:Client:getClients" }
+
+
+get_clients_by_operators_month:
+    path:  /get_clients_by_operators_month
+    defaults: { _controller: "BackendBundle:Client:getLengthByOperatorMonth" }
+
+get_clients_by_operators:
+    path:  /get_clients_by_operators
+    defaults: { _controller: "BackendBundle:Client:getLengthByOperator" }
+
+get_clients_by_operators_ws:
+    path:  /get_clients_by_operators_ws
+    defaults: { _controller: "BackendBundle:Client:getLengthByOperatorWS" }
+
+client_verificar_dni:
+    path:  /verificar_dni
+    defaults: { _controller: "BackendBundle:Client:verificarDni" }
+
+client_verificar_passport:
+    path:  /verificar_dni
+    defaults: { _controller: "BackendBundle:Client:verificarPassport" }

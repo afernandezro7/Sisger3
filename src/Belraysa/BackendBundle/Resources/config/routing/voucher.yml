@@ -1,0 +1,65 @@
+voucher:
+    path:     /{ws}/index
+    defaults: { _controller: "BackendBundle:Voucher:index" }
+
+voucher_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Voucher:show" }
+
+voucher_new:
+    path:     /{idReply}/new
+    defaults: { _controller: "BackendBundle:Voucher:new" }
+
+voucher_reply:
+    path:     /{idReply}/vouchers
+    defaults: { _controller: "BackendBundle:Voucher:indexByReply" }
+
+voucher_export_reply:
+    path:     /{idReply}/export_vouchers
+    defaults: { _controller: "BackendBundle:Voucher:exportByReply" }
+
+getVouchers:
+    path:     /getVouchers
+    defaults: { _controller: "BackendBundle:Voucher:getVouchers" }
+
+voucher_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Voucher:create" }
+    requirements: { _method: post }
+
+voucher_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Voucher:edit" }
+
+voucher_generate_pdf:
+    path:     /voucher/{voucherId}/pdf
+    defaults: { _controller: "BackendBundle:Voucher:generateVoucherPDF" }
+
+voucher_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Voucher:update" }
+    requirements: { _method: post|put }
+
+voucher_cancel:
+    path:     /{id}/cancel
+    defaults: { _controller: "BackendBundle:Voucher:cancel" }
+
+voucher_activate:
+    path:     /{id}/activate
+    defaults: { _controller: "BackendBundle:Voucher:activate" }
+    
+generate_voucher_report:
+    path:     /generate_voucher_report
+    defaults: { _controller: "BackendBundle:Voucher:generateReport" }
+
+generate_voucher_report_by_ws:
+    path:     /{ws}/generate_voucher_report_by_ws
+    defaults: { _controller: "BackendBundle:Voucher:generateReportByWs" }
+
+voucher_filter_by_ws:
+    path:     /{ws}/filtrar
+    defaults: { _controller: "BackendBundle:Voucher:filtrarPorWS" }
+
+voucher_filter_tree_by_ws:
+    path:      /{month}/{year}/{usuario}/{ws}/filtrar_tree
+    defaults: { _controller: "BackendBundle:Voucher:filtrarTreePorWS" }

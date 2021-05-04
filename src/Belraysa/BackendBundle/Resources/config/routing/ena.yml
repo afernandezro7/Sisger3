@@ -1,0 +1,42 @@
+ena:
+    path:     /
+    defaults: { _controller: "BackendBundle:ENA:index" }
+
+ena_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:ENA:show" }
+
+ena_hbl:
+    path:     /{id}/hbl
+    defaults: { _controller: "BackendBundle:ENA:hbl" }
+
+ena_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:ENA:new" }
+
+ena_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:ENA:create" }
+    requirements: { _method: post }
+
+ena_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:ENA:edit" }
+
+ena_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:ENA:update" }
+
+
+ena_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:ENA:delete" }
+
+ena_batch_delete:
+    path: /batch_delete
+    defaults: { _controller: "BackendBundle:ENA:batchDelete" }
+    requirements: { _method: post }
+
+ena_exp:
+    path:     /{exp_id}/index
+    defaults: { _controller: "BackendBundle:ENA:indexExp" }

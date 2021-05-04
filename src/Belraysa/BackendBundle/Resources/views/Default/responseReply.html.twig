@@ -1,0 +1,161 @@
+<style>
+    .dropdown-menu {
+        right: 0 !important;
+        left: auto !important;
+    }
+</style>
+<br>
+<form id="batch_action_form_delete" action="{{ path('reply_batch_delete') }}"
+      method="post">
+    <table class="table table-hover" id="datatable_replies">
+        <thead>
+        <tr>
+            <th>
+                <input id="selectallReplies" name="batch_action_checkbox[]" type="checkbox"
+                       class="flat-red">
+            </th>
+            <th>Id</th>
+            <th>Cliente</th>
+            <th>Fechas</th>
+            <th style="width: 10%" align="center">Servicios</th>
+            <th>Vendedor</th>
+            <th>Espacio</th>
+            <th style="text-align: center">
+                <div class="mailbox-controls">
+                    <div class="btn-group">
+                        <button data-toggle="confirmation" class="btn btn-flat btn-sm btn-default"
+                                disabled="disabled"
+                                id="batch-delete-button-reply" type="submit"><i
+                                    class="fa fa-trash-o"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reply in replies %}
+            <tr>
+                {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                <td>
+                    <input name="batch_action_checkbox[]" type="checkbox" value="{{ reply.id }}"
+                           class="flat-red selectableReply">
+                </td>
+                <td>{{ reply.sisgerCode }}</td>
+                <td>{{ reply.precioVentaLider[0].cliente.firstName }} {{ reply.precioVentaLider[0].cliente.lastName }}</td>
+                <td>{{ reply.beginDate|date('d/m/Y') }} - {{ reply.finishDate|date('d/m/Y') }}</td>
+                <td style="width: 10%" align="center">
+                    {% for service in reply.services %}
+                        <span class="label label-default">{{ service.name }}</span>  &nbsp;
+                    {% endfor %}
+                </td>
+                <td style='text-align:center'
+                    title="{{ reply.user.firstName }} {{ reply.user.lastName }}">
+                    {{ reply.user.letra }}
+                </td>
+                <td style='text-align:center'>
+                    {% if reply.workspace %}
+
+                            <span class="label label-default">{{ reply.workspace.name }}</span>
+
+                    {% else %}
+                        <span class="label label-default">Sin asignar</span>
+                    {% endif %}
+                </td>
+                <td style="text-align: center">
+                    <div class="mailbox-controls">
+                        <div class="btn-group">
+                            <a title="Ver detalles del expediente" id="show_button"
+                               href="{{ path('reply_show', { 'id': reply.id }) }}"
+                               class="btn btn-flat btn-default btn-sm"><i class="fa fa-eye"></i>
+                            </a>
+                            {% if app.user == reply.user or app.user.role.name == 'ROLE_SUPER_ADMIN' %}
+                                <a title="Editar datos del expediente" id="edit_button"
+                                   href="{{ path('reply_edit', { 'id': reply.id }) }}"
+                                   class="btn btn-flat btn-default btn-sm"><i
+                                            class="fa fa-edit"></i></a>
+                                <a data-toggle="confirmation" title="Eliminar"
+                                   href="{{ path('reply_delete', { 'id': reply.id }) }}"
+                                   class="btn btn-flat btn-default btn-sm"><i
+                                            class="fa fa-trash-o"></i></a>
+                            {% endif %}
+
+                            {% if reply.vouchers|length > 0 or reply.receipes|length > 0 %}
+                                <div class="btn-group">
+                                    <button aria-expanded="false" type="button"
+                                            class="btn btn-sm btn-flat btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+
+                                    <ul class="dropdown-menu">
+                                        {% if reply.vouchers|length > 0 %}
+                                            <li><a title="Ver vouchers" id="vouchers_button"
+                                                   href="{{ path('voucher_reply', { 'idReply': reply.id }) }}"><i
+                                                            class="fa fa-table"></i> Ver vouchers
+                                                </a></li>
+                                            <li><a target="_blank" title="Exportar vouchers" id="vouchers_button"
+                                                   href="{{ path('voucher_export_reply', { 'idReply': reply.id }) }}"><i
+                                                            class="fa fa-file-pdf-o"></i> Exportar
+                                                    vouchers
+                                                </a></li>
+                                        {% endif %}
+                                        {% if reply.receipes|length > 0 %}
+                                            <li><a title="Ver recibos" id="receipes_button"
+                                                   href="{{ path('recibo_reply', { 'idReply': reply.id }) }}"><i
+                                                            class="fa fa-table"></i> Ver recibos
+                                                </a></li>
+                                            <li><a target="_blank" title="Exportar recibos" id="receipes_button"
+                                                   href="{{ path('recibo_export_reply', { 'idReply': reply.id }) }}"><i
+                                                            class="fa fa-file-pdf-o"></i> Exportar
+                                                    recibos
+                                                </a></li>
+                                        {% endif %}
+                                    </ul>
+
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</form>
+
+<script>
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_minimal-grey',
+        radioClass: 'iradio_minimal-grey'
+    });
+
+    $("[data-toggle='confirmation']").popConfirm({
+        title: "¿Está seguro?", // The title of the confirm
+        content: "¿Está seguro de que desea eliminar?", // The message of the confirm
+        placement: "bottom", // The placement of the confirm (Top, Right, Bottom, Left)
+        container: "body", // The html container
+        yesBtn: "Sí",
+        noBtn: "No"
+    });
+
+
+    $('#datatable_replies').DataTable(
+            {
+                "columns": [
+                    {"orderable": false},
+                    null,
+                    null,
+                    {"orderable": false},
+                    null,
+                    null,
+                    null,
+                    {"orderable": false}
+                ],
+                "paginate": true
+            }
+    );
+</script>

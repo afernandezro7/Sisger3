@@ -1,0 +1,165 @@
+<form onsubmit="startPageLoading();" action="{{ path('voucher_create') }}" role="form" id="newVoucher" method="post" {{ form_enctype(form) }}
+      class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Proveedor</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.provider, {'attr' : {'class' : 'form-control','placeholder':'Proveedor' }}) }}
+            {{ form_errors(form.provider) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Ref. Proveedores</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.refproviders, {'attr' : {'class' : 'form-control','placeholder':'Escriba cada referencia separada por /' }}
+            ) }}
+            {{ form_errors(form.refproviders) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Fecha de creaci&oacute;n</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.creationDate, {'attr' : {'class' : 'form-control','placeholder':'Fecha de creación' }})
+            }}
+            {{ form_errors(form.creationDate) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Cliente</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.client, {'attr' : {'class' : 'form-control select2', 'data-placeholder':'De click aqui para seleccionar un cliente o escriba su nombre.' ,'style':'width: 100%;', 'required':'required' }}
+            ) }}
+            {{ form_errors(form.client) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Cantidad de personas</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.pax, {'attr' : {'class' : 'form-control','placeholder':'Cantidad de personas' }}) }}
+            {{ form_errors(form.pax) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Fecha de entrada</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.beginDate, {'attr' : {'class' : 'form-control','placeholder':'Fecha de entrada' }}) }}
+            {{ form_errors(form.beginDate) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Fecha de salida</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.finishDate, {'attr' : {'class' : 'form-control','placeholder':'Fecha de salida' }}) }}
+            {{ form_errors(form.finishDate) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Servicios</label>
+
+        <div class="col-sm-10">
+            <textarea class="form-control" name="jodit" id="jodit" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+    {% if app.user.firma %}
+     <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4 simple-checkbox">
+           <input type="checkbox" class="minimal" name="firmar"></input>
+            <label for="item-enabled">Firmar</label>
+        </div>
+    </div>
+    {% endif %}
+    <input type="hidden" value="{{ entity.reply }}" name="idReply">
+    {{ form_rest(form) }}
+</form>
+
+<script>
+    var now = new Date();
+    $('#belraysa_backendbundle_voucher_creationDate').datepicker('setDate', now);
+    $('#belraysa_backendbundle_voucher_creationDate').datepicker('setEndDate', now);
+    $('#belraysa_backendbundle_voucher_creationDate').datepicker()
+            .on('changeDate', function (e) {
+                var startDate = $('#belraysa_backendbundle_voucher_creationDate').datepicker('getDate');
+                //startDate = mostrarFecha(startDate, 1);
+                $('#belraysa_backendbundle_voucher_beginDate').datepicker('setStartDate', startDate);
+                //startDate = mostrarFecha(startDate, 1);
+                $('#belraysa_backendbundle_voucher_finishDate').datepicker('setStartDate', startDate);
+            });
+
+    $('#belraysa_backendbundle_voucher_beginDate').datepicker()
+            .on('changeDate', function (e) {
+                var endDate = $('#belraysa_backendbundle_voucher_beginDate').datepicker('getDate');
+                //alert(startDate);
+                // endDate = mostrarFecha(endDate, -1);
+                $('#belraysa_backendbundle_voucher_creationDate').datepicker('setEndDate', endDate);
+                //startDate = mostrarFecha(endDate, 2);
+                $('#belraysa_backendbundle_voucher_finishDate').datepicker('setStartDate', endDate);
+
+            });
+    $('#belraysa_backendbundle_voucher_finishDate').datepicker()
+            .on('changeDate', function (e) {
+                var endDate = $('#belraysa_backendbundle_voucher_finishDate').datepicker('getDate');
+                //alert(startDate);
+                //endDate = mostrarFecha(endDate, -2);
+                $('#belraysa_backendbundle_voucher_creationDate').datepicker('setEndDate', endDate);
+                //endDate = mostrarFecha(endDate, 1);
+                $('#belraysa_backendbundle_voucher_beginDate').datepicker('setEndDate', endDate);
+            });
+</script>
+<script>
+    $('.select2').select2();
+    /* $("#newVoucher").submit(function (event) {
+
+     loading();
+     $('#loading').html('<div class="se-pre-con"></div>');
+     event.preventDefault();
+
+
+     var $form = $(this),
+
+     url = $form.attr('action'),
+     method = $form.attr('method');
+     $('#myModalHorizontal1').modal('hide');
+     $.ajax({
+     data: $(this).serialize(),
+     type: method,
+     url: url,
+     success: function (response) {
+     $('#loading').hide();
+     if (response) {
+     if (response[0] + response[1] + response[2] + response[3] + response[4] == '<form') {
+     $('#putContentHere').html(response);
+     $('#myModalHorizontal1').modal('show');
+     }
+     }
+     }
+     });
+     });*/
+
+</script>
+
+<script>
+    new Jodit('#jodit', {
+        uploader: {
+            url: 'jodit-connectors/index.php?action=upload'
+        },
+        filebrowser: {
+            ajax: {
+                url: 'jodit-connectors/index.php'
+            }
+        }
+    });
+
+</script>

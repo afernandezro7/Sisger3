@@ -1,0 +1,243 @@
+{% extends "BackendBundle::layout.html.twig" %}
+{% block stylesheets_inline %}
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.css') }}"
+          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/tree/dist/themes/default/style.min.css') }}"
+          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/iCheck/all.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/toastr-master/build/toastr.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/select2/dist/css/select2.min.css') }}">
+    <link href="{{ asset('bundles/backend/lte/plugins/datepicker/datepicker3.css') }}" type="text/css" rel="stylesheet"
+          xmlns="http://www.w3.org/1999/html"/>
+
+{% endblock %}
+
+{% block title %}Mercanc&iacute;as | {{ concepto.tipo }}{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Mercanc&iacute;as ({{ concepto.getValorAduanal() }} de 950)
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('index') }}"><i class="fa fa-home"></i> Inicio</a></li>
+                <li>L-BRS</li>
+                <li>{{ concepto.tipo }}</li>
+                <li class="active">Mercanc&iacute;as</li>
+            </ol>
+        </section>
+        <br>
+        <section class="content">
+
+            <div class="row">
+                <table class="table table-hover" id="datatable">
+                    <thead>
+                    <tr>
+                        <th>&Iacute;ndice</th>
+                        <th>Descripci&oacute;n</th>
+                        <th>Cantidad</th>
+                        <th style="text-align: center">Arancel</th>
+                        <th>Volumen (m3)</th>
+                        <th>Peso (Kgs)</th>
+                        <th>Relaci&oacute;n (Kgs/m3)</th>
+                        <th style="text-align: center">
+                            <div class="mailbox-controls">
+                                {% if concepto.getValorAduanal() < 950 %}
+                                    <div class="btn-group">
+                                        <a title="Crear mercanc&iacute;a" data-toggle="modal" type="button"
+                                           data-target="#modalNewMercancia" data-path="{{ path('mercancia_new') }}"
+                                           tabindex="-1" class="btn btn-flat btn-default btn-sm"><i
+                                                    class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for mercancia in entities %}
+                        <tr>
+                            <td>{{ mercancia.indice }}</td>
+                            {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                            <td>{{ mercancia.descripcion }}</td>
+                            <td>
+                                {{ mercancia.cantidad }}
+                            </td>
+                            <td style="text-align: center">
+                                {% if mercancia.arancel %}
+                                    {{ mercancia.arancel.arancel }}
+                                {% else %}
+                                    <span title="Edite la mercanc&iacute;a para especificar el arancel correspondiente"
+                                          class="label label-warning"><i class="fa fa-warning"></i></span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ mercancia.volumenM3 }}
+                            </td>
+
+                            <td>
+                                {{ mercancia.pesoKg }}
+                            </td>
+                            <td>
+                                {{ mercancia.relacion }}
+                            </td>
+                            <td style="text-align: center">
+                                <div class="mailbox-controls">
+                                    <div class="btn-group">
+                                        <a title="Obtener etiqueta" id="hbl_button"
+                                           type="button"
+                                           href="{{ path('mercancia_etiqueta', { 'id': mercancia.id }) }}"
+                                           class="btn btn-flat btn-sm btn-danger"><i
+                                                    class="fa fa-file-pdf-o"></i>
+                                        </a>
+                                        <a title="Editar datos" id="edit_button"
+                                           data-toggle="modal"
+                                           type="button"
+                                           tabindex="-1"
+
+                                           data-target="#modalEdit"
+                                           data-path="{{ path('mercancia_edit', { 'id': mercancia.id }) }}"
+
+                                           href="#" class="btn btn-flat btn-default btn-sm"><i
+                                                    class="fa fa-edit"></i></a>
+
+                                        <a data-toggle="confirmation" title="Eliminar"
+                                           href="{{ path('mercancia_delete', { 'id': mercancia.id }) }}"
+                                           class="btn btn-flat btn-default btn-sm"><i
+                                                    class="fa fa-trash-o"></i></a>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.col -->
+
+            <!-- /.row -->
+        </section>
+
+    </div><!-- /.content-wrapper -->
+
+    <div class="modal fade" id="modalNewMercancia" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        Crear mercanc&iacute;a
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    {{ include("BackendBundle:Mercancia:new.html.twig") }}
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="newMercancia" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEdit" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        Editar datos
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div id="modalEditContent" class="modal-body">
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="edit" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript_inline %}
+
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/PopConfirm-master/jquery.popconfirm.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/toastr-master/toastr.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/js/mercancias.js') }}"></script>
+    <script>
+        $(".item-tree").removeClass("active");
+        $("#enas").addClass("active");
+        $('#datatable').DataTable(
+            {
+                "columns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    {"orderable": false}
+                ]
+            }
+        );
+    </script>
+    <script>
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+
+
+    </script>
+{% endblock %}

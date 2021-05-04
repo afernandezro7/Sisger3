@@ -1,0 +1,189 @@
+{% set layout = "BackendBundle::L-BRS.html.twig" %}
+{% set vol = 0 %}
+{% set bultos = 0 %}
+{% set peso = 0 %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link href="{{ asset('bundles/backend/admin/pages/css/profile-old.css') }}" rel="stylesheet" type="text/css"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/jquery-nestable/jquery.nestable.css') }}"/>
+
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}{{ entity.codigo }}{% endblock %}
+  {% block breadtitle %} <h1>{{ entity.codigo }}</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li><a href="{{ path('user') }}">CONTENEDORES</a></li>
+        <li class="active">{{ entity.codigo }}
+            | {% if entity.estado == 'RESERVANDO' or entity.estado == 'COMPLETANDO' %}Pre -{% endif %} Manifiesto
+        </li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="panel-group accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="row accordion-toggle" style="margin-right: 15px;"
+                           data-parent="#accordion3" href="#collapse_3_1">
+                            <div style="text-align: center" class="col-sm-2"><b>HBL</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-2">
+                                <b> Nombre/RTTE </b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-2">
+                                <b> Nombre/CSG</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                                <b> Pasaporte/CSG</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                                <b> CI/CSG</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                                <b> Cant. Bultos</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                                <b> Peso Kg</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                                <b> Volumen M3</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                                <b> Categor&iacute;a</b>
+                            </div>
+                        </a>
+                    </h4>
+                </div>
+            </div>
+            {% for hbl in entity.conceptos %}
+                {% set bultos = bultos + hbl.bultos|length %}
+                {% set peso = peso + hbl.getPesoKg() %}
+                {% set vol = vol + hbl.getVolumenM3() %}
+            {% endfor %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="row accordion-toggle" style="margin-right: 15px;"
+                           data-parent="#accordion3" href="#collapse_3_1">
+                            <div style="text-align: center" class="col-sm-7">
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                                <b> Totales</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                                <b> {{ bultos }}</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                                <b> {{ peso }}</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                                <b> {{ vol }}</b>
+                            </div>
+                            <div style="text-align: center" class="col-sm-1">
+                            </div>
+                        </a>
+                    </h4>
+                </div>
+            </div>
+            {% for hbl in entity.conceptos %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a class="row accordion-toggle collapse" data-toggle="collapse"
+                               data-parent="#accordion3" href="#collapse_{{ loop.index }}" style="margin-right: 15px;">
+                                <div style="text-align: center" class="col-sm-2">{{ hbl.sisgerCode }}
+                                </div>
+                                <div style="text-align: center" class="col-sm-2">
+                                    {% if hbl.tipo == 'Envio' %}
+                                        {{ hbl.remitenteNombre }}
+                                    {% else %}
+                                        {{ hbl.remitente.firstName }} {{ hbl.remitente.lastName }}
+                                    {% endif %}
+                                </div>
+                                <div style="text-align: center" class="col-sm-2">
+                                    {{ hbl.consignado.firstName }} {{ hbl.consignado.lastName }}
+                                </div>
+                                <div style="text-align: center" class="col-sm-1">
+                                    {{ hbl.consignado.passport }}
+                                </div>
+                                <div style="text-align: center" class="col-sm-1">
+                                    {{ hbl.consignado.dni }}
+                                </div>
+                                <div style="text-align: center" class="col-sm-1">
+                                    {{ hbl.bultos|length }}
+                                </div>
+                                <div style="text-align: center" class="col-sm-1">
+                                    {{ hbl.getPesoKg() }}
+                                </div>
+                                <div style="text-align: center" class="col-sm-1">
+                                    {{ hbl.getVolumenM3() }}
+                                </div>
+                                <div style="text-align: center" class="col-sm-1">
+                                    {{ hbl.tipo }}
+                                </div>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse_{{ loop.index }}" class="panel-collapse collapse">
+                        <div class="panel-body" style=" overflow-y:auto;">
+                            <div class="panel-group accordion" id="accordion4">
+                                <table class="table-responsive table table-striped table-bordered table-advance table-hover"
+                                       id="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Descripci&oacute;n</th>
+                                        <th>Volumen (M3)</th>
+                                        <th>Peso (Kgs)</th>
+                                        <th>Relaci&oacute;n (Kgs/m3)</th>
+                                        <th style="text-align: center">Valor Aduanal</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for bulto in hbl.bultos %}
+                                        {% for mercancia in bulto.mercancias %}
+                                            <tr>
+                                                {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                                                <td>{{ mercancia.descripcion }}</td>
+                                                <td>
+                                                    {{ mercancia.volumenM3 }}
+                                                </td>
+
+                                                <td>
+                                                    {{ mercancia.pesoKg }}
+                                                </td>
+                                                <td>
+                                                    {{ mercancia.relacion }}
+                                                </td>
+                                                <td style="text-align: center">
+                                                    {% if mercancia.arancel %}
+                                                        {{ mercancia.arancel.arancel }}
+                                                    {% else %}
+                                                        <span title="Edite la mercanc&iacute;a para especificar el arancel correspondiente"
+                                                              class="label label-warning">SIN ESPECIFICAR</span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}
+    {% block javascript_inline %}
+        <script src="{{ asset('bundles/backend/global/plugins/jquery-nestable/jquery.nestable.js') }}"></script>
+        <script>
+            $('#nestable_list_1').nestable();
+        </script>
+    {% endblock %}

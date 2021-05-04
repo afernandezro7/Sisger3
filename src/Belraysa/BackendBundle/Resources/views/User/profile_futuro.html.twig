@@ -1,0 +1,1428 @@
+{% set layout = "BackendBundle::G-BRS.html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link href="{{ asset('bundles/backend/admin/pages/css/profile-old.css') }}" rel="stylesheet" type="text/css"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.css') }}"/>
+     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/backend/global/plugins/select2/select2.css') }}"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/jquery-multi-select/css/multi-select.css') }}"/>
+     <link href="{{ asset('bundles/backend/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}"
+           rel="stylesheet" type="text/css"/>
+     <style>
+         span.required {
+             color: #e02222;
+         }
+     </style>
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}{{ user.firstName }} {{ user.lastName }}{% endblock %}
+{% block usuarios %}active{% endblock %}
+  {% block breadtitle %} <h1>{{ user.firstName }} {{ user.lastName }}</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li><a href="{{ path('user') }}">USUARIOS</a></li>
+        <li class="active">{{ user.firstName }} {{ user.lastName }}</li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row profile">
+    <div class="col-md-12">
+    <!--BEGIN TABS-->
+    <div class="tabbable-line tabbable-full-width">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#tab_1_1" data-toggle="tab">
+                General </a>
+        </li>
+        <li>
+            <a href="#tab_1_3" data-toggle="tab">
+                Cuenta </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+    <div class="tab-pane active" id="tab_1_1">
+    <div class="row">
+    <div class="col-md-3">
+        <ul class="list-unstyled profile-nav">
+            <li>
+                <img src="{{ asset('uploads/usersPhotos/' ~ user.getPhoto()) }}"
+                     class="img-responsive" alt=""/>
+                <a href="javascript:;" class="profile-edit">
+                    editar </a>
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-12 profile-info">
+                <ul class="list-inline">
+                    <li>
+                        <i class="icon-user"></i> {{ user.getUsername() }}
+                    </li>
+                    <li>
+                        <i class="icon-envelope"></i> {{ user.getEmail() }}
+                    </li>
+                    <li>
+                        <i class="icon-call-end"></i> {{ user.getPhone() }}
+                    </li>
+                    {% if user.workspace %}
+                        <li>
+                            <i class="icon-home"></i> {{ user.getWorkspace().getName() }}
+                        </li>
+                    {% else %}
+                        <li>
+                            <i class="icon-home"></i> Sin entorno asociado
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+
+    <div class="tabbable-line tabbable-custom-profile">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#tab_1_00" data-toggle="tab">
+                Resumen de ingresos </a>
+        </li>
+        <li>
+            <a href="#tab_1_11" data-toggle="tab">
+                &Uacute;ltimos recibos </a>
+        </li>
+        <li>
+            <a href="#tab_1_22" data-toggle="tab">
+                Actividad reciente </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+    <div class="tab-pane active" id="tab_1_00">
+        <div class="portlet sale-summary">
+            <div class="portlet-body">
+                <ul class="list-unstyled">
+                    <li>
+																<span class="sale-info">
+																INGRESOS DE LA SEMANA <i class="fa fa-img-down"></i>
+																</span>
+                                                    <span class="sale-num">
+																87 </span>
+                    </li>
+                    <li>
+																<span class="sale-info">
+																INGRESOS TOTALES </span>
+                                                    <span class="sale-num">
+																2377 </span>
+                    </li>
+                    <li>
+																<span class="sale-info">
+																UTILIDAD NETA TOTAL </span>
+                                                    <span class="sale-num">
+																$37.990 </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="tab_1_11">
+        <div class="portlet-body">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Expediente
+                    </th>
+                    <th class="hidden-xs">
+                        <i class="fa fa-question"></i> Descripci&oacute;n
+                    </th>
+                    <th>
+                        <i class="fa fa-bookmark"></i> Monto
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td class="hidden-xs">
+                        Server hardware purchase
+                    </td>
+                    <td>
+                        52560.10$ <span class="label label-success label-sm">
+																Paid </span>
+                    </td>
+                    <td>
+                        <a class="btn default btn-xs green-stripe"
+                           href="javascript:;">
+                            Ver </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td class="hidden-xs">
+                        Server hardware purchase
+                    </td>
+                    <td>
+                        52560.10$ <span class="label label-success label-sm">
+																Paid </span>
+                    </td>
+                    <td>
+                        <a class="btn default btn-xs green-stripe"
+                           href="javascript:;">
+                            Ver </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td class="hidden-xs">
+                        Server hardware purchase
+                    </td>
+                    <td>
+                        52560.10$ <span class="label label-success label-sm">
+																Paid </span>
+                    </td>
+                    <td>
+                        <a class="btn default btn-xs green-stripe"
+                           href="javascript:;">
+                            Ver </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td class="hidden-xs">
+                        Server hardware purchase
+                    </td>
+                    <td>
+                        52560.10$ <span class="label label-success label-sm">
+																Paid </span>
+                    </td>
+                    <td>
+                        <a class="btn default btn-xs green-stripe"
+                           href="javascript:;">
+                            Ver </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td class="hidden-xs">
+                        Server hardware purchase
+                    </td>
+                    <td>
+                        52560.10$ <span class="label label-success label-sm">
+																Paid </span>
+                    </td>
+                    <td>
+                        <a class="btn default btn-xs green-stripe"
+                           href="javascript:;">
+                            Ver </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td class="hidden-xs">
+                        Server hardware purchase
+                    </td>
+                    <td>
+                        52560.10$ <span class="label label-success label-sm">
+																Paid </span>
+                    </td>
+                    <td>
+                        <a class="btn default btn-xs green-stripe"
+                           href="javascript:;">
+                            Ver </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td>
+                        <a href="javascript:;">
+                            Pixel Ltd </a>
+                    </td>
+                    <td class="hidden-xs">
+                        Server hardware purchase
+                    </td>
+                    <td>
+                        52560.10$ <span class="label label-success label-sm">
+																Paid </span>
+                    </td>
+                    <td>
+                        <a class="btn default btn-xs green-stripe"
+                           href="javascript:;">
+                            Ver </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--tab-pane-->
+    <div class="tab-pane" id="tab_1_22">
+    <div class="tab-pane active" id="tab_1_1_1">
+    <div class="scroller" data-height="290px" data-always-visible="1"
+         data-rail-visible1="1">
+    <ul class="feeds">
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-success">
+                        <i class="fa fa-bell-o"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        You have 4 pending tasks. <span
+                                class="label label-danger label-sm">
+																					Take action <i
+                                    class="fa fa-share"></i>
+																					</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                Just now
+            </div>
+        </div>
+    </li>
+    <li>
+        <a href="javascript:;">
+            <div class="col1">
+                <div class="cont">
+                    <div class="cont-col1">
+                        <div class="label label-success">
+                            <i class="fa fa-bell-o"></i>
+                        </div>
+                    </div>
+                    <div class="cont-col2">
+                        <div class="desc">
+                            New version v1.4 just lunched!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col2">
+                <div class="date">
+                    20 mins
+                </div>
+            </div>
+        </a>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-danger">
+                        <i class="fa fa-bolt"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        Database server #12 overloaded. Please fix
+                        the issue.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                24 mins
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-info">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                30 mins
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-success">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                40 mins
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-warning">
+                        <i class="fa fa-plus"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New user registered.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                1.5 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-success">
+                        <i class="fa fa-bell-o"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        Web server hardware needs to be upgraded.
+                                                                            <span class="label label-inverse label-sm">
+																					Overdue </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                2 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-default">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                3 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-warning">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                5 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-info">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                18 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-default">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                21 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-info">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                22 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-default">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                21 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-info">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                22 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-default">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                21 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-info">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                22 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-default">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                21 hours
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="col1">
+            <div class="cont">
+                <div class="cont-col1">
+                    <div class="label label-info">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="cont-col2">
+                    <div class="desc">
+                        New order received. Please take care of it.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="date">
+                22 hours
+            </div>
+        </div>
+    </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    <!--tab-pane-->
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!--tab_1_2-->
+    <div class="tab-pane" id="tab_1_3">
+    <div class="row profile-account">
+    <div class="col-md-3">
+        <ul class="ver-inline-menu tabbable margin-bottom-10">
+            <li class="active">
+                <a data-toggle="tab" href="#tab_1-1">
+                    <i class="icon-settings"></i> Informaci&oacute;n General </a>
+                                        <span class="after">
+												</span>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#tab_2-2">
+                    <i class="icon-picture"></i> Cambiar Avatar </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#tab_3-3">
+                    <i class="icon-key"></i> Cambiar Contrase&ntilde;a </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#tab_4-4">
+                    <i class="icon-lock"></i> Ajustar Permisos </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+    <div class="tab-content">
+    <div id="tab_1-1" class="tab-pane {% if tab == 'false' or tab == '#tab_1-1' %}active{% endif %}">
+
+        <form id="editInfoGeneral"
+              action="{{ path('user_update', { 'id': user.id }) }}"
+              method="post"
+              class="form-horizontal" {{ form_enctype(edit_info_general_form) }} >
+            <div class="form-group">
+                <label class="control-label"><span class="required"> * </span>Nombre
+                </label>
+                {{ form_widget(edit_info_general_form.firstName, {'attr' : {'class' : 'form-control','placeholder':'John', 'minlength':'2' }}
+                ) }}
+                {{ form_errors(edit_info_general_form.firstName) }}
+            </div>
+            <div class="form-group">
+                <label class="control-label"><span class="required"> * </span>Apellidos
+                </label>
+                {{ form_widget(edit_info_general_form.lastName, {'attr' : {'class' : 'form-control','placeholder':'Ej: Doe', 'minlength':'2' }}
+                ) }}
+                {{ form_errors(edit_info_general_form.lastName) }}
+            </div>
+            <div class="form-group">
+                <label class="control-label"><span class="required"> * </span>Usuario
+                </label>
+
+                <div class="input-icon right">
+                    <i class="icon-exclamation-sign"></i>
+                    {{ form_widget(edit_info_general_form.username, {'attr':{'class':'form-control','placeholder':'johndoe' }}
+                    ) }}
+                    {{ form_errors(edit_info_general_form.username) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tel&eacute;fono</label>
+                {{ form_widget(edit_info_general_form.phone, {'attr' : {'class' : 'form-control' }}
+                ) }}
+                {{ form_errors(edit_info_general_form.phone) }}
+            </div>
+            <div class="form-group">
+                <label class="control-label">Correo</label>
+                {{ form_widget(edit_info_general_form.email, {'attr' : {'class' : 'form-control','placeholder':'johndoe@example.com' }}
+                ) }}
+                {{ form_errors(edit_info_general_form.email) }}
+            </div>
+            <div class="form-group">
+                <label class="control-label"><span class="required"> * </span>Letra
+                </label>
+
+                <div class="input-icon right">
+                    <i class="icon-exclamation-sign"></i>
+                    {{ form_widget(edit_info_general_form.letra, {'attr':{'class':'form-control','placeholder':'A' }}
+                    ) }}
+                    {{ form_errors(edit_info_general_form.letra) }}
+                </div>
+            </div>
+            <div class="margiv-top-10">
+                <button id="editInfoGeneralButton" type="submit" class="btn blue">
+                    Guardar cambios
+                </button>
+            </div>
+            {{ form(edit_info_general_form) }}
+        </form>
+    </div>
+    <div id="tab_2-2" class="tab-pane {% if tab == '#tab_2-2' %}active{% endif %}">
+        <form id="editAvatar" onsubmit="startPageLoading()"
+              action="{{ path('user_update_avatar', { 'id': user.id }) }}"
+              method="post" enctype="multipart/form-data"
+              class="form-horizontal" {{ form_enctype(edit_avatar) }} >
+            <div class="form-group">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-new thumbnail"
+                         style="width: 200px; height: 150px;">
+                        <img src="{{ asset('uploads/usersPhotos/' ~ user.photo) }}"
+                             alt=""/>
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail"
+                         style="max-width: 200px; max-height: 150px;">
+                    </div>
+                    <div>
+																<span class="btn default btn-file">
+																<span class="fileinput-new">
+																Seleccionar imagen </span>
+																<span class="fileinput-exists">
+																Cambiar </span>
+                                                                    {{ form_widget(edit_avatar.photo) }}
+                                                                    {{ form_errors(edit_avatar.photo) }}
+																</span>
+                        <a href="javascript:;" class="btn default fileinput-exists"
+                           data-dismiss="fileinput">
+                            Quitar </a>
+                    </div>
+                </div>
+                <div class="clearfix margin-top-10">
+															<span class="label label-danger">
+															Nota! </span>
+                                                    <span>
+															Esta funcionalidad es soportada en &uacute;ltimas versiones de Firefox, Chrome, Opera, Safari e Internet Explorer 10 </span>
+                </div>
+            </div>
+            <div class="margin-top-10">
+                <button type="submit" form="editAvatar" class="btn blue">
+                    Guardar cambios
+                </button>
+            </div>
+            {{ form(edit_avatar) }}
+        </form>
+    </div>
+    <div id="tab_3-3" class="tab-pane {% if tab == '#tab_3-3' %}active{% endif %}">
+
+        <form id="editPassword"
+              action="{{ path('user_update_password', { 'id': user.id }) }}"
+              method="post"
+              class="form-horizontal" {{ form_enctype(edit_password) }} >
+            <div class="form-group">
+                <label class="control-label"><span class="required"> * </span>Contrase&ntilde;a
+                    actual</label>
+
+                <div class="input-icon right">
+                    <i class="icon-exclamation-sign"></i>
+                    <input id="primer_password" required="required" type="password"
+                           class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group last password-strength">
+                <label class="control-label"><span class="required"> * </span>Contrase&ntilde;a
+                    nueva</label>
+                {{ form_widget(edit_password.password) }}
+                {{ form_errors(edit_password.password) }}
+            </div>
+            <div class="form-group">
+                <label class="control-label"><span
+                            class="required"> * </span>Repetir</label>
+
+                <div class="input-icon right">
+                    <i class="icon-exclamation-sign"></i>
+                    <input id="segundo_password" required="required" type="password" name="segundo_password"
+                           class="form-control"/>
+                </div>
+            </div>
+            <div class="margin-top-10">
+                <button id="editPasswordButton" type="submit" form="editPassword"
+                        class="btn blue">
+                    Guardar cambios
+                </button>
+            </div>
+            {{ form(edit_password) }}
+        </form>
+    </div>
+    <div id="tab_4-4" class="tab-pane {% if tab == '#tab_4-4' %}active{% endif %}">
+
+        <form id="editPermisos"
+              action="{{ path('user_update_permisos', { 'id': user.id }) }}"
+              method="post"
+              class="form-horizontal" {{ form_enctype(edit_permisos) }} >
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+
+            <div class="form-group">
+                <label class="control-label"><span class="required"> * </span>Entorno
+                </label>
+
+                {{ form_widget(edit_permisos.workspace, {'attr' : {'class' : 'form-control select2me' }}
+                ) }}
+                {{ form_errors(edit_permisos.workspace) }}
+
+            </div>
+            <div class="form-group">
+                <label class="control-label"><span class="required"> * </span>Rol
+                </label>
+
+                {{ form_widget(edit_permisos.role, {'attr' : {'class' : 'form-control select2me' }}
+                ) }}
+                {{ form_errors(edit_permisos.role) }}
+
+            </div>
+            <div class="form-group">
+                <div id="group-lectura" class="form-group col-md-6">
+                    <label class="control-label">Lectura</label>
+
+                    {{ form_widget(edit_permisos.nomencladoresLectura, {'attr' : {'class' : 'form-control multi-select', 'multiple':'multiple' }}
+                    ) }}
+                    {{ form_errors(edit_permisos.nomencladoresLectura) }}
+
+                </div>
+                <div id="group-escritura" class="form-group col-md-6">
+                    <label class="control-label">Escritura</label>
+
+                    {{ form_widget(edit_permisos.nomencladoresEscritura, {'attr' : {'class' : 'form-control multi-select', 'multiple':'multiple' }}
+                    ) }}
+                    {{ form_errors(edit_permisos.nomencladoresEscritura) }}
+
+                </div>
+            </div>
+            {{ form(edit_permisos) }}
+            <!--end profile-settings-->
+            <div class="margin-top-10">
+                <button form="editPermisos" id="editPermisosButton" type="submit" class="btn blue">
+                    Guardar cambios
+                </button>
+            </div>
+        </form>
+    </div>
+    </div>
+    </div>
+    <!--end col-md-9-->
+    </div>
+    </div>
+    <!--end tab-pane-->
+    </div>
+    </div>
+    <!--END TABS-->
+    </div>
+    </div>
+
+{% endblock %}
+{% block javascript_inline %}
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/jquery-validation/js/additional-methods.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/backend/global/plugins/select2/select2.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}"></script>
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-pwstrength/pwstrength-bootstrap.min.js') }}"
+            type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            if ("{{ tab }}" != "false") {
+                var tab = "{{ tab }}";
+
+                window.location.href = tab
+
+            }
+        });
+        jQuery(document).ready(function () {
+            FormInfoGeneral.init();
+            FormPassword.init();
+         //   FormPermisos.init();
+        });
+    </script>
+    <script>
+        $("#belraysa_backendbundle_usuario_info_general_phone").inputmask("mask", {
+            "mask": "(999) 999-9999"
+        });
+        $("#belraysa_backendbundle_usuario_permisos_nomencladoresLectura").multiSelect();
+        $("#belraysa_backendbundle_usuario_permisos_nomencladoresEscritura").multiSelect();
+        var flag_username = true;
+        var flag_password1 = false;
+        var flag_letra = true;
+    </script>
+    <script>
+    var FormInfoGeneral = function () {
+        return {
+            //main function to initiate the module
+            init: function () {
+                var formInfoGeneral = $('#editInfoGeneral');
+
+                formInfoGeneral.validate({
+                    doNotHideMessage: false, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    rules: {
+                        //informacion personal
+                        "belraysa_backendbundle_usuario_info_general[letra]": {
+                            required: true
+                        },
+                        "belraysa_backendbundle_usuario_info_general[firstName]": {
+                            required: true
+                        },
+                        "belraysa_backendbundle_usuario_info_general[lastName]": {
+                            required: true
+                        },
+                        "belraysa_backendbundle_usuario_info_general[email]": {
+                            email: true
+                        }
+
+                    },
+
+                    messages: { // custom messages
+                        'belraysa_backendbundle_usuario_info_general[username]': {
+                            required: "Este campo es requerido."
+                        },
+                        "belraysa_backendbundle_usuario_info_general[letra]": {
+                            required: "Este campo es requerido."
+                        },
+                        'belraysa_backendbundle_usuario_info_general[firstName]': {
+                            required: "Este campo es requerido."
+                        },
+                        'belraysa_backendbundle_usuario_info_general[lastName]': {
+                            required: "Este campo es requerido."
+                        },
+                        "belraysa_backendbundle_usuario_info_general[email]": {
+                            email: "Por favor, especifique una dirección de correo válida."
+                        }
+
+                    },
+
+                    invalidHandler: function (event, validator) { //display error alert on form submit
+                        Metronic.scrollTo(error, -200);
+                    },
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                                .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                                .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+                    submitHandler: function (form) {
+
+                        //add here some ajax code to submit your form or just call form.submit() if you want to submit the form without ajax
+                        if (flag_username && flag_letra) {
+                            startPageLoading();
+                            form.submit();
+                        } else {
+                            boton = $('#editInfoGeneralButton');
+                            boton.popover('destroy');
+                            boton.popover({
+                                'html': true,
+                                'placement': 'left',
+                                'container': 'body',
+                                'content': 'Revisa que has completado correctamente cada campo'
+                            });
+                            boton.popover('show');
+                        }
+                    }
+
+                });
+                // default form wizard
+
+                $('#editInfoGeneralButton').click(function () {
+
+
+                    if (formInfoGeneral.valid() == false) {
+                        return false;
+                    }
+
+                });
+
+            }
+
+        };
+
+    }();
+    var FormPassword = function () {
+        return {
+            //main function to initiate the module
+            init: function () {
+
+                var formPassword = $('#editPassword');
+
+                formPassword.validate({
+                    doNotHideMessage: false, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    rules: {
+                        //password
+                        "belraysa_backendbundle_usuario_password[password]": {
+                            minlength: 2,
+                            required: true
+                        },
+                        "segundo_password": {
+                            minlength: 2,
+                            required: true,
+                            equalTo: "#belraysa_backendbundle_user_password"
+                        }
+
+                    },
+
+                    messages: { // custom messages
+                        "belraysa_backendbundle_usuario_password[password]": {
+                            minlength: "Por favor, escriba al menos 2 caracteres.",
+                            required: "Este campo es requerido."
+                        },
+                        "segundo_password": {
+                            minlength: "Por favor, escriba al menos 2 caracteres.",
+                            required: "Este campo es requerido.",
+                            equalTo: "Por favor, escriba el mismo valor otra vez."
+                        }
+                    },
+
+                    invalidHandler: function (event, validator) { //display error alert on form submit
+
+                        Metronic.scrollTo(error, -200);
+                    },
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                                .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                                .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+                    submitHandler: function (form) {
+
+                        //add here some ajax code to submit your form or just call form.submit() if you want to submit the form without ajax
+                        if (flag_password1) {
+                            startPageLoading();
+                            form.submit();
+                        } else {
+                            boton = $('#editPasswordButton');
+                            boton.popover('destroy');
+                            boton.popover({
+                                'html': true,
+                                'placement': 'left',
+                                'container': 'body',
+                                'content': 'Revisa que has completado correctamente cada campo'
+                            });
+                            boton.popover('show');
+                        }
+                    }
+
+                });
+                // default form wizard
+
+                $('#editPasswordButton').click(function () {
+
+                    if (formPassword.valid() == false) {
+                        return false;
+                    }
+
+                });
+
+            }
+
+        };
+
+    }();
+    var FormPermisos = function () {
+        return {
+            //main function to initiate the module
+            init: function () {
+
+                var formPermisos = $('#editPermisos');
+
+                formPermisos.validate({
+                    doNotHideMessage: false, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+
+                    messages: { // custom messages
+                        "belraysa_backendbundle_usuario_permisos[nomencladoresLectura][]": {
+                            required: "Este campo es requerido."
+                        },
+                        "belraysa_backendbundle_usuario_permisos[nomencladoresEscritura][]": {
+                            required: "Este campo es requerido."
+                        }
+
+                    },
+
+                    invalidHandler: function (event, validator) { //display error alert on form submit
+
+                        Metronic.scrollTo(error, -200);
+                    },
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                                .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                                .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+                    submitHandler: function (form) {
+                        if (formPermisos.valid() == false) {
+                            return false;
+                        }
+                        //add here some ajax code to submit your form or just call form.submit() if you want to submit the form without ajax
+                        startPageLoading();
+                        form.submit();
+                    }
+
+                });
+
+            }
+
+        };
+
+    }();
+    </script>
+    <script>
+        $('#belraysa_backendbundle_usuario_permisos_workspace').change(function (e) {
+            startPageLoading();
+            var postData = $("#editPermisos").serializeArray();
+            var formURL = "{{ path('user_load_workspace_nomencladores') }}";
+            $.ajax(
+                    {
+                        url: formURL,
+                        type: "POST",
+                        data: postData,
+                        success: function (data, textStatus, jqXHR) {
+                            $('#group-lectura').replaceWith(
+                                    // ... with the returned one from the AJAX response.
+                                    $(data).find('#group-lectura')
+                            );
+                            $('#group-escritura').replaceWith(
+                                    // ... with the returned one from the AJAX response.
+                                    $(data).find('#group-escritura')
+                            );
+                            $("#belraysa_backendbundle_usuario_permisos_nomencladoresLectura").multiSelect();
+                            $("#belraysa_backendbundle_usuario_permisos_nomencladoresEscritura").multiSelect();
+                            Metronic.stopPageLoading();
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            //if fails
+                        }
+                    });
+            e.preventDefault(); //STOP default action
+
+        });
+    </script>
+    <script>
+        var initialized = false;
+        var input = $("#belraysa_backendbundle_usuario_password_password");
+
+        input.keydown(function () {
+            if (initialized === false) {
+                // set base options
+                input.pwstrength({
+                    raisePower: 1.4,
+                    minChar: 8,
+                    verdicts: ["Débil", "Normal", "Medio", "Fuerte", "Muy fuerte"],
+                    scores: [17, 26, 40, 50, 60]
+                });
+
+                // add your own rule to calculate the password strength
+                input.pwstrength("addRule", "demoRule", function (options, word, score) {
+                    return word.match(/[a-z].[0-9]/) && score;
+                }, 10, true);
+
+                // set as initialized
+                initialized = true;
+            }
+        });
+    </script>
+    <script>
+        $("#belraysa_backendbundle_usuario_info_general_username").change(function () {
+
+            var input = $(this);
+            if (input.val() === "") {
+                input.closest('.form-group').removeClass('has-error').removeClass('has-success');
+                $('.fa-check, fa-warning', input.closest('.form-group')).remove();
+                return;
+            }
+
+            input.attr("readonly", true).attr("disabled", true).addClass("spinner");
+
+            $.post("{{ path('user_verificar_username') }}", {
+                username: input.val(),
+                user: "{{ user.getId() }}"
+            }, function (res) {
+                input.attr("readonly", false).attr("disabled", false).removeClass("spinner");
+
+                // change popover font color based on the result
+                if (res.status == 'OK') {
+                    input.closest('.form-group').removeClass('has-error').addClass('has-success');
+                    $('.fa-warning', input.closest('.form-group')).remove();
+                    input.before('<i class="fa fa-check"></i>');
+                    flag_username = true;
+                } else {
+                    input.closest('.form-group').removeClass('has-success').addClass('has-error');
+                    $('.fa-check', input.closest('.form-group')).remove();
+                    input.before('<i class="fa fa-warning"></i>');
+
+                    input.popover('destroy');
+                    input.popover({
+                        'html': true,
+                        'placement': 'left',
+                        'container': 'body',
+                        'content': res.message
+                    });
+                    input.popover('show');
+                    input.data('bs.popover').tip().removeClass('success').addClass('error');
+
+                    Metronic.setLastPopedPopover(input);
+                    flag_username = false;
+                }
+
+            }, 'json');
+
+        });
+    </script>
+    <script>
+        $("#primer_password").change(function () {
+            var input = $(this);
+            if (input.val() === "") {
+                input.closest('.form-group').removeClass('has-error').removeClass('has-success');
+                $('.fa-check, fa-warning', input.closest('.form-group')).remove();
+                return;
+            }
+
+            input.attr("readonly", true).attr("disabled", true).addClass("spinner");
+
+            $.post("{{ path('user_verificar_password') }}", {
+                password: input.val(),
+                user: "{{ user.getId() }}"
+            }, function (res) {
+                input.attr("readonly", false).attr("disabled", false).removeClass("spinner");
+
+                // change popover font color based on the result
+                if (res.status == 'OK') {
+                    input.closest('.form-group').removeClass('has-error').addClass('has-success');
+                    $('.fa-warning', input.closest('.form-group')).remove();
+                    input.before('<i class="fa fa-check"></i>');
+                    flag_password1 = true;
+                } else {
+                    input.closest('.form-group').removeClass('has-success').addClass('has-error');
+                    $('.fa-check', input.closest('.form-group')).remove();
+                    input.before('<i class="fa fa-warning"></i>');
+
+                    input.popover('destroy');
+                    input.popover({
+                        'html': true,
+                        'placement': 'left',
+                        'container': 'body',
+                        'content': res.message
+                    });
+                    input.popover('show');
+                    input.data('bs.popover').tip().removeClass('success').addClass('error');
+
+                    Metronic.setLastPopedPopover(input);
+                    flag_password1 = false;
+                }
+
+            }, 'json');
+
+        });
+    </script>
+    <script>
+        $("#belraysa_backendbundle_usuario_info_general_letra").change(function () {
+            var input = $(this);
+            if (input.val() === "") {
+                input.closest('.form-group').removeClass('has-error').removeClass('has-success');
+                $('.fa-check, fa-warning', input.closest('.form-group')).remove();
+                return;
+            }
+
+            input.attr("readonly", true).attr("disabled", true).addClass("spinner");
+
+            $.post("{{ path('user_verificar_letra') }}", {
+                letra: input.val(),
+                user: "{{ user.getId() }}"
+            }, function (res) {
+                input.attr("readonly", false).attr("disabled", false).removeClass("spinner");
+
+                // change popover font color based on the result
+                if (res.status == 'OK') {
+                    input.closest('.form-group').removeClass('has-error').addClass('has-success');
+                    $('.fa-warning', input.closest('.form-group')).remove();
+                    input.before('<i class="fa fa-check"></i>');
+                    flag_letra = true;
+                } else {
+                    input.closest('.form-group').removeClass('has-error');
+                    input.closest('.form-group').removeClass('has-success').addClass('has-error');
+                    $('.fa-check', input.closest('.form-group')).remove();
+                    input.before('<i class="fa fa-warning"></i>');
+
+                    input.popover('destroy');
+                    input.popover({
+                        'html': true,
+                        'placement': 'left',
+                        'container': 'body',
+                        'content': res.message
+                    });
+                    input.popover('show');
+                    input.data('bs.popover').tip().removeClass('success').addClass('error');
+
+                    Metronic.setLastPopedPopover(input);
+                    flag_letra = false;
+                }
+
+            }, 'json');
+
+        });
+    </script>
+
+{% endblock %}

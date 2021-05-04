@@ -1,0 +1,39 @@
+mercancia:
+    path:     /{bulto}/index
+    defaults: { _controller: "BackendBundle:Mercancia:index" }
+
+mercancia_show:
+    path:     /show
+    defaults: { _controller: "BackendBundle:Mercancia:show" }
+
+mercancia_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Mercancia:new" }
+
+mercancia_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Mercancia:create" }
+    requirements: { _method: post }
+
+mercancia_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Mercancia:edit" }
+
+mercancia_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Mercancia:update" }
+    requirements: { _method: post|put }
+
+mercancia_move:
+    path:     /{id}/move
+    defaults: { _controller: "BackendBundle:Mercancia:move" }
+    requirements: { _method: post|put }
+
+mercancia_delete:
+    path:     /delete
+    defaults: { _controller: "BackendBundle:Mercancia:delete" }
+
+mercancia_mas_bulto:
+  path:     /mas_bulto
+  defaults: { _controller: "BackendBundle:Mercancia:masBulto" }
+  requirements: { _method: post }

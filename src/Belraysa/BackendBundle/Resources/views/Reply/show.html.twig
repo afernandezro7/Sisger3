@@ -1,0 +1,942 @@
+{% set layout = "BackendBundle::" ~ reply.workspace.getName() ~ ".html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.css') }}"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.css') }}"/>
+     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/backend/global/plugins/select2/select2.css') }}"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}"/>
+     <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/jodit/jodit.min.css') }}">
+
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}Ver expediente: {{ reply.sisgerCode }}{% endblock %}
+  {% block breadtitle %} <h1>Ver expediente</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li><a href="{{ path('reply', { 'ws': reply.workspace.getName() }) }}">Expedientes</a></li>
+        <li class="active">Ver expediente: {{ reply.sisgerCode }}</li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <!-- BEGIN PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default"
+                       href="{{ path('reply_print', { 'id': reply.id }) }}"
+                       target="_blank">
+                        <i class="icon-printer"></i>
+                    </a>
+                    <a class="btn btn-circle btn-icon-only btn-default"
+                       href="{{ path('reply_edit', { 'id': reply.id }) }}"
+                       target="_blank">
+                        <i class="icon-pencil"></i>
+                    </a>
+                    <a class="btn btn-circle btn-icon-only btn-default"
+                       href="{{ path('reply_delete', { 'id': reply.id }) }}">
+                        <i class="icon-trash"></i>
+                    </a>
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="#">
+                    </a>
+                    <a class="btn btn-circle btn-icon btn-default" href="{{ path('reply_new') }}">
+                        <i class="fa fa-plus"></i> Expediente
+                    </a>
+                    <a class="btn btn-circle btn-icon btn-default" type="button" onclick="startPageLoading();"
+                       data-path="{{ path('ingreso_new', { 'idReply': reply.id }) }}"
+                       id="receipe_ingreso_button" tabindex="-1">
+                        <i class="fa fa-plus"></i> Ingreso
+                    </a>
+                    {#  {% if app.user.role.name == 'ROLE_SUPER_ADMIN' %}
+                          <a class="btn btn-circle btn-icon btn-default" type="button"
+                             onclick="startPageLoading();"
+                             data-path="{{ path('costorecurrente_new', { 'idReply': reply.id }) }}"
+                             id="receipe_costorecurrente_button" tabindex="-1">
+                              <i class="fa fa-plus"></i> Costo recurrente
+                          </a>
+                          <a class="btn btn-circle btn-icon btn-default" type="button"
+                             onclick="startPageLoading();"
+                             data-path="{{ path('costo_new', { 'idReply': reply.id }) }}"
+                             id="receipe_costo_button" tabindex="-1">
+                              <i class="fa fa-plus"></i> Costo
+                          </a>
+                          <a class="btn btn-circle btn-icon btn-default" type="button"
+                             onclick="startPageLoading();"
+                             data-path="{{ path('gasto_new', { 'idReply': reply.id }) }}"
+                             id="receipe_gasto_button" tabindex="-1">
+                              <i class="fa fa-plus"></i> Gasto
+                          </a>
+                      {% endif %}#}
+                    <a class="btn btn-circle btn-icon btn-default" type="button"
+                       onclick="startPageLoading();"
+                       data-path="{{ path('voucher_new', { 'idReply': reply.id }) }}"
+                       id="voucher_button" tabindex="-1">
+                        <i class="fa fa-plus"></i> Voucher
+                    </a>
+
+                </div>
+
+            </div>
+            <div class="portlet-body">
+                <div class="pad margin no-print">
+                    <div class="note note-info">
+                        <h4><i class="fa fa-info"></i> Nota:</h4>
+                        Esta p&aacute;gina ha sido enriquecida para la impresi&oacute;n. Para realizar esta acci&oacute;n
+                        de
+                        click en el bot&oacute;n
+                        Imprimir.
+                    </div>
+                </div>
+                <section class="invoice">
+                    <!-- title row -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="page-header" align="center">
+                                <p align="center" style="display: inline; "><strong><u>EXPEDIENTE DE
+                                            CLIENTES</u></strong></p>
+                                <img class="pull-right" height=50px"
+                                     onError="this.onerror=null;this.src='{{ asset('uploads/images/belraysa.png') }}';"
+                                     src="{{ asset('uploads/agencyLogos/'~reply.workspace.logo) }}">
+                                </h2>
+                            </div>
+                            <!-- /.col -->
+
+                            <h4><b>Expediente:</b>
+                                <small>
+                                    {{ reply.sisgerCode }}</small>
+                                &nbsp; &nbsp; <b>Fecha de creaci&oacute;n:</b>
+
+                                <small>{{ reply.createdAt|date('d/m/Y') }}</small>
+                            </h4>
+
+                        </div>
+                    </div>
+                    <br>
+                    <!-- info row -->
+                    <div class="row invoice-info">
+                        <div class="col-xs-12 table-responsive">
+                            <table class="col-xs-12 table table-striped table-responsive">
+                                <tbody>
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="portlet light bordered">
+                                            <div class="portlet-title">
+                                                <div class="caption font-dark">
+                                                    <span class="caption-subject bold uppercase">Rooming List</span>
+                                                </div>
+                                                <div class="tools">
+                                                    <a href="javascript:;" class="collapse" data-original-title=""
+                                                       title="">
+                                                    </a>
+                                                    <a href="javascript:;" class="remove" data-original-title=""
+                                                       title="">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="portlet-body">
+
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>NOMBRE Y APELLIDOS</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            {% if reply.precioVentaLider|length == 1 %}
+                                                                {% if reply.precioVentaLider[0].cliente %}
+                                                                    {{ reply.precioVentaLider[0].cliente.firstName }} {{ reply.precioVentaLider[0].cliente.lastName }}
+                                                                    <b>(L&Iacute;DER)</b>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                    {% for precioVenta in reply.preciosVenta %}
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                {{ precioVenta.cliente.firstName }} {{ precioVenta.cliente.lastName }}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+                                                            <b>INGRESOS:</b>
+                                                        </td>
+                                                        <td></td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        {% set pagado = 0 %}
+                                                        {% set saliente = 0 %}
+                                                        <td>
+                                                            {% for ingreso in reply.getIngresos() %}
+                                                                {% if ingreso.activo == 1 and ingreso.cuentaXCobrar == 0 %}
+                                                                    <a href="{{ path('recibo_generate_pdf', {'reciboId': ingreso.id }) }}">
+                                                                    <span class="label label-success">{{ ingreso.sisgerCode }}
+                                                                        :
+                                                                ${{ ingreso.importe }}</span>
+                                                                    </a>
+                                                                    {% set pagado = pagado + ingreso.importe %}
+                                                                {% elseif ingreso.activo == 0 and ingreso.cuentaXCobrar == 0 %}
+                                                                    <a href="{{ path('recibo_generate_pdf', {'reciboId': ingreso.id }) }}">
+                                                                    <span style="text-decoration: dashed"
+                                                                          class="label label-default">{{ ingreso.sisgerCode }}
+                                                                        :
+                                                                ${{ ingreso.importe }}</span>
+                                                                    </a>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+                                                            <b>COBRADO:</b> &nbsp; <label style="color: green">
+                                                                ${{ pagado }}</label>
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+                                                            <b>CUENTAS POR COBRAR:</b>
+                                                        </td>
+                                                        <td></td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        {% set cxc = 0 %}
+                                                        <td>
+                                                            {% for ingreso in reply.getIngresos() %}
+                                                                {% if ingreso.activo == 1 and ingreso.cuentaXCobrar == 1 %}
+
+                                                                    <span class="label" style="background-color: #89C4F4; margin-right: 5px">
+                                                                        <a href="{{ path('recibo_generate_pdf', {'reciboId': ingreso.id }) }}" style="color: white">
+                                                                            CxC-{{ ingreso.sisgerCode [2:] }}
+                                                                        :
+                                                                ${{ ingreso.saldoPendiente }}
+                                                                        </a>
+                                                                        <a style="padding-left: 5px;color: white" href="{{ path('recibo_edit', { 'id': ingreso.id}) }}"><i class="fa fa-edit"></i></a>
+                                                                    </span>
+                                                                    {% set cxc = cxc + ingreso.saldoPendiente %}
+                                                                {% elseif ingreso.activo == 0 and ingreso.cuentaXCobrar == 1 %}
+
+                                                                    <span style="text-decoration: dashed;margin-right: 5px" class="label label-default">
+                                                                        <a href="{{ path('recibo_generate_pdf', {'reciboId': ingreso.id }) }}" style="color: white">
+                                                                            CxC-{{ ingreso.sisgerCode [2:] }}
+                                                                        :
+                                                                ${{ ingreso.saldoPendiente }}
+                                                                        </a>
+                                                                    </span>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+                                                            <b>DEUDA:</b> &nbsp; <label style="color: green">
+                                                                ${{ cxc }}</label>
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+                                                            <b>COSTOS:</b>
+                                                        </td>
+                                                        <td></td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+
+                                                        <td>
+                                                            {% for egreso in reply.getEgresos() %}
+                                                                {% if egreso.activo == 1 %}
+                                                                    <a href="{{ path('recibo_generate_pdf', {'reciboId': egreso.id }) }}">
+                                                                    <span class="label label-danger">{{ egreso.sisgerCode }}
+                                                                        : -
+                                                                ${{ egreso.importe*(-1) }}</span>
+                                                                    </a>
+                                                                    {% set saliente = saliente + egreso.importe %}
+                                                                {% else %}
+                                                                    <a href="{{ path('recibo_generate_pdf', {'reciboId': egreso.id }) }}">
+                                                                    <span style="text-decoration: dashed"
+                                                                          class="label label-default">{{ egreso.sisgerCode }}
+                                                                        : -
+                                                                ${{ egreso.importe*(-1) }}</span>
+                                                                    </a>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+                                                            <b>PAGADO:</b> &nbsp; <label
+                                                                    style="color: darkred"> {% if saliente > 0 %}-{% endif %}
+                                                                ${{ saliente*(-1) }}</label>
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+                                                            <b>BALANCE:</b> &nbsp; {% if  (pagado + saliente) >= 0 %}
+                                                                <label style="color: green">
+                                                                    ${{ pagado + saliente }}</label>
+                                                            {% else %}
+                                                                <label style="color: darkred">
+                                                                    - ${{ (pagado + saliente)*(-1) }}</label>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- /.box-body -->
+                                            </div>
+                                            <!-- /.box -->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" class="col-sm-1"><strong>Fechas: </strong></td>
+                                    <td colspan="1" class="col-sm-1">
+                                        Del: {{ reply.beginDate|date('d/m/Y') }} al {{ reply.finishDate|date('d/m/Y') }}
+                                    </td>
+                                    <td colspan="1" class="col-sm-1"><strong>Cant. noches: </strong></td>
+                                    <td colspan="1" class="col-sm-1">
+                                        {{ noches }} noches
+                                    </td>
+                                    <td class="col-sm-1" align="right"><strong>Vendedor: </strong></td>
+                                    <td class="col-sm-1"> {{ reply.user.firstName }} {{ reply.user.lastName }} </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-1"><strong>Cantidad de Pax: </strong></td>
+                                    <td class="col-sm-1">  {{ reply.pax }} </td>
+
+                                    <td class="col-sm-1" align="right"><strong>Precio: </strong></td>
+                                    <td class="col-sm-1">${{ reply.price }}</td>
+                                    <td class="col-sm-1" align="right"></td>
+                                    <td class="col-sm-1"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" class="col-sm-12"><strong>Servicios contratados: </strong></td>
+                                </tr>
+                                <tr>
+                                    {% set ids = {} %}
+                                    {% for s in reply.services %}
+                                        {% set ids = ids|merge({(loop.index0): s.id}) %}
+                                    {% endfor %}
+                                    <td colspan="8"
+                                        class="col-sm-8">
+                                        {% for service in services %}
+
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" disabled
+                                                       value="{{ service.id }}" {% for id in ids %}{% if service.id == id %} checked="true" {% endif %}{% endfor %}> {{ service.name }}
+                                            </div>
+
+
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" class="col-sm-1"><strong>Tel&eacute;fonos: </strong></td>
+                                    <td colspan="7" class="col-sm-11">
+                                        {% if reply.precioVentaLider|length > 0 %}    {% if reply.precioVentaLider[0].cliente %}{{ reply.precioVentaLider[0].cliente.phones }} {% endif %}{% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" class="col-sm-1"><strong>Correo: </strong></td>
+                                    <td colspan="7" class="col-sm-11">
+                                        {% if reply.precioVentaLider|length > 0 %}  {% if reply.precioVentaLider[0].cliente %}   {{ reply.precioVentaLider[0].cliente.email }} {% endif %}{% endif %}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="8" class="col-sm-12"><strong>Observaciones: </strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8"
+                                        class="col-sm-12">{% if reply.observations %} {{ reply.observations }} {% else %} &nbsp; {% endif %}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- /.row -->
+                            {# <div class="col-xs-12 table-responsive">
+                                 <table id="dinamicTable" class="table table-striped">
+                                     <thead>
+                                     <tr>
+                                         <th>PRECIO</th>
+                                         <th>COSTO</th>
+                                         <th>ABONOS</th>
+                                         <th>UTILIDAD BRUTA</th>
+                                         <th>UTILIDAD REAL</th>
+                                     </tr>
+                                     </thead>
+                                     <tbody>
+                                     {% for anexo in reply.anexos %}
+                                         <tr>
+                                             <td>{% if anexo.price !=0 %}{{ anexo.price }}{% else %}&nbsp;{% endif %}</td>
+                                             <td>{% if anexo.cost !=0 %}{{ anexo.cost }}{% else %}&nbsp;{% endif %}</td>
+                                             <td>{% if anexo.abonos !=0 %}{{ anexo.abonos }}{% else %}&nbsp;{% endif %}</td>
+                                             <td>{% if anexo.uNeta !=0 %}{{ anexo.uNeta }}{% else %}&nbsp;{% endif %}</td>
+                                             <td>{% if anexo.uBruta !=0 %}{{ anexo.uBruta }}{% else %}&nbsp;{% endif %}</td>
+                                         </tr>
+                                     {% endfor %}
+                                     </tbody>
+                                 </table>
+                                 <br>
+                                 <div align="center">
+                                     <label>1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 1 0 - 11 - 12 - 13 - 14 - 15 - 16 - 17 - 18 - 19 - 20
+                                         - 21 - 22 - 23 - 24 - 25 - 26 - 27 - 28 - 29 - 30</label>
+                                 </div>
+                                 <br>
+                                 <br>
+                                 <br>
+                                 <!-- /.box-body -->
+                             </div>#}
+
+                            <table id="dinamicTable" class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>PRECIO</th>
+                                    <th>COSTO</th>
+                                    <th>ABONOS</th>
+                                    <th>UTILIDAD BRUTA</th>
+                                    <th>UTILIDAD REAL</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        {#<div class="input-group">
+                                            <div class="input-group-addon box-default">
+                                                $
+                                            </div>
+                                            <input name="anexoprice[]" class="form-control" type="text">  </div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {#  <div class="input-group">
+                                            <div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexocost[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {# <div class="input-group">
+                                             <div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexoabono[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {#< <div class="input-group">
+                                             {#<div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexouneta[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {# <div class="input-group">
+                                           <div class="input-group-addon box-default">
+                                                $
+                                            </div>
+                                            <input name="anexoubruta[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {#<div class="input-group">
+                                            <div class="input-group-addon box-default">
+                                                $
+                                            </div>
+                                            <input name="anexoprice[]" class="form-control" type="text">  </div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {#  <div class="input-group">
+                                            <div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexocost[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {# <div class="input-group">
+                                             <div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexoabono[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {#< <div class="input-group">
+                                             {#<div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexouneta[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {# <div class="input-group">
+                                           <div class="input-group-addon box-default">
+                                                $
+                                            </div>
+                                            <input name="anexoubruta[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {#<div class="input-group">
+                                            <div class="input-group-addon box-default">
+                                                $
+                                            </div>
+                                            <input name="anexoprice[]" class="form-control" type="text">  </div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {#  <div class="input-group">
+                                            <div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexocost[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {# <div class="input-group">
+                                             <div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexoabono[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {#< <div class="input-group">
+                                             {#<div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexouneta[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {# <div class="input-group">
+                                           <div class="input-group-addon box-default">
+                                                $
+                                            </div>
+                                            <input name="anexoubruta[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {#<div class="input-group">
+                                            <div class="input-group-addon box-default">
+                                                $
+                                            </div>
+                                            <input name="anexoprice[]" class="form-control" type="text">  </div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {#  <div class="input-group">
+                                            <div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexocost[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {# <div class="input-group">
+                                             <div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexoabono[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {#< <div class="input-group">
+                                             {#<div class="input-group-addon box-default">
+                                                 $
+                                             </div>
+                                             <input name="anexouneta[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        {# <div class="input-group">
+                                           <div class="input-group-addon box-default">
+                                                $
+                                            </div>
+                                            <input name="anexoubruta[]" class="form-control" type="text"></div>#}
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <!-- /.content-wrapper -->
+
+                </section>
+            </div>
+        </div>
+        <!-- END PORTLET-->
+    </div>
+    <div class="modal fade" id="myModalHorizontal1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="putYourTitleHere">
+
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div id="putContentHere" class="modal-body">
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <div id="putYourFooterHere">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+    {% block javascript_inline %}
+
+
+        <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
+                type="text/javascript"></script>
+        <script src="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+        <script src="{{ asset('bundles/backend/others/collection/jquery.collection.js') }}"></script>
+        <script type="text/javascript"
+                src="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+        <script type="text/javascript"
+                src="{{ asset('bundles/backend/global/plugins/select2/select2.min.js') }}"></script>
+        <script type="text/javascript"
+                src="{{ asset('bundles/backend/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+
+        <script src="{{ asset('bundles/backend/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js') }}"
+                type="text/javascript"></script>
+        <script src="{{ asset('bundles/backend/lte/plugins/jodit/jodit.min.js') }}"></script>
+        <script>
+            $(document).on("click", '#receipe_ingreso_button', function (e) {
+                e.preventDefault();
+                var $form = null,
+                    url = $(this).data('path'),
+                    method = 'post';
+                $.ajax({
+                    data: null,
+                    type: method,
+                    url: url,
+                    success: function (response) {
+                        $('#putContentHere').html(response);
+                        $('#putYourFooterHere').html('<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">Cerrar</button><button form="newReceipe" id="newReceipebtn" type="submit" class="btn btn-flat btn-danger"><i class="fa fa-file-pdf-o"></i> Generar</button>');
+                        $('#putYourTitleHere').html('Generar recibo de ingreso');
+                        $('#myModalHorizontal1').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        $("#belraysa_backendbundle_ingreso_importe").TouchSpin({
+                            buttondown_class: 'btn red',
+                            buttonup_class: 'btn red',
+                            min: 0,
+                            max: '9 999 999',
+                            step: 0.01,
+                            decimals: 2,
+                            boostat: 5,
+                            maxboostedstep: 10,
+                            prefix: '$'
+                        });
+                        $("#belraysa_backendbundle_ingreso_saldoAnterior").TouchSpin({
+                            buttondown_class: 'btn red',
+                            buttonup_class: 'btn red',
+                            min: 0,
+                            max: '9 999 999',
+                            step: 0.01,
+                            decimals: 2,
+                            boostat: 5,
+                            maxboostedstep: 10,
+                            prefix: '$'
+                        });
+                        $("#belraysa_backendbundle_ingreso_abono").TouchSpin({
+                            buttondown_class: 'btn red',
+                            buttonup_class: 'btn red',
+                            min: 0,
+                            max: '9 999 999',
+                            step: 0.01,
+                            decimals: 2,
+                            boostat: 5,
+                            maxboostedstep: 10,
+                            prefix: '$'
+                        });
+                        var now = new Date()
+                        $('#belraysa_backendbundle_ingreso_fecha').datepicker({
+                            autoclose: true,
+                            endDate: now
+                        });
+                        $('#belraysa_backendbundle_ingreso_fechaLimite').datepicker({
+                            autoclose: true,
+                            startDate: now
+                        });
+                        stopPageLoading();
+
+                        $("#newReceipe").on("submit", function (e) {
+                            var total = $('#belraysa_backendbundle_ingreso_saldoAnterior').val();
+                            var importe = $('#belraysa_backendbundle_ingreso_importe').val();
+                            var pendiente = total - importe;
+                            if(pendiente > 0){
+                                var res = $('#fechaLimite').val() != "";
+                                if(res){
+                                    startPageLoading();
+                                    //disable the submit button
+                                    $("#newReceipebtn").attr("disabled", true);
+                                    return true;
+                                }
+                                else{
+                                    alert("Debe especificar la fecha l&iacute;mite");
+                                    return false;
+                                }
+                            }
+                            else if(pendiente < 0){
+                                alert("El Total debe ser mayor o igual que el Importe");
+                                return false;
+                            }
+                        });
+                    }
+                });
+            });
+            /*   $(document).on("click", '#receipe_gasto_button', function (e) {
+                   e.preventDefault();
+                   var $form = null,
+                           url = $(this).data('path'),
+                           method = 'post';
+                   $.ajax({
+                       data: null,
+                       type: method,
+                       url: url,
+                       success: function (response) {
+                           $('#putContentHere').html(response);
+                           $('#putYourFooterHere').html('<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">Cerrar</button><button form="newReceipe" type="submit" class="btn btn-flat btn-danger"><i class="fa fa-file-pdf-o"></i> Generar</button>');
+                           $('#putYourTitleHere').html('Generar recibo de gasto');
+                           $('#myModalHorizontal1').modal({
+                               backdrop: 'static',
+                               keyboard: false
+                           });
+                           $("#belraysa_backendbundle_gasto_importe").TouchSpin({
+                               buttondown_class: 'btn red',
+                               buttonup_class: 'btn red',
+                               min: 0,
+                               max: '9 999 999',
+                               step: 0.01,
+                               decimals: 2,
+                               boostat: 5,
+                               maxboostedstep: 10,
+                               prefix: '$'
+                           });
+                           stopPageLoading();
+                       }
+                   });
+               });
+               $(document).on("click", '#receipe_costo_button', function (e) {
+                   e.preventDefault();
+                   var $form = null,
+                           url = $(this).data('path'),
+                           method = 'post';
+                   $.ajax({
+                       data: null,
+                       type: method,
+                       url: url,
+                       success: function (response) {
+                           $('#putContentHere').html(response);
+                           $('#putYourFooterHere').html('<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">Cerrar</button><button form="newReceipe" type="submit" class="btn btn-flat btn-danger"><i class="fa fa-file-pdf-o"></i> Generar</button>');
+                           $('#putYourTitleHere').html('Generar recibo de costo');
+                           $('#myModalHorizontal1').modal({
+                               backdrop: 'static',
+                               keyboard: false
+                           });
+                           $("#belraysa_backendbundle_costo_importe").TouchSpin({
+                               buttondown_class: 'btn red',
+                               buttonup_class: 'btn red',
+                               min: 0,
+                               max: '9 999 999',
+                               step: 0.01,
+                               decimals: 2,
+                               boostat: 5,
+                               maxboostedstep: 10,
+                               prefix: '$'
+                           });
+                           stopPageLoading();
+                       }
+                   });
+               });
+               $(document).on("click", '#receipe_costorecurrente_button', function (e) {
+                   e.preventDefault();
+                   var $form = null,
+                           url = $(this).data('path'),
+                           method = 'post';
+                   $.ajax({
+                       data: null,
+                       type: method,
+                       url: url,
+                       success: function (response) {
+                           $('#putContentHere').html(response);
+                           $('#putYourFooterHere').html('<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">Cerrar</button><button form="newReceipe" type="submit" class="btn btn-flat btn-danger"><i class="fa fa-file-pdf-o"></i> Generar</button>');
+                           $('#putYourTitleHere').html('Generar recibo de costo recurrente');
+                           $('#myModalHorizontal1').modal({
+                               backdrop: 'static',
+                               keyboard: false
+                           });
+                           $("#belraysa_backendbundle_costorecurrente_importe").TouchSpin({
+                               buttondown_class: 'btn red',
+                               buttonup_class: 'btn red',
+                               min: 0,
+                               max: '9 999 999',
+                               step: 0.01,
+                               decimals: 2,
+                               boostat: 5,
+                               maxboostedstep: 10,
+                               prefix: '$'
+                           });
+                           stopPageLoading();
+                       }
+                   });
+               });*/
+        </script>
+        <script>
+            $(document).on("click", '#voucher_button', function (e) {
+                e.preventDefault();
+                var $form = null,
+                    url = $(this).data('path'),
+                    method = 'post';
+                $.ajax({
+                    data: null,
+                    type: method,
+                    url: url,
+                    success: function (response) {
+                        $('#putContentHere').html(response);
+                        $('#putYourFooterHere').html('<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">Cerrar</button><button form="newVoucher" type="submit" class="btn btn-flat btn-danger"><i class="fa fa-file-pdf-o"></i> Generar</button>');
+                        $('#putYourTitleHere').html('Generar voucher');
+                        $('#myModalHorizontal1').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        stopPageLoading();
+                    }
+                });
+            });
+
+            function validateDates() {
+                var creationDate = $('#belraysa_backendbundle_voucher_creationDate').datepicker('getDate');
+                var beginDate = $('#belraysa_backendbundle_voucher_beginDate').datepicker('getDate');
+                var finishDate = $('#belraysa_backendbundle_voucher_finishDate').datepicker('getDate');
+                var flag = 0;
+                if (creationDate != "Invalid Date" && flag == 0) {
+                    var startDate = $('#belraysa_backendbundle_voucher_creationDate').datepicker('getDate');
+                    startDate = mostrarFecha(startDate, 1);
+                    $('#belraysa_backendbundle_voucher_beginDate').datepicker('setStartDate', startDate);
+                    startDate = mostrarFecha(startDate, 1);
+                    $('#belraysa_backendbundle_voucher_finishDate').datepicker('setStartDate', startDate);
+                    flag = 1;
+                }
+                if (beginDate != "Invalid Date" && flag == 0) {
+                    var endDate = $('#belraysa_backendbundle_voucher_beginDate').datepicker('getDate');
+                    endDate = mostrarFecha(endDate, -1);
+                    $('#belraysa_backendbundle_voucher_creationDate').datepicker('setEndDate', endDate);
+                    startDate = mostrarFecha(endDate, 2);
+                    $('#belraysa_backendbundle_voucher_finishDate').datepicker('setStartDate', startDate);
+                    flag = 1;
+                }
+                if (finishDate != "Invalid Date" && flag == 0) {
+                    var endDate = $('#belraysa_backendbundle_voucher_finishDate').datepicker('getDate');
+                    endDate = mostrarFecha(endDate, -2);
+                    $('#belraysa_backendbundle_voucher_creationDate').datepicker('setEndDate', endDate);
+                    endDate = mostrarFecha(endDate, 1);
+                    $('#belraysa_backendbundle_voucher_beginDate').datepicker('setEndDate', endDate);
+                    flag = 1;
+                }
+            }
+
+            function mostrarFecha(dateP, days) {
+                milisegundos = parseInt(35 * 24 * 60 * 60 * 1000);
+                fecha = dateP;
+                day = fecha.getDate();
+                month = fecha.getMonth() + 1;
+                year = fecha.getFullYear();
+                tiempo = fecha.getTime();
+                milisegundos = parseInt(days * 24 * 60 * 60 * 1000);
+                total = fecha.setTime(tiempo + milisegundos);
+                day = fecha.getDate();
+                month = fecha.getMonth() + 1;
+                year = fecha.getFullYear();
+                return fecha;
+            }
+        </script>
+    {% endblock %}

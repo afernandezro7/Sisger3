@@ -1,0 +1,421 @@
+{% set layout = "BackendBundle::G-BRS.html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.css') }}"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.css') }}"/>
+     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/backend/global/plugins/select2/select2.css') }}"/>
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}Entidades Bancarias{% endblock %}
+  {% block breadtitle %} <h1>Entidades Bancarias</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li class="active">Entidades Bancarias</li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <!-- BEGIN PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+
+                </div>
+                <div class="actions">
+                    <div class="btn-group">
+
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                data-close-others="true"
+                                aria-expanded="false"><i class="fa fa-plus"></i></button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a title="Crear caja menuda" data-toggle="modal"
+                                   type="button" data-backdrop="static" data-keyboard="false"
+                                   data-target="#modalNewCash" data-path="{{ path('cash_new') }}"
+                                   tabindex="-1">
+                                    <i class="fa fa-money"></i> Caja Menuda
+                                </a>
+                            </li>
+                            <li>
+                                <a title="Crear tarjeta de cr&eacute;dito"
+                                   data-toggle="modal" type="button" data-backdrop="static" data-keyboard="false"
+                                   data-target="#modalNewCard" data-path="{{ path('card_new') }}"
+                                   tabindex="-1">
+                                    <i class="fa fa-credit-card"></i> TC
+                                </a>
+                            </li>
+                            <li>
+                                <a title="Crear banco" data-toggle="modal" type="button"
+                                   data-backdrop="static" data-keyboard="false"
+                                   data-target="#modalNewBank" data-path="{{ path('bank_new') }}"
+                                   tabindex="-1">
+                                    <i class="fa fa-bank"></i> Banco
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="portlet-body">
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-bordered table-advance table-hover"
+                           id="table">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Entornos</th>
+                            <th>Balance</th>
+                        {#    <th>Movimientos</th> #}
+                            <th style="text-align: center">
+                                Acciones
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for banking in entities %}
+                            <tr>
+                                <td>
+                                    <a {% if banking.type == 'Caja Menuda' %}
+                                            href="{{ path('cash_show', { 'id': banking.id }) }}"> <span
+                                                class="label label-success"><i class="fa fa-money"></i></span>&nbsp;
+                                        {% elseif banking.type == 'TC' %}
+                                            href="{{ path('card_show', { 'id': banking.id }) }}" >   <span
+                                                class="label label-warning"><i
+                                                    class="fa fa-credit-card"></i></span>&nbsp;
+                                        {% else %}
+                                            href="{{ path('bank_show', { 'id': banking.id }) }}" >   <span
+                                                class="label label-primary"><i class="fa fa-bank"></i></span>&nbsp;
+                                        {% endif %}
+                                        {{ banking.name }}
+                                    </a></td>
+
+                                <td>{% for workspace1 in banking.workspaces %}<span
+                                            class="label label-default">{{ workspace1.name }}</span>&nbsp;{% endfor %}
+                                </td>
+                                <td>{% if banking.getBalance() > 0 %}
+                                        <label
+                                                style="color: green">{{ banking.getBalance() }} USD</label>{% else %}
+                                        <label
+                                                style="color: darkred">{{ banking.getBalance() }} USD</label>{% endif %}
+                                </td>
+                            {#    <td>
+                                    <div class="sparkbar" data-color="#00a65a" data-height="20">
+                                        {% for entry in banking.getEntries() %}
+                                            {% if loop.index > 1 %},{% endif %}
+                                            {% if entry.credit > 0 %} {{ entry.credit }} {% else %} {{ entry.debit }} {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </td> #}
+                                <td style="text-align: center">
+                                    <div class="mailbox-controls">
+                                        <div class="btn-group">
+                                            <a title="Ver detalles" id="show_button"
+                                               type="button"
+                                                    {% if banking.type == 'Caja Menuda' %}
+                                                        href="{{ path('cash_show', { 'id': banking.id }) }}"
+                                                    {% elseif banking.type == 'TC' %}
+                                                        href="{{ path('card_show', { 'id': banking.id }) }}"
+                                                    {% else %}
+                                                        href="{{ path('bank_show', { 'id': banking.id }) }}"
+                                                    {% endif %}
+                                               class="btn btn-flat btn-default btn-sm"><i
+                                                        class="fa fa-list"></i>
+                                            </a>
+                                            <a title="Ver l&iacute;nea de tiempo" id="timeline_button"
+                                               type="button"
+                                                    {% if banking.type == 'Caja Menuda' %}
+                                                        href="{{ path('cash_timeline', { 'id': banking.id }) }}"
+                                                    {% elseif banking.type == 'TC' %}
+                                                        href="{{ path('card_timeline', { 'id': banking.id }) }}"
+                                                    {% else %}
+                                                        href="{{ path('bank_timeline', { 'id': banking.id }) }}"
+                                                    {% endif %}
+                                               class="btn btn-flat btn-default btn-sm"><i
+                                                        class="fa fa-clock-o"></i>
+                                            </a> <a title="Editar datos" id="edit_button"
+                                                    type="button"
+                                                    {% if banking.type == 'Caja Menuda' %}
+                                                        data-path="{{ path('cash_edit', { 'id': banking.id }) }}"
+                                                    {% elseif banking.type == 'TC' %}
+                                                        data-path="{{ path('card_edit', { 'id': banking.id }) }}"
+                                                    {% else %}
+                                                        data-path="{{ path('bank_edit', { 'id': banking.id }) }}"
+                                                    {% endif %}
+                                                    href="#" class="btn btn-flat btn-default btn-sm"><i
+                                                        class="fa fa-edit"></i></a>
+
+                                            <a data-toggle="confirmation" title="Eliminar"
+                                               href="{{ path('banking_delete', { 'id': banking.id }) }}"
+                                               class="btn btn-flat btn-default btn-sm"><i
+                                                        class="fa fa-trash-o"></i></a>
+
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="text-right">
+                        {{ knp_pagination_render(entities) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END PORTLET-->
+    </div>
+    <div class="modal fade" id="modalEdit" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        Editar datos
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div id="modalEditContent" class="modal-body">
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="edit" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalNewCash" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        Crear caja menuda
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    {{ include("BackendBundle:Cash:new.html.twig") }}
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="newCash" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalNewCard" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        Crear tarjeta de cr&eacute;dito
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    {{ include("BackendBundle:Card:new.html.twig") }}
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="newCard" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalNewBank" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        Crear banco
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    {{ include("BackendBundle:Bank:new.html.twig") }}
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="newBank" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascript_inline %}
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
+            type="text/javascript"></script>
+
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/backend/global/plugins/select2/select2.min.js') }}"></script>
+    <script>
+        var table = $('#table');
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": true,
+            "newestOnTop": false,
+            "progressBar": false,
+            "rtl": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": 300,
+            "hideDuration": 1000,
+            "timeOut": 10000,
+            "extendedTimeOut": 1000,
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+
+        function lanzarOk(mensaje) {
+            Command: toastr["success"](mensaje);
+        }
+
+        function lanzarError(mensaje) {
+            Command: toastr["error"](mensaje);
+        }
+
+        /* SPARKLINE CHARTS
+         * ----------------
+         * Create a inline charts with spark line
+         */
+
+        //-----------------
+        //- SPARKLINE BAR -
+        //-----------------
+        $('.sparkbar').each(function () {
+            var $this = $(this);
+            $this.sparkline('html', {
+                type: 'bar',
+                height: $this.data('height') ? $this.data('height') : '30',
+                barColor: $this.data('color'),
+                defaultPixelsPerValue: 3,
+                width: "auto",
+                composite: !1,
+                tagValuesAttribute: "values",
+                tagOptionsPrefix: "spark",
+                enableTagOptions: !1,
+                enableHighlight: !0,
+                highlightLighten: 1.4,
+                tooltipSkipNull: !0,
+                tooltipPrefix: "",
+                tooltipSuffix: " USD",
+                disableHiddenCheck: !1,
+                numberFormatter: !1,
+                numberDigitGroupCount: 3,
+                numberDigitGroupSep: " ",
+                numberDecimalMark: ".",
+                disableTooltips: !1,
+                disableInteraction: !1
+            });
+        });
+
+    </script>
+    <script>
+
+        $(document).on("click", '#edit_button', function (e) {
+
+            startPageLoading()
+            e.preventDefault();
+            var $form = null,
+                url = $(this).data('path'),
+                method = 'post';
+            $.ajax({
+                data: null,
+                type: method,
+                url: url,
+                success: function (response) {
+                    $('#modalEditContent').html(response);
+                    stopPageLoading();
+                    $('#modalEdit').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

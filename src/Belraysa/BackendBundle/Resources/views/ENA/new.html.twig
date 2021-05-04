@@ -1,0 +1,129 @@
+<form action="{{ path('ena_create') }}" role="form" id="newENA"
+      method="post"
+      class="form-horizontal">
+    <div class="form-group form-md-radios">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-10">
+            <div class="md-radio-inline">
+                <div class="md-radio">
+                    <input value="RVA" type="radio" onchange="disableSelector('RVA');" id="radio6"
+                           name="estado"
+                           class="md-radiobtn" checked>
+                    <label for="radio6">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        RVA </label>
+                </div>
+
+                <div class="md-radio">
+                    <input value="HBL" onchange="disableSelector('HBL');" type="radio" id="radio7"
+                           {% if flag_hbl == 'no' %}disabled="disabled" {% endif %}
+                           name="estado"
+                           class="md-radiobtn">
+                    <label for="radio7">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        HBL </label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   {# <div class="form-group">
+        <div class="col-sm-2"><label>Fecha (HBL)</label>
+        </div>
+        <div class="col-sm-10">
+            <div class="input-group date date-picker" data-date-format="dd-mm-yyyy">
+                <input type="text" class="form-control" id="belraysa_backendbundle_ena_code" name="sisgerCode">
+												<span class="input-group-btn">
+												<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+												</span>
+            </div>
+        </div>
+    </div>#}
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Expediente</label>
+        </div>
+        <div class="input-icon input-icon-sm col-sm-5">
+            <i style="margin-top: 5px">E-</i>
+            {% if exp_id != 0 %}
+                <input class="form-control form-filter input-sm" name="expediente" value="{{ exp_id }}" type="text" required="">
+            {% else %}
+                <input class="form-control form-filter input-sm" name="expediente" type="text" required="">
+            {% endif %}
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Remitente</label>
+        </div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.remitente, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', }}
+            ) }}
+            {{ form_errors(form.remitente) }}
+        </div>
+    </div>
+    <div class="alert alert-danger display-none">
+        <button class="close" data-dismiss="alert"></button>
+        La fecha de salida debe ser posterior a la fecha de entrada
+    </div>
+    <div class="alert alert-success display-none">
+        <button class="close" data-dismiss="alert"></button>
+        La informaci&oacute;n proporcionada es correcta.
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label><span style="color: red"
+                                           class="required">*&nbsp;</span>Entrada</label>
+        </div>
+        <div class="col-sm-10">
+            <div class="input-group date date-picker" {# data-date-start-date="+0d" #}
+                 data-date-format="dd-mm-yyyy">
+                {{ form_widget(form.fechaEntrada, {'attr' : {'class' : 'form-control' , }}
+                ) }}
+            <span class="input-group-btn">
+												<button class="btn default" type="button"><i class="fa fa-calendar"></i>
+                                                </button>
+												</span>
+                {{ form_errors(form.fechaEntrada) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label><span style="color: red"
+                                           class="required">*&nbsp;</span>Salida</label>
+        </div>
+        <div class="col-sm-10">
+            <div class="input-group date date-picker"
+                 data-date-format="dd-mm-yyyy">
+                {{ form_widget(form.fechaSalida, {'attr' : {'class' : 'form-control' , }}
+                ) }}
+            <span class="input-group-btn">
+												<button class="btn default" type="button"><i class="fa fa-calendar"></i>
+                                                </button>
+												</span>
+
+            </div>
+        </div>
+        {{ form_errors(form.fechaSalida) }}
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Contenedor</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.contenedor, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', }}
+            ) }}
+            {{ form_errors(form.contenedor) }}
+        </div>
+    </div>
+
+    {{ form(form) }}
+</form>

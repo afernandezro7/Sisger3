@@ -1,0 +1,293 @@
+{% extends "BackendBundle::layout.html.twig" %}
+{% block stylesheets_inline %}
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.css') }}">
+{% endblock %}
+
+{% block title %}Listado de roles{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <legend>
+                Listado de roles
+            </legend>
+            <ol class="breadcrumb">
+                <li><a href="{{ path("index") }}"><i class="fa fa-home"></i> Incio</a></li>
+                <li>Roles</li>
+                <li class="active">Listado de roles</li>
+            </ol>
+        </section>
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+            <section class="content">
+                <div class="col-xs-12">
+                    <br>
+                    <div class="alert alert-danger">
+                        {{ flashMessage }}
+                    </div>
+                </div>
+            </section>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <section class="content">
+                <div class="col-xs-12">
+                    <br>
+                    <div class="alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                </div>
+            </section>
+        {% endfor %}
+        <br>
+
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form id="batch_action_form_delete" action="{{ path('role_batch_delete') }}" method="post">
+                        <table id="role_index" class="display table table-bordered table-striped dataTable">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox">
+                                </th>
+                                <th>Nombre</th>
+                                <th>Acciones
+                                    <div class="btn-group pull-right">
+                                        <button type="button" class="btn btn-default">Opciones</button>
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Opciones</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a data-toggle="modal" type="button"
+                                                   data-target="#myModalHorizontal" tabindex="-1">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                    Registrar rol
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="confirm('¿Está seguro de que desea eliminar?') ? $('#batch_action_form_delete').submit() : '' ">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                    Eliminar seleccionados
+                                                </a></li>
+                                        </ul>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for role in entities %}
+                                <tr>
+                                    {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                                    <td>
+                                        <input name="batch_action_checkbox[]" type="checkbox" value="{{ role.id }}">
+                                    </td>
+                                    <td>{{ role.name }}</td>
+                                    <td style="text-align: center">
+                                        <a id="edit_button" data-toggle="modal" type="button"
+                                           data-target="#myModalHorizontal1" tabindex="-1"
+                                           data-name="{{ role.name }}"
+                                           data-id="{{ role.id }}"
+                                           href="#">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                        {# <a title="Editar datos de cliente"
+                                            href="{{ path('client_edit', { 'id': client.id }) }}">
+                                             <span class="glyphicon glyphicon-edit"></span>
+                                         </a>#}
+                                        <a title="Eliminar role"
+                                           href="{{ path('role_delete', { 'id': role.id }) }}">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </form>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </section>
+
+    </div><!-- /.content-wrapper -->
+
+    {# modals #}
+    <div class="modal fade" id="myModalHorizontal" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Registrar rol nuevo
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    {{ render(controller('BackendBundle:Role:new', {request: app.request})) }}
+                    <div id="newRoleResponse"></div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="newRole" type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# modals #}
+    <div class="modal fade" id="myModalHorizontal1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Editar datos de rol
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form action="{{ path('role_update') }}" role="form" id="editRole" method="post"
+                          class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Nombre</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="name" id="name">
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" id="id">
+                    </form>
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="editRole" type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript_inline %}
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+    <!-- page script -->
+    <script>
+        $(document).ready(function () {
+            $('#role_index').DataTable();
+        });
+    </script>
+
+    <SCRIPT language="javascript">
+        $(function () {
+            // add multiple select / deselect functionality
+            $('#selectall').click(function () {
+                $('.minimal').attr('checked', this.checked);
+            });
+
+            // if all checkbox are selected, check the selectall checkbox
+            // and viceversa
+            $('.minimal').click(function () {
+
+                if ($('.minimal').length == $('.minimal:checked').length) {
+                    $('#selectall').attr("checked", "checked");
+                } else {
+                    $('#selectall').removeAttr("checked");
+                }
+
+            });
+        });
+    </SCRIPT>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('table th input:checkbox').on('click', function () {
+                var that = this;
+                $(this).closest('table').find('tr > td:first-child input:checkbox')
+                        .each(function () {
+                            this.checked = that.checked;
+                            $(this).closest('tr').toggleClass('selected');
+                        });
+            });
+        });
+    </script>
+    <script>
+        $("#newRole").submit(function (event) {
+
+            /!* stop form from submitting normally *!/
+            event.preventDefault();
+
+            /!* get some values from elements on the page: *!/
+            var $form = $(this),
+
+                    url = $form.attr('action'),
+                    method = $form.attr('method');
+
+            /!* Send data using post *!/
+//Añadimos la imagen de carga en el contenedor
+            $('#loading').html('<div id="loading"> <img height="70px" width="70px" src="{{ asset('uploads/images/712.png') }}"></div>');
+
+
+            $.ajax({
+                data: $(this).serialize(),
+                type: method,
+                url: url,
+                success: function (response) {
+                    $('#myModalHorizontal').modal('hide');
+                    setTimeout(function () {// wait for 5 secs(2)
+                        location.reload(); // then reload the page.(3)
+                    }, 0);
+
+                }
+            });
+
+
+        });
+
+    </script>
+
+    <script>
+        $(document).on("click", '#edit_button', function (e) {
+
+            var name = $(this).data('name');
+            var id = $(this).data('id');
+
+            $("#name").val(name);
+            $("#id").val(id);
+
+
+        });
+    </script>
+{% endblock %}

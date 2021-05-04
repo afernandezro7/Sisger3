@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>TipoContenedor</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Volumenm3</th>
+                <td>{{ entity.volumenM3 }}</td>
+            </tr>
+            <tr>
+                <th>Maxpesokg</th>
+                <td>{{ entity.maxPesoKg }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('tipocontenedor') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('tipocontenedor_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

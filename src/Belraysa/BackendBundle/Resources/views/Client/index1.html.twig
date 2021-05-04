@@ -1,0 +1,419 @@
+{% extends "BackendBundle::layout.html.twig" %}
+{% block stylesheets_inline %}
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.css') }}"
+          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/iCheck/minimal/grey.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/toastr-master/build/toastr.css') }}">
+{% endblock %}
+
+{% block title %}Listado de clientes{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Listado de clientes
+            </h1>
+
+            <ol class="breadcrumb">
+                <li><a href="{{ path('index') }}"><i class="fa fa-home"></i> Inicio</a></li>
+                <li class="active">Clientes</li>
+            </ol>
+        </section>
+        <br>
+        <section class="content">
+            <div class="row">
+                <form id="client_filter_form" action="{{ path('client_filter') }}" method="post">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Filtrar:</label>
+
+                        <div class="col-sm-10">
+                            <input name="query" required="required" type="text" class="form-control">
+                        </div>
+                        <div class="col-sm-1">
+                            <button  type="submit" form="client_filter_form" class="btn btn-flat btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+
+                <form id="batch_action_form_delete" action="{{ path('client_batch_delete') }}" method="post">
+                    <table class="table table-hover" id="clientes">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input id="selectall" name="batch_action_checkbox[]" type="checkbox"
+                                       class="flat-red">
+                            </th>
+                            <th>Nombre</th>
+                            <th>CI</th>
+                            <th>Pasaporte</th>
+
+                            <th style="text-align: center">
+                                <div class="mailbox-controls">
+                                    <div class="btn-group">
+                                        <a title="Registrar cliente" data-toggle="modal" type="button"
+                                           data-target="#myModalHorizontal" tabindex="-1"
+                                           class="btn btn-flat btn-default btn-sm"><i
+                                                    class="fa fa-plus"></i>
+                                        </a>
+                                        <button data-toggle="confirmation" class="btn btn-flat btn-sm btn-default"
+                                                disabled="disabled"
+                                                id="batch-delete-button" type="submit"><i
+                                                    class="fa fa-trash-o"></i>
+                                        </button>
+                                        <a title="Obtener direcciones de correo" data-toggle="modal" type="button"
+                                           data-target="#myModalHorizontal2" tabindex="-1"
+                                           class="btn btn-flat btn-default btn-sm"><i
+                                                    class="fa fa-envelope-o"></i>
+                                        </a>
+                                        <a title="Exportar tabla" type="button" target="_blank"
+                                           href="{{ path('client_pdf') }}"
+                                           class="btn btn-flat btn-danger btn-sm"><i
+                                                    class="fa fa-file-pdf-o"></i>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for client in entities %}
+                            <tr>
+                                {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                                <td>
+                                    <input name="batch_action_checkbox[]" type="checkbox" value="{{ client.id }}"
+                                           class="flat-red selectable">
+                                </td>
+                                <td>{{ client.firstName }} {{ client.lastName }}</td>
+                                <td>{{ client.dni }}</td>
+                                <td>{{ client.passport }}</td>
+                                <td style="text-align: center">
+                                    <div class="mailbox-controls">
+                                        <div class="btn-group">
+                                            {#
+                                            {% if client.replies|length > 0 or client.repliesLeader|length > 0 %}
+                                                <a title="Ver expedientes" id="documents_button"
+                                                   href="{{ path('reply_index_by_client', { 'id': client.id }) }}"
+                                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-folder-open"></i>
+                                                </a>
+                                            {% endif %} #}
+                                            {% if client.documents|length > 0 %}
+                                                <a title="Ver documentos" id="documents_button"
+                                                   href="{{ path('document_client', { 'idClient': client.id }) }}"
+                                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-list"></i>
+                                                </a>
+                                            {% endif %}
+                                            {% if app.user == client.user or app.user.role.name == 'ROLE_SUPER_ADMIN' %}
+                                                <a title="Editar datos del cliente" id="edit_button" data-toggle="modal"
+                                                   type="button"
+                                                   data-target="#myModalHorizontal1" tabindex="-1"
+                                                   data-firstname="{{ client.firstName }}"
+                                                   data-lastname="{{ client.lastName }}"
+                                                   data-dni="{{ client.dni }}"
+                                                   data-passport="{{ client.passport }}"
+                                                   data-address="{{ client.address }}"
+                                                   data-municipality="{{ client.municipality }}"
+                                                   data-province="{{ client.province }}"
+                                                   data-country="{{ client.country }}"
+                                                   data-phones="{{ client.phones }}"
+                                                   data-cell="{{ client.cell }}"
+                                                   data-id="{{ client.id }}"
+                                                   data-email="{{ client.email }}"
+                                                   href="#"
+                                                   class="btn btn-flat btn-default btn-sm"><i
+                                                            class="fa fa-edit"></i></a>
+                                                <a data-toggle="confirmation" title="Eliminar"
+                                                   href="{{ path('client_delete', { 'id': client.id }) }}"
+                                                   class="btn btn-flat btn-default btn-sm"><i
+                                                            class="fa fa-trash-o"></i></a>
+                                            {% else %}
+                                                <span class="label label-danger">No hay acciones disponibles</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </form>
+                <div class="text-right">
+                    {{ knp_pagination_render(entities) }}
+                </div>
+            </div>
+            <!-- /.col -->
+
+            <!-- /.row -->
+        </section>
+
+    </div><!-- /.content-wrapper -->
+    <div id="loading"></div>
+    {# modals #}
+    <div class="modal fade" id="myModalHorizontal" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Registrar cliente nuevo
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    {{ render(controller('BackendBundle:Client:new', {request: app.request})) }}
+                    <div id="newClientResponse"></div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <a href="#" id="saveNewClient" class="btn btn-flat bg-orange">
+                        <i class="fa fa-save"></i> + <i class="fa fa-child"> </i>
+                    </a>
+                    <a href="#" id="saveNewReply" class="btn btn-flat bg-orange">
+                        <i class="fa fa-save"></i> + <i class="fa fa-folder-open"> </i>
+                    </a>
+                    <a href="#" id="save" class="btn btn-flat btn-primary">
+                        <i class="fa fa-save"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# modals #}
+    <div class="modal fade" id="myModalHorizontal1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Editar datos de cliente
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form action="{{ path('client_update') }}" role="form" id="editClient" method="post"
+                          class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red"
+                                                                        class="required">*&nbsp;</span>Nombre</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="firstName" id="firstName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red"
+                                                                        class="required">*&nbsp;</span>Apellidos</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="lastName" id="lastName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red"
+                                                                        class="required">*&nbsp;</span>Carn&eacute; de
+                                identidad</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="dni" id="dni">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red"
+                                                                        class="required">*&nbsp;</span>Pasaporte</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="passport" id="passport">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red"
+                                                                        class="required">*&nbsp;</span>Direcci&oacute;n</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="address" id="address">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red"
+                                                                        class="required">*&nbsp;</span>Municipio</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="municipality" id="municipality">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red"
+                                                                        class="required">*&nbsp;</span>Provincia</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="province" id="province">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red"
+                                                                        class="required">*&nbsp;</span>Pa&iacute;s</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="country" id="country">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tel&eacute;fonos(s)</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="phones" id="phones">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Celular</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="cell" id="cell">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Correos(s)</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="email" id="email">
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" id="id">
+                    </form>
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn brn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="editClient" type="submit" class="btn btn-flat btn-primary">
+                        <i class="fa fa-save"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalHorizontal2" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Direcciones de correo
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+
+                    <b>Copie el listado de abajo a su cliente de correos para contactar a todas las
+                        direcciones que aparecen</b>
+
+                    <br>
+                    <br>
+
+                    <textarea rows="20"
+                              class="form-control">{% for client in clientes %}{% if client.email %}{{ client.email }}{% if loop.index != entities|length %}, {% endif %}{% endif %}{% endfor %}</textarea>
+                </div>
+
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript_inline %}
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/PopConfirm-master/jquery.popconfirm.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/toastr-master/toastr.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/customer.js') }}"></script>
+
+    <script>
+        $(document).on("click", '#saveNewReply', function () {
+            $('#myModalHorizontal').modal('hide');
+            $('#loading').html('<div class="se-pre-con"></div>');
+            loading();
+            var $form = $("#newClient"),
+                url = $form.attr('action'),
+                method = $form.attr('method');
+            $.ajax({
+                data: $form.serialize(),
+                type: method,
+                url: url,
+                success: function (response) {
+                    $('#loading').hide();
+                    location.href = "{{ path('reply_new') }}";
+                }
+            });
+        });
+    </script>
+    <script>
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+
+        $('#clientes').DataTable(
+            {
+                "columns": [
+                    {"orderable": false},
+                    null,
+                    null,
+                    null,
+                    {"orderable": false}
+                ]
+                ,
+                "paginate": false,
+                "filter": false
+            }
+        );
+    </script>
+{% endblock %}

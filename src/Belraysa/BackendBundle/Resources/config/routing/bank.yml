@@ -1,0 +1,37 @@
+bank:
+    path:     /
+    defaults: { _controller: "BackendBundle:Bank:index" }
+
+bank_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Bank:show" }
+
+bank_timeline:
+    path:     /{id}/timeline
+    defaults: { _controller: "BackendBundle:Bank:timeline" }
+
+bank_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Bank:new" }
+
+bank_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Bank:create" }
+    requirements: { _method: post }
+
+bank_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Bank:edit" }
+
+bank_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Bank:update" }
+    requirements: { _method: post|put }
+
+bank_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Bank:delete" }
+
+bank_reporte_por_rango_de_fechas:
+    path:     /{banking}/pdf
+    defaults: { _controller: "BackendBundle:Bank:generarReportePDF" }

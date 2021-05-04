@@ -1,0 +1,248 @@
+<br>
+<form id="batch_action_form_delete" action="{{ path('client_batch_delete') }}" method="post">
+    <table class="table table-hover" id="datatable_customers">
+        <thead>
+        <tr>
+            <th>
+                <input id="selectallClients" name="batch_action_checkbox[]" type="checkbox"
+                       class="flat-red">
+            </th>
+            <th>Nombre</th>
+            <th>Tel&eacute;fono</th>
+            <th>Correo</th>
+            <th>Expedientes</th>
+            <th style="text-align: center">
+                <div class="mailbox-controls">
+                    <div class="btn-group">
+                        <button data-toggle="confirmation" class="btn btn-flat btn-sm btn-default"
+                                disabled="disabled"
+                                id="batch-delete-button-client" type="submit"><i
+                                    class="fa fa-trash-o"></i>
+                        </button>
+                    </div>
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for client in customers %}
+            <tr>
+                {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                <td>
+                    <input name="batch_action_checkbox[]" type="checkbox" value="{{ client.id }}"
+                           class="flat-red selectableClient">
+                </td>
+                <td>{{ client.firstName }} {{ client.lastName }}</td>
+                <td>{% if client.phones %}{{ client.phones }}{% else %}<span
+                            class="label label-default">No especificado</span>{% endif %}</td>
+                <td>
+                    {% if client.email %}
+                        {{ client.email }}
+                    {% else %}
+                        <span class="label label-default">No especificado</span>
+                    {% endif %}
+                </td>
+                <td>
+                        <span class="label label-default">{{ client.replies|length }}</span>
+                </td>
+                <td style="text-align: center">
+                    <div class="mailbox-controls">
+                        <div class="btn-group">
+                           {# {% if client.replies|length > 0 or client.repliesLeader|length > 0 %}
+                                <a title="Ver expedientes" id="documents_button"
+                                   href="{{ path('reply_index_by_client', { 'id': client.id }) }}"
+                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-folder-open"></i>
+                                </a>
+                            {% endif %} #}
+                            {% if client.documents|length > 0 %}
+                                <a title="Ver documentos" id="documents_button"
+                                   href="{{ path('document_client', { 'idClient': client.id }) }}"
+                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-list"></i>
+                                </a>
+                            {% endif %}
+                            {% if app.user == client.user or app.user.role.name == 'ROLE_SUPER_ADMIN' %}
+                                <a title="Editar datos del cliente" id="edit_button" data-toggle="modal"
+                                   type="button"
+                                   data-target="#myModalHorizontal1" tabindex="-1"
+                                   data-firstname="{{ client.firstName }}"
+                                   data-lastname="{{ client.lastName }}"
+                                   data-phones="{{ client.phones }}"
+                                   data-id="{{ client.id }}"
+                                   data-email="{{ client.email }}"
+                                   href="#"
+                                   class="btn btn-flat btn-default btn-sm"><i
+                                            class="fa fa-edit"></i></a>
+                                <a data-toggle="confirmation" title="Eliminar"
+                                   href="{{ path('client_delete', { 'id': client.id }) }}"
+                                   class="btn btn-flat btn-default btn-sm"><i
+                                            class="fa fa-trash-o"></i></a>
+                            {% else %}
+                                <span class="label label-danger">No hay acciones disponibles</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</form>
+
+<div class="modal fade" id="myModalHorizontal1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Editar datos de cliente
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form action="{{ path('client_update') }}" role="form" id="editClient" method="post"
+                      class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span style="color: red"
+                                                                    class="required">*&nbsp;</span>Nombre</label>
+
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="firstName" id="firstName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span style="color: red"
+                                                                    class="required">*&nbsp;</span>Apellidos</label>
+
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="lastName" id="lastName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tel&eacute;fonos(s)</label>
+
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="phones" id="phones">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Correos(s)</label>
+
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="email" id="email">
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" id="id">
+                </form>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn brn-flat btn-default"
+                        data-dismiss="modal">
+                    Cerrar
+                </button>
+                <button form="editClient" type="submit" class="btn btn-flat btn-primary">
+                    <i class="fa fa-save"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("click", '#edit_button', function (e) {
+        var firstName = $(this).data('firstname');
+        var lastName = $(this).data('lastname');
+        var phones = $(this).data('phones');
+        var email = $(this).data('email');
+        var id = $(this).data('id');
+        $("#firstName").val(firstName);
+        $("#lastName").val(lastName);
+        $("#phones").val(phones);
+        $("#email").val(email);
+        $("#id").val(id);
+    });
+
+
+    $(document).on("click", '#save', function () {
+        $('#myModalHorizontal').modal('hide');
+        loading();
+        $('#loading').html('<div class="se-pre-con"></div>');
+        var $form = $("#newClient"),
+                url = $form.attr('action'),
+                method = $form.attr('method');
+        $.ajax({
+            data: $form.serialize(),
+            type: method,
+            url: url,
+            success: function (response) {
+                $('#loading').hide();
+                setTimeout(function () {// wait for 5 secs(2)
+                    location.reload(); // then reload the page.(3)
+                }, 0);
+            }
+        });
+    });
+
+    $(document).on("click", '#saveNewClient', function () {
+        $('#myModalHorizontal').modal('hide');
+        $('#loading').html('<div class="se-pre-con"></div>');
+        loading();
+        var $form = $("#newClient"),
+                url = $form.attr('action'),
+                method = $form.attr('method');
+        $.ajax({
+            data: $form.serialize(),
+            type: method,
+            url: url,
+            success: function (response) {
+                $('#loading').hide();
+                $('#myModalHorizontal').modal('show');
+            }
+        });
+    });
+
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_minimal-grey',
+        radioClass: 'iradio_minimal-grey'
+    });
+
+    $("[data-toggle='confirmation']").popConfirm({
+        title: "¿Está seguro?", // The title of the confirm
+        content: "¿Está seguro de que desea eliminar?", // The message of the confirm
+        placement: "bottom", // The placement of the confirm (Top, Right, Bottom, Left)
+        container: "body", // The html container
+        yesBtn: "Sí",
+        noBtn: "No"
+    });
+
+
+
+    $('#datatable_customers').DataTable(
+            {
+                "columns": [
+                    {"orderable": false},
+                    null,
+                    null,
+                    null,
+                    null,
+                    {"orderable": false}
+                ]
+                ,
+                "paginate": true
+            }
+    );
+</script>
+
+
+
+

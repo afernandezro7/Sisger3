@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<!--
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.5
+Version: 4.1.0
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <title>SISGER III | {% block title %}Sistema de Gesti&oacute;n Contable{% endblock %}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN PACE PLUGIN FILES -->
+    <script src="{{ asset('bundles/backend/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
+    <link href="{{ asset('bundles/backend/global/plugins/pace/themes/pace-theme-flash.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <!-- END PACE PLUGIN FILES -->
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('bundles/backend/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('bundles/backend/global/plugins/simple-line-icons/simple-line-icons.min.css') }}"
+          rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('bundles/backend/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('bundles/backend/global/plugins/uniform/css/uniform.default.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('bundles/backend/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}"
+          rel="stylesheet"
+          type="text/css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('bundles/backend/global/plugins/jstree/dist/themes/default/style.min.css') }}"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    {% block stylesheet_inline %}
+    {% endblock %}
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
+    <link href="{{ asset('bundles/backend/global/css/components.css') }}" id="style_components" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('bundles/backend/global/css/plugins.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('bundles/backend/admin/layout5/css/layout.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('bundles/backend/admin/layout5/css/custom.css') }}" rel="stylesheet" type="text/css"/>
+    <style>
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            background-color: #ddd;
+            border-color: #dddddd;
+        }
+
+        .tree_user_expedientes {
+            display: none;
+        }
+
+        .tree_user_expedientes_shown {
+            display: inline;
+        }
+
+        .page-loading {
+            z-index: 99999999999999;
+        }
+    </style>
+
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
+<!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default -->
+<body class="page-header-fixed page-quick-sidebar-over-content">
+
+<!-- BEGIN MAIN LAYOUT -->
+<div class="wrapper">
+    <!-- Header BEGIN -->
+    <header class="page-header">
+        <nav class="navbar mega-menu" role="navigation">
+            <div class="container-fluid">
+                <div class="clearfix navbar-fixed-top">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target=".navbar-responsive-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="toggle-icon">
+		                        <span class="icon-bar"></span>
+		                        <span class="icon-bar"></span>
+		                        <span class="icon-bar"></span>
+		                    </span>
+                    </button>
+                    <!-- End Toggle Button -->
+
+                    <!-- BEGIN LOGO -->
+                    <a id="index" class="page-logo" href="{{ path('index') }}">
+                        <img src="{{ asset('bundles/backend/admin/layout5/img/logo_sisger3.png') }}" alt="Logo">
+                    </a>
+                    <!-- END LOGO -->
+
+                    <!-- BEGIN SEARCH -->
+                    <form class="search" action="{{ path('executeSearch') }}" method="GET" id="form-search">
+                        <input type="text" class="form-control" name="criteria" placeholder="Buscar...">
+                        <button form="form-search" type="submit" class="btn submit"><i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                    <!-- END SEARCH -->
+
+                    <!-- BEGIN TOPBAR ACTIONS -->
+                    <div class="topbar-actions">
+
+                        <!-- BEGIN USER PROFILE -->
+                        <div class="btn-group-img btn-group">
+
+                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown"
+                                    data-hover="dropdown" data-close-others="true">
+                                <img src="{{ asset('uploads/usersPhotos/' ~ app.user.photo) }}" alt="">
+                            </button>
+                            <ul class="dropdown-menu-v2" role="menu">
+
+                                <li class="active">
+                                    <a href="{{ path('user_show', {'id': app.user.id}) }}">Mi perfil </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ path('logout') }}">Salir</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- END USER PROFILE -->
+
+                        <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                        <button type="button" class="quick-sidebar-toggler" data-toggle="collapse">
+                            <span class="sr-only">Toggle Quick Sidebar</span>
+                            <i class="icon-logout"></i>
+                        </button>
+                        <!-- END QUICK SIDEBAR TOGGLER -->
+                    </div>
+                    <!-- END TOPBAR ACTIONS -->
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="nav-collapse collapse navbar-collapse navbar-responsive-collapse">
+                    <ul class="nav navbar-nav text-uppercase">
+                        {% if app.user.role.name == 'ROLE_SUPER_ADMIN' %}
+                            <li class="dropdown dropdown-fw {% if workspace.getCurrentWorkspace().getName() == 'G-BRS' %}open selected{% endif %}">
+                                <a onclick="startPageLoading()"
+                                   href="{{ path('user_switch_workspace', { 'name': 'G-BRS' }) }}">
+                                    GRUPO BRS
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-fw">
+                                    <li class="{% block dashboardgbrs %} {% endblock %}"><a href="{{ path('index') }}">Dashboard</a>
+                                    </li>
+                                    <li class="{% block usuarios %} {% endblock %}"><a href="{{ path('user') }}"
+                                                                                       onclick="startPageLoading()">Usuarios</a>
+                                    </li>
+                                    <li class="dropdown more-dropdown-sub {% block contabilidadgbrs %}{% endblock %}">
+                                        <a href="javascript:;" data-close-others="true">
+                                            Contabilidad
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('reply_all') }}">Expedientes</a></li>
+                                            <li><a href="{{ path('recibo_all') }}">Recibos</a></li>
+                                            <li><a href="{{ path('extra') }}">Operaciones extra</a></li>
+                                            <li><a href="{{ path('traspaso') }}">Traspasos</a></li>
+                                            {% if app.user.role.name != 'ROLE_OPERATOR' %}
+                                                <li><a href="{{ path('banking_all') }}">Entidades Bancarias</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        {% endif %}
+                        {% if app.user.role.name == 'ROLE_SUPER_ADMIN' or app.user.workspace.name == 'AAVV' %}
+                            <li class="dropdown dropdown-fw {% if workspace.getCurrentWorkspace().getName() == 'AAVV' %}open selected{% endif %}">
+                                <a onclick="startPageLoading()"
+                                   href="{{ path('user_switch_workspace', { 'name': 'AAVV' }) }}">
+                                    BELRAYSA TOURS
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-fw">
+                                    <li class="{% block dashboardaavv %}{% endblock %}"><a href="{{ path('index') }}">Dashboard</a>
+                                    </li>
+                                    <li class="{% block clientesaavv %}{% endblock %}"><a href="{{ path('client') }}">Clientes</a>
+                                    </li>
+                                    <li class="{% block documentosaavv %}{% endblock %}"><a
+                                                href="{{ path('document') }}">Documentos</a>
+                                    </li>
+                                    <li class="dropdown more-dropdown-sub {% block contabilidadaavv %}{% endblock %}">
+                                        <a href="javascript:;" data-close-others="true">
+                                            Contabilidad
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('reply', { 'ws': 'AAVV' }) }}">Expedientes</a></li>
+                                            <li><a href="{{ path('recibo', { 'ws': 'AAVV' }) }}">Recibos</a></li>
+                                            <li><a href="{{ path('recibo_egresos', { 'ws': 'AAVV' }) }}">Egresos</a></li>
+                                            <li><a href="{{ path('voucher', { 'ws': 'AAVV' }) }}">Vouchers</a></li>
+                                            {% if app.user.role.name != 'ROLE_OPERATOR' %}
+                                                <li><a href="{{ path('banking', { 'ws': 'AAVV' }) }}">Entidades
+                                                        Bancarias</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown more-dropdown-sub {% block configuracionesaavv %}{% endblock %}">
+                                        <a href="javascript:;" data-close-others="true">
+                                            Configuraciones
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('service', { 'ws': 'AAVV' }) }}">Servicios</a></li>
+                                            {% if app.user.role.name != 'ROLE_OPERATOR' %}
+                                                <li><a href="{{ path('conceptogasto', { 'ws': 'AAVV' }) }}">Conceptos de
+                                                        gastos</a></li>
+                                                <li><a href="{{ path('conceptocosto', { 'ws': 'AAVV' }) }}">Conceptos de
+                                                        costos</a></li>
+                                                <li><a href="{{ path('inventario', { 'ws': 'AAVV' }) }}">Conceptos de
+                                                        costos recurrentes</a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        {% endif %}
+                        {% if app.user.role.name == 'ROLE_SUPER_ADMIN' or app.user.workspace.name == 'C507' %}
+                            <li class="dropdown dropdown-fw {% if workspace.getCurrentWorkspace().getName() == 'C507' %}open selected{% endif %}">
+                                <a onclick="startPageLoading()"
+                                   href="{{ path('user_switch_workspace', { 'name': 'C507' }) }}">
+                                    Capacitaciones 507
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-fw">
+                                    <li class="{% block dashboardc507 %}{% endblock %}"><a href="{{ path('index') }}">Dashboard</a>
+                                    </li>
+                                    <li class="{% block clientesc507 %}{% endblock %}"><a href="{{ path('client') }}">Clientes</a>
+                                    </li>
+                                    <li class="{% block documentosc507 %}{% endblock %}"><a
+                                                href="{{ path('document') }}">Documentos</a>
+                                    </li>
+                                    <li class="dropdown more-dropdown-sub {% block contabilidadc507 %}{% endblock %}">
+                                        <a href="javascript:;" data-close-others="true">
+                                            Contabilidad
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('reply', { 'ws': 'C507' }) }}">Expedientes</a></li>
+                                            <li><a href="{{ path('recibo', { 'ws': 'C507' }) }}">Recibos</a></li>
+                                            <li><a href="{{ path('recibo_egresos', { 'ws': 'C507' }) }}">Egresos</a></li>
+                                            <li><a href="{{ path('voucher', { 'ws': 'C507' }) }}">Vouchers</a></li>
+                                            {% if app.user.role.name != 'ROLE_OPERATOR' %}
+                                                <li><a href="{{ path('banking', { 'ws': 'C507' }) }}">Entidades
+                                                        Bancarias</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown more-dropdown-sub {% block configuracionesc507 %}{% endblock %}">
+                                        <a href="javascript:;" data-close-others="true">
+                                            Configuraciones
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('service', { 'ws': 'C507' }) }}">Servicios</a></li>
+                                            {% if app.user.role.name != 'ROLE_OPERATOR' %}
+                                                <li><a href="{{ path('conceptogasto', { 'ws': 'C507' }) }}">Conceptos de
+                                                        gastos</a></li>
+                                                <li><a href="{{ path('conceptocosto', { 'ws': 'C507' }) }}">Conceptos de
+                                                        costos</a></li>
+                                                <li><a href="{{ path('inventario', { 'ws': 'C507' }) }}">Conceptos de
+                                                        costos recurrentes</a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        {% endif %}
+                        {% if app.user.role.name == 'ROLE_SUPER_ADMIN' or app.user.workspace.name == 'L-BRS' %}
+                            <li onclick="startPageLoading()"
+                                class="dropdown dropdown-fw {% if workspace.getCurrentWorkspace().getName() == 'L-BRS' %}open selected{% endif %}">
+                                <a href="{{ path('user_switch_workspace', { 'name': 'L-BRS' }) }}">
+                                    LOGISTICA BRS
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-fw">
+                                    <li class="{% block dashboardlbrs %}{% endblock %}"><a href="{{ path('index') }}">Dashboard</a>
+                                    </li>
+                                    <li class="{% block clienteslbrs %}{% endblock %}"><a href="{{ path('client') }}">Clientes</a>
+                                    </li>
+                                    <li class="{% block documentoslbrs %}{% endblock %}"><a
+                                                href="{{ path('document') }}">Documentos</a>
+                                    </li>
+                                    <li class="{% block contenedores %}{% endblock %}"><a
+                                                href="{{ path('contenedor') }}">Contenedores</a>
+                                    </li>
+                                    <li class="dropdown more-dropdown-sub {% block operaciones %}{% endblock %}">
+                                        <a href="javascript:;" data-close-others="true">
+                                            Operaciones
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('ena') }}">ENAs</a></li>
+                                            <li><a href="{{ path('envio') }}">Env&iacute;os</a></li>
+                                            <li><a href="{{ path('menaje') }}">Menajes</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="{% block programador %}{% endblock %}"><a href="{{ path('anno') }}">Programador</a>
+                                    </li>
+                                    <li class="dropdown more-dropdown-sub {% block contabilidadlbrs %}{% endblock %}">
+                                        <a href="javascript:;" data-close-others="true">
+                                            Contabilidad
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('reply', { 'ws': 'L-BRS' }) }}">Expedientes</a></li>
+                                            <li><a href="{{ path('recibo', { 'ws': 'L-BRS' }) }}">Recibos</a></li>
+                                            <li><a href="{{ path('recibo_egresos', { 'ws': 'L-BRS' }) }}">Egresos</a></li>
+                                            <li><a href="{{ path('voucher', { 'ws': 'L-BRS' }) }}">Vouchers</a></li>
+                                            {% if app.user.role.name != 'ROLE_OPERATOR' %}
+                                                <li><a href="{{ path('banking', { 'ws': 'L-BRS' }) }}">Entidades
+                                                        Bancarias</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown more-dropdown-sub {% block configuracioneslbrs %}{% endblock %}">
+                                        <a href="javascript:;" data-close-others="true">
+                                            Configuraciones
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('service', { 'ws': 'L-BRS' }) }}">Servicios</a></li>
+                                            {% if app.user.role.name != 'ROLE_OPERATOR' %}
+                                                <li><a href="{{ path('conceptogasto', { 'ws': 'L-BRS' }) }}">Conceptos
+                                                        de gastos</a></li>
+                                                <li><a href="{{ path('conceptocosto', { 'ws': 'L-BRS' }) }}">Conceptos
+                                                        de costos</a></li>
+                                                <li><a href="{{ path('inventario', { 'ws': 'L-BRS' }) }}">Conceptos de
+                                                        costos
+                                                        recurrentes</a>
+                                                </li>
+                                            {% endif %}
+                                            <hr>
+                                            <li><a href="{{ path('arancel') }}">Valores aduanales</a></li>
+                                            <li><a href="{{ path('tarifa') }}">Tarifas mar&iacute;timas</a></li>
+                                            {% if app.user.role.name != 'ROLE_OPERATOR' %}
+                                                <hr>
+                                                <li><a href="{{ path('tipocontenedor') }}">Tipos de contenedores</a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <!-- END NAVBAR COLLAPSE -->
+            </div>
+            <!--/container-->
+        </nav>
+    </header>
+    <!-- Header END -->
+    <!-- PAGE CONTENT BEGIN -->
+    <div class="container-fluid">
+        <div class="page-content">
+            {% block breadcrumbs %}
+            {% endblock %}
+            {% block sidebar %}
+                <!-- BEGIN QUICK SIDEBAR -->
+                <a href="javascript:;" class="page-quick-sidebar-toggler"><i class="icon-login"></i></a>
+                <div class="page-quick-sidebar-wrapper">
+                    <div class="page-quick-sidebar">
+                        <div class="nav-justified">
+                            <ul class="nav nav-tabs nav-justified">
+                                <li class="active">
+                                    <a href="#quick_sidebar_tab_1" data-toggle="tab">
+                                        Usuarios
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active page-quick-sidebar-chat" id="quick_sidebar_tab_1">
+                                    <div class="page-quick-sidebar-chat-users" data-rail-color="#ddd"
+                                         data-wrapper-class="page-quick-sidebar-list">
+                                        {% if app.user.workspace.name == 'G-BRS' or app.user.role.name=='ROLE_SUPER_ADMIN' %}
+                                            <h3 class="list-heading">G-BRS</h3>
+                                            <ul class="media-list list-items">
+                                                {% for u in workspace.getGBRSWorkspace().getUsers() %}
+                                                    <li class="media" data-user="u-{{ u.getId() }}">
+                                                        <div class="media-status">
+                            <span title="{{ u.getReplies()|length }} expedientes"
+                                  class="badge badge-success">{{ u.getReplies()|length }}</span>
+                                                        </div>
+                                                        <img class="media-object" style="width: 45px; height: 45px"
+                                                             src="{{ asset('uploads/usersPhotos/' ~ u.photo) }}"
+                                                             alt="...">
+
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">{{ u.firstName }} {{ u.lastName }}</h4>
+
+                                                            <div class="media-heading-sub">
+                                                                {{ u.getRole().getAlias() }}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                        {% if app.user.workspace.name == 'AAVV' or app.user.role.name=='ROLE_SUPER_ADMIN' %}
+                                            <h3 class="list-heading">AAVV</h3>
+                                            <ul class="media-list list-items">
+                                                {% for u in workspace.getAAVVWorkspace().getUsers() %}
+                                                    <li class="media" data-user="u-{{ u.getId() }}">
+                                                        <div class="media-status">
+                            <span title="{{ u.getReplies()|length }} expedientes"
+                                  class="badge badge-success">{{ u.getReplies()|length }}</span>
+                                                        </div>
+                                                        <img class="media-object" style="width: 45px; height: 45px"
+                                                             src="{{ asset('uploads/usersPhotos/' ~ u.photo) }}"
+                                                             alt="...">
+
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">{{ u.firstName }} {{ u.lastName }}</h4>
+
+                                                            <div class="media-heading-sub">
+                                                                {{ u.getRole().getAlias() }}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                        {% if app.user.workspace.name == 'C507' or app.user.role.name=='ROLE_SUPER_ADMIN' %}
+                                            <h3 class="list-heading">C507</h3>
+                                            <ul class="media-list list-items">
+                                                {% for u in workspace.getC507Workspace().getUsers() %}
+                                                    <li class="media" data-user="u-{{ u.getId() }}">
+                                                        <div class="media-status">
+                            <span title="{{ u.getReplies()|length }} expedientes"
+                                  class="badge badge-success">{{ u.getReplies()|length }}</span>
+                                                        </div>
+                                                        <img class="media-object" style="width: 45px; height: 45px"
+                                                             src="{{ asset('uploads/usersPhotos/' ~ u.photo) }}"
+                                                             alt="...">
+
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">{{ u.firstName }} {{ u.lastName }}</h4>
+
+                                                            <div class="media-heading-sub">
+                                                                {{ u.getRole().getAlias() }}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                        {% if app.user.workspace.name == 'L-BRS' or app.user.role.name=='ROLE_SUPER_ADMIN' %}
+                                            <h3 class="list-heading">L-BRS</h3>
+                                            <ul class="media-list list-items">
+                                                {% for u in workspace.getLBRSWorkspace().getUsers() %}
+                                                    <li class="media" data-user="u-{{ u.getId() }}">
+                                                        <div class="media-status">
+                            <span title="{{ u.getReplies()|length }} expedientes"
+                                  class="badge badge-success">{{ u.getReplies()|length }}</span>
+                                                        </div>
+                                                        <img class="media-object" style="width: 45px; height: 45px"
+                                                             src="{{ asset('uploads/usersPhotos/' ~ u.photo) }}"
+                                                             alt="...">
+
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">{{ u.firstName }} {{ u.lastName }}</h4>
+
+                                                            <div class="media-heading-sub">
+                                                                {{ u.getRole().getAlias() }}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="page-quick-sidebar-item">
+                                        <div class="page-quick-sidebar-chat-user">
+                                            <div class="page-quick-sidebar-nav">
+                                                <a href="javascript:;" class="page-quick-sidebar-back-to-list"><i
+                                                            class="icon-arrow-left"></i>Volver</a>
+                                            </div>
+                                            <div class="page-quick-sidebar-chat-user-messages">
+                                                {% for u in users.getUsers() %}
+                                                    <div id="u-{{ u.getId() }}" class="tree_user_expedientes">
+                                                        <ul>
+                                                            {% for anno in users.getAnnos(u.getId()) %}
+                                                                <li {% if  ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                    <a
+                                                                            target="_blank"
+                                                                            href="#">{{ anno }}</a>
+                                                                    <ul>
+                                                                        <li {% if 'now' | date('m') == 1 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Enero</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 1, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 1, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 1, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 2 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Febrero</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 2, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 2, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 2, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 3 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Marzo</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 3, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 3, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 3, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 4 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Abril</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 4, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 4, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 4, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 5 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Mayo</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 5, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 5, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 5, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 6 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Junio</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 6, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 6, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 6, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 7 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Julio</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 7, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 7, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 7, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 8 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Agosto</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 8, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 8, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 8, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 9 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Septiembre</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 9, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 9, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 9, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 10 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Octubre</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 10, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 10, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 10, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 11 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Noviembre</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 11, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 11, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 11, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li {% if 'now' | date('m') == 12 and ('now' | date('Y') == anno) %}data-jstree='{ "opened" : true }' {% endif %}>
+                                                                            <a target="_blank"
+                                                                               href="#">Diciembre</a>
+                                                                            <ul>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('reply_filter_tree_by_ws', {'month': 12, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Expedientes</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('recibo_filter_tree_by_ws', {'month': 12, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Recibos</a>
+                                                                                </li>
+                                                                                <li><a target="_blank"
+                                                                                       href="{{ path('voucher_filter_tree_by_ws', {'month': 12, 'year':anno, 'usuario': u.getId(), 'ws': u.getWorkspace().getId() }) }}">Vouchers</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END QUICK SIDEBAR -->
+            {% endblock %}
+            {% block content %}
+            {% endblock %}
+        </div>
+        <!-- PAGE CONTENT END -->
+
+        <!-- Copyright BEGIN -->
+        <p class="copyright">  {{ 'now' | date('Y') }} &copy; Belraysa Tours &amp; Travel Group.
+        </p>
+        <!-- Copyright END -->
+    </div>
+</div>
+<!-- END MAIN LAYOUT -->
+<a href="#index" class="go2top"><i class="icon-arrow-up"></i></a>
+
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="{{ asset('bundles/backend/global/plugins/respond.min.js') }}"></script>
+<script src="{{ asset('bundles/backend/global/plugins/excanvas.min.js') }}"></script>
+<![endif]-->
+<script src="{{ asset('bundles/backend/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/backend/global/plugins/jquery-migrate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/backend/global/plugins/bootstrap/js/bootstrap.min.js') }}"
+        type="text/javascript"></script>
+
+<script src="{{ asset('bundles/backend/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('bundles/backend/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('bundles/backend/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/backend/global/plugins/uniform/jquery.uniform.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('bundles/backend/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('bundles/backend/global/plugins/jstree/dist/jstree.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ asset('bundles/backend/others/regionselector/dist/crs.min.js') }}"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+{% block javascript_inline %}
+{% endblock %}
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="{{ asset('bundles/backend/global/scripts/metronic.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/backend/admin/layout5/scripts/layout.js') }}" type="text/javascript"></script>
+
+<script>
+    jQuery(document).ready(function () {
+        Metronic.init(); // init metronic core componets
+        Layout.init(); // init layout
+        QuickSidebar.init(); // init quick sidebar
+    });
+
+    function startPageLoading() {
+        $('.page-loading').remove();
+        var ico = "{{ asset('bundles/backend/global/img/loading-spinner-grey.gif') }}";
+        $('body').append('<div class="page-loading"><img src="' + ico + '"/>&nbsp;&nbsp;<span>Espere, por favor</span></div>');
+    }
+
+    function stopPageLoading() {
+        $('.page-loading, .page-spinner-bar').remove();
+    }
+</script>
+<script>
+    var QuickSidebar = function () {
+
+        // Handles quick sidebar toggler
+        var handleQuickSidebarToggler = function () {
+            // quick sidebar toggler
+            $('.page-header .quick-sidebar-toggler, .page-quick-sidebar-toggler').click(function (e) {
+                $('body').toggleClass('page-quick-sidebar-open');
+            });
+        };
+        // Handles quick sidebar chats
+        var handleQuickSidebarChat = function () {
+
+            var wrapper = $('.page-quick-sidebar-wrapper');
+            var wrapperChat = wrapper.find('.page-quick-sidebar-chat');
+
+            var initChatSlimScroll = function () {
+                var chatUsers = wrapper.find('.page-quick-sidebar-chat-users');
+                var chatUsersHeight;
+
+                chatUsersHeight = wrapper.height() - wrapper.find('.nav-justified > .nav-tabs').outerHeight();
+
+                // chat user list
+                Metronic.destroySlimScroll(chatUsers);
+                chatUsers.attr("data-height", chatUsersHeight);
+                Metronic.initSlimScroll(chatUsers);
+
+                var chatMessages = wrapperChat.find('.page-quick-sidebar-chat-user-messages');
+                var chatMessagesHeight = chatUsersHeight - wrapperChat.find('.page-quick-sidebar-chat-user-form').outerHeight() - wrapperChat.find('.page-quick-sidebar-nav').outerHeight();
+                var tree = '';
+                // user chat messages
+                Metronic.destroySlimScroll(chatMessages);
+                chatMessages.attr("data-height", chatMessagesHeight);
+                Metronic.initSlimScroll(chatMessages);
+
+                $(function () {
+                    $('.tree_user_expedientes').jstree({
+                        "core": {
+                            "multiple": false
+
+                        }
+                    });
+                });
+
+                $('.tree_user_expedientes').on('select_node.jstree', function (e, data) {
+                    var link = $('#' + data.selected).find('a');
+                    if (link.attr("href") != "#" && link.attr("href") != "javascript:;" && link.attr("href") != "") {
+                        if (link.attr("target") == "_blank") {
+                            link.attr("href").target = "_blank";
+                        }
+                        document.location.href = link.attr("href");
+                        return false;
+                    }
+                });
+            };
+
+            initChatSlimScroll();
+            Metronic.addResizeHandler(initChatSlimScroll); // reinitialize on window resize
+
+            wrapper.find('.page-quick-sidebar-chat-users .media-list > .media').click(function () {
+                wrapperChat.addClass("page-quick-sidebar-content-item-shown");
+                var id = '#' + jQuery(this).attr("data-user");
+                $(id).removeClass("tree_user_expedientes");
+                $(id).addClass("tree_user_expedientes_shown");
+                tree = $(id);
+            });
+
+            wrapper.find('.page-quick-sidebar-chat-user .page-quick-sidebar-back-to-list').click(function () {
+                wrapperChat.removeClass("page-quick-sidebar-content-item-shown");
+                if (tree != '') {
+                    tree.removeClass("tree_user_expedientes_shown");
+                    tree.addClass("tree_user_expedientes");
+                }
+            });
+
+        };
+
+        return {
+            init: function () {
+                //layout handlers
+                handleQuickSidebarToggler(); // handles quick sidebar's toggler
+                handleQuickSidebarChat(); // handles quick sidebar's chats
+            }
+        };
+
+    }();
+</script>
+<script>
+    $('.modal').on('hidden.bs.modal', function () {
+        $(this).find('form')[0].reset();
+    });
+
+</script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

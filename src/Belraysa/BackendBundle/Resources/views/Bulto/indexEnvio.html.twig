@@ -1,0 +1,603 @@
+{% set layout = "BackendBundle::L-BRS.html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.css') }}"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.css') }}"/>
+     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/backend/global/plugins/select2/select2.css') }}"/>
+
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}Bultos | {{ concepto.tipo }} - {{ concepto }}{% endblock %}
+  {% block breadtitle %} <h1>Bultos | {{ concepto.tipo }} - {{ concepto }}</h1>
+      {% if concepto.contenedor.estado != 'CERRADO' %}
+          <button class="btn btn-primary" id="llenar_hbl">Llenar HBL</button>
+      {% endif %}
+  {% endblock %}
+    {% block breadcrumb %}
+        {% if concepto.tipo == 'ENA' %}
+            <li><a href="{{ path('ena') }}">ENAs</a></li>
+        {% elseif concepto.tipo == 'Envio' %}
+            <li><a href="{{ path('envio') }}">Env&iacute;os</a></li>
+        {% else %}
+            <li><a href="{{ path('menaje') }}">Menajes</a></li>
+        {% endif %}
+        <li class="active">Bultos | {{ concepto }}</li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="portlet light bordered">
+
+                <div class="portlet-body">
+                    <div id="tree_3" class="tree-demo">
+                        <ul>
+                            <li title="VA: {{ concepto.getValorAduanal() }} pto" class="concepto tooltips"
+                                data-tipo="concepto" data-id="{{ concepto.id }}"
+                                data-jstree='{ "type" : "concepto" }'>
+                                {{ concepto }}
+                                <ul>
+                                    {% for bulto in entities %}
+                                        <li title="VA: {{ bulto.getValorAduanal() }} pto" class="bulto tooltips"
+                                            data-tipo="bulto" data-id="{{ bulto.id }}" data-indice="{{ bulto.indice }}"
+                                            data-jstree='{ "type" : "bulto" }'>
+                                            <a href="">Bulto #{{ bulto.indice }}</a>
+                                            <ul>
+                                                {% for mercancia in bulto.mercancias %}
+                                                    <li title="VA: {{ mercancia.getValorAduanal() }} pto"
+                                                        class="mercancia tooltips" data-tipo="mercancia"
+                                                        data-jstree='{ "type" : "mercancia" }'
+                                                        data-edit="{{ path('mercancia_edit', { 'id': mercancia.id }) }}"
+                                                        data-move="{{ path('mercancia_move', { 'id': mercancia.id }) }}"
+                                                        data-id="{{ mercancia.id }}">
+                                                        {{ mercancia.getDescripcion() }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                    {% if concepto.contenedor.estado != 'CERRADO' %}
+                        <div class="alert alert-info no-margin margin-top-10">
+                            Nota: Arrastre mercanc&iacute;as de un bulto a otro para cambiar su ubicaci&oacute;n. Haga click
+                            derecho encima de un nodo del &aacute;rbol para ver las opciones disponibles.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            {% set va1 = concepto.getValorAduanal/100 %}
+            {% set va = va1|round(2)*100 %}
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div title="{{ va }}% Valor aduanal" class="progress tooltips">
+                        <div class="progress-bar progress-bar-success" style="width: {{ va }}%">
+									<span class="sr-only">
+									{{ va }}% Valor aduanal </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="portlet-body" id="detalles">
+                    <div style="text-align: center" class="well no-margin">
+                        <h2 style="color: #6c6159">Haga click en una mercanc&iacute;a para ver sus detalles, en un bulto
+                            para ver su etiqueta y en un concepto para ver sus etiquetas y HBL.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if concepto.getMercancias()|length == 0 %}
+        <div class="modal fade modalNewMercancia" id="modalNewMercancia" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close btn-close"
+                                data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title">
+                            Crear mercanc&iacute;a
+                        </h4>
+                        <h5>
+                            Bulto # <span id="bulto_actual"></span>
+                        </h5>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        {{ include("BackendBundle:Mercancia:new3.html.twig") }}
+                    </div>
+
+                    <div id="site_activities_loading" style="position: absolute; left: 50%; top: 50%;" class="hidden">
+                        <img src="{{ asset('bundles/backend/admin/layout/img/loading.gif') }}" alt="loading"/>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-flat btn-default btn-close"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button form="newMercancia" type="submit" class="btn btn-flat btn-primary">
+                            Guardar
+                        </button>
+                        <button class="btn btn-flat btn-primary hidden" type="submit" id="crear_mas_mercancia">
+                            <i class="fa fa-save"></i> + Mercancía
+                        </button>
+                        <button class="btn btn-flat btn-primary hidden" id="crear_mas_bulto">
+                            <i class="fa fa-save"></i> + Bulto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="modal fade modalNewMercancia" id="modalNewMercancia2" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title">
+                            Crear mercanc&iacute;a
+                        </h4>
+                        <h5>
+                            Bulto # <span id="bulto_actual"></span>
+                        </h5>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        {{ include("BackendBundle:Mercancia:new2.html.twig") }}
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-flat btn-default btn-close"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button form="newMercancia" type="submit" class="btn btn-flat btn-primary">
+                            Guardar
+                        </button>
+                        <button class="btn btn-flat btn-primary hidden" type="submit" id="crear_mas_mercancia">
+                            <i class="fa fa-save"></i> + Mercancía
+                        </button>
+                        <button class="btn btn-flat btn-primary hidden" id="crear_mas_bulto">
+                            <i class="fa fa-save"></i> + Bulto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="modal fade" id="modalEdit" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        Editar datos
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div id="modalEditContent" class="modal-body">
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="edit" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript_inline %}
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
+            type="text/javascript"></script>
+
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/backend/global/plugins/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js') }}"
+            type="text/javascript"></script>
+    <script>
+    var res = '{{ concepto.contenedor.estado }}';
+
+    $("#tree_3").jstree({
+        "core": {
+            "themes": {
+                "responsive": false
+            },
+            // so that create works
+
+            "check_callback": function (operation, node, node_parent, node_position, more) {
+                var currentNode = $('#tree_3').jstree('get_node', node, true);
+                var targetNode = $('#tree_3').jstree('get_node', node_parent, true);
+            //    alert(targetNode.data('id'));
+                if (operation == 'move_node') {
+                    if(res == "CERRADO"){
+                        return false;
+                    }
+
+                    var $form = null,
+                            url = currentNode.data('move'),
+                            method = 'post';
+                    $.ajax({
+                        data: {'target': targetNode.data('id')},
+                        type: method,
+                        url: url,
+                        success: function (response) {
+                            location.href = "{{ path('bulto', {'concepto':concepto.id}) }}";
+
+                        }
+                    });
+                }
+                // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
+                // in case of 'rename_node' node_position is filled with the new node name
+                return true;
+            }
+        },
+        "types": {
+            "mercancia": {
+                "icon": "fa fa-circle-o icon-state-info",
+                "valid_children": ''
+            },
+            "bulto": {
+                "icon": "icon-social-dropbox icon-state-success",
+                "valid_children": ['mercancia']
+
+            },
+            "concepto": {
+                "icon": "fa fa-barcode",
+                "valid_children": ['bulto']
+            },
+            "#": {
+                "valid_children": ['concepto']
+            }
+
+        },
+        "contextmenu": {
+            items: customMenu,
+            select_node: false
+        },
+
+        "dnd": {
+            check_while_dragging: false
+        },
+        "plugins": ["contextmenu", "dnd", "state", "types"]
+    })
+    function customMenu(node) {
+        // The default set of all items
+        var currentNode = $('#tree_3').jstree('get_node', node, true);
+        var items = {
+            createBultoItem: { // The "delete" menu item
+                label: "Crear bulto",
+                action: function () {
+
+                    url = "{{ path('bulto_create') }}";
+                    $.ajax({
+                        data: {'id': "{{ concepto.id }}"},
+                        type: 'get',
+                        url: url,
+                        success: function (response) {
+                            //    node = $('#tree_3').jstree('create_node', node, { text: 'Bulto #' + response, icon: 'icon-social-dropbox icon-state-success' });
+                            location.href = "{{ path('bulto', {'concepto':concepto.id}) }}";
+
+                        }
+                    });
+                }
+            },
+
+            createMercanciaItem: { // The "delete" menu item
+                label: "Crear mercancía",
+                action: function () {
+                    if ("{{concepto.getMercancias()|length}}" == 0) {
+                        document.getElementById('bultoid').value = currentNode.data('id');
+                        document.getElementById('bulto_actual').innerHTML = currentNode.data('indice');
+                        $('#modalNewMercancia').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                    } else {
+                        document.getElementById('bultoid2').value = currentNode.data('id');
+                        $('#modalNewMercancia2').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                    }
+                }
+            },
+
+            editMercanciaItem: { // The "delete" menu item
+                label: "Editar mercancía",
+                action: function () {
+                    var $form = null,
+                            url = currentNode.data('edit'),
+                            method = 'post';
+                    $.ajax({
+                        data: null,
+                        type: method,
+                        url: url,
+                        success: function (response) {
+                            $('#modalEditContent').html(response);
+                            $('#modalEdit').modal({
+                                backdrop: 'static',
+                                keyboard: false
+                            });
+
+                        }
+                    });
+                }
+            },
+
+            deleteBultoItem: { // The "delete" menu item
+                label: "Eliminar bulto",
+                action: function () {
+
+                    url = "{{ path('bulto_delete') }}";
+                    $.ajax({
+                        data: {'id': currentNode.data('id')},
+                        type: 'get',
+                        url: url,
+                        success: function (response) {
+                            //  $('#tree_3').jstree('delete_node', node, true);
+                            location.href = "{{ path('bulto', {'concepto':concepto.id}) }}";
+
+                        }
+                    });
+                }
+            },
+
+            deleteMercanciaItem: { // The "delete" menu item
+                label: "Eliminar mercancía",
+                action: function () {
+
+                    url = "{{ path('mercancia_delete') }}";
+                    $.ajax({
+                        data: {'id': currentNode.data('id')},
+                        type: 'get',
+                        url: url,
+                        success: function (response) {
+                            //  $('#tree_3').jstree('delete_node', node, true);
+                            location.href = "{{ path('bulto', {'concepto':concepto.id}) }}";
+
+                        }
+                    });
+                }
+            }
+        };
+
+        if (currentNode.hasClass("bulto")) {
+            // Delete the "delete" menu item
+            delete items.deleteMercanciaItem;
+            delete items.editMercanciaItem;
+            delete items.createBultoItem;
+        }
+
+        if (currentNode.hasClass("concepto")) {
+            // Delete the "delete" menu item
+            delete items.deleteBultoItem;
+            delete items.deleteMercanciaItem;
+            delete items.editMercanciaItem;
+            delete items.createMercanciaItem;
+        }
+
+        if (currentNode.hasClass("mercancia")) {
+            // Delete the "delete" menu item
+            delete items.deleteBultoItem;
+            delete items.createBultoItem;
+            delete items.createMercanciaItem;
+        }
+
+        if(res == "CERRADO"){
+            delete items.createMercanciaItem;
+            delete items.editMercanciaItem;
+            delete items.deleteMercanciaItem;
+            delete items.createBultoItem;
+            delete items.deleteBultoItem;
+        }
+
+        return items;
+    }
+
+
+    // handle link clicks in tree nodes(support target="_blank" as well)
+    $('#tree_3').on('select_node.jstree', function (e, data) {
+
+        var tipo = $('#' + data.selected).data('tipo');
+        if (tipo) {
+            var id = $('#' + data.selected).data('id');
+
+            if (id) {
+
+                if (tipo == 'mercancia') {
+                    url = "{{ path('mercancia_show') }}";
+                    $.ajax({
+                        data: {'id': id},
+                        type: 'get',
+                        url: url,
+                        success: function (response) {
+                            $('#detalles').html(response);
+
+                        }
+                    });
+                } else if (tipo == 'bulto') {
+                    url = "{{ path('bulto_show') }}";
+                    $.ajax({
+                        data: {'id': id},
+                        type: 'get',
+                        url: url,
+                        success: function (response) {
+                            $('#detalles').html(response);
+
+                        }
+                    });
+                } else if (tipo == 'concepto') {
+                    url = "{{ path('concepto_show') }}";
+                    $.ajax({
+                        data: {'id': id},
+                        type: 'get',
+                        url: url,
+                        success: function (response) {
+                            $('#detalles').html(response);
+
+                        }
+                    });
+                }
+
+
+            }
+        }
+    });
+
+
+    $('#llenar_hbl').on('click', function(){
+        $('#crear_mas_mercancia').removeClass("hidden");
+        $('#crear_mas_bulto').removeClass("hidden");
+        document.getElementsByClassName('bulto_id')[0].value = -1;
+        document.getElementById('bulto_actual').innerHTML = {{ entities.Count() + 1 }};
+        $('.modalNewMercancia').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    });
+
+    $('.btn-close').on('click', function(){
+        $('#crear_mas_mercancia').addClass("hidden");
+        $('#crear_mas_bulto').addClass("hidden");
+        if($('.bulto_id').val() != -1){
+            location.reload();
+        }
+    });
+
+    $('#crear_mas_mercancia').on('click', function(e){
+        $('#site_activities_loading').removeClass("hidden");
+        url = "{{ path('mercancia_mas_bulto') }}";
+        data = $('#newMercancia').serialize() + "&mas_bulto=" + false;
+        $.ajax({
+            data: data,
+            type: 'post',
+            url: url,
+            success: function (response) {
+                document.getElementsByClassName('bulto_id')[0].value = response['id'];
+
+                $('#relacion').removeClass("hidden");
+                var opt = document.createElement('option');
+                opt.value = response['mercancia_id'];
+                opt.innerHTML = response['mercancia_desc'] + " - Bulto # " + response['mercancia_indice'];
+                opt.selected = true;
+                $('#miRelacionada').append(opt);
+                $('#arancel select').attr('disabled', 'disabled');
+
+                $('#site_activities_loading').addClass("hidden");
+                alert("La mercancía fue creada");
+                $("#newMercancia")[0].reset();
+            },
+            error: function (response) {
+                alert(JSON.stringify(response));
+            }
+        });
+    });
+
+    $('#crear_mas_bulto').on('click', function(){
+        $('#site_activities_loading').removeClass("hidden");
+        url = "{{ path('mercancia_mas_bulto') }}";
+        data = $('#newMercancia').serialize() + "&mas_bulto=" + true;
+        $.ajax({
+            data: data,
+            type: 'post',
+            url: url,
+            success: function (response) {
+                document.getElementById('bulto_actual').innerHTML = response['indice'];
+                document.getElementsByClassName('bulto_id')[0].value = response['id'];
+
+                $('#relacion').removeClass("hidden");
+                var opt = document.createElement('option');
+                opt.value = response['mercancia_id'];
+                opt.innerHTML = response['mercancia_desc'] + " - Bulto # " + response['mercancia_indice'];
+                opt.selected = true;
+                $('#miRelacionada').append(opt);
+                $('#arancel select').attr('disabled', 'disabled');
+
+                $('#site_activities_loading').addClass("hidden");
+                alert("La mercancía fue creada");
+                $("#newMercancia")[0].reset();
+            },
+            error: function (response) {
+                alert(JSON.stringify(response));
+            }
+        });
+    });
+
+    </script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": true,
+            "newestOnTop": false,
+            "progressBar": false,
+            "rtl": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": 300,
+            "hideDuration": 1000,
+            "timeOut": 10000,
+            "extendedTimeOut": 1000,
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+
+        function lanzarOk(mensaje) {
+            Command: toastr["success"](mensaje);
+        }
+        function lanzarError(mensaje) {
+            Command: toastr["error"](mensaje);
+        }
+    </script>
+
+{% endblock %}

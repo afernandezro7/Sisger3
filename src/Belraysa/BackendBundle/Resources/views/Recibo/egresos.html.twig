@@ -1,0 +1,827 @@
+{% set layout = "BackendBundle::" ~ workspace.currentWorkspace.getName() ~ ".html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.css') }}"/>
+     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/backend/global/plugins/select2/select2.css') }}"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}"/>
+
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}Egresos{% endblock %}
+  {% block breadtitle %} <h1>Egresos</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li class="active">Egresos</li>
+    {% endblock %}
+
+{% block content %}
+
+
+    <div class="row">
+        <div class="table-responsive">
+            <form id="form-egresos" action="{{ path('recibo_salvar_egresos') }}" method="post">
+                <input type="hidden" id="save-id" name="position" value="">
+                <table class="table table-striped table-bordered table-advance table-hover"
+                       id="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Tipo</th>
+                        <th>Fecha</th>
+                        <th style="width: 15%">Importe</th>
+                        <th>Pago</th>
+                        <th style="width: 15%">Cuenta</th>
+                        <th>A</th>
+                        <th>Concepto</th>
+                        <th style="width: 20%">Detalles</th>
+                        <th style="width: 13%">Exp.</th>
+
+                        <th style="text-align: center; width: 13%">
+                            <a title="Adicionar" type="button" href="#" onclick="
+        addRow();
+         var now = new Date()
+        $('.date-picker').datepicker({
+                autoclose: true,
+                endDate: now
+            });
+$('.importe').TouchSpin({
+        min: 0,
+        max: '9 999 999',
+        step: 0.01,
+        decimals: 2,
+        boostat: 5,
+        maxboostedstep: 10,
+
+        });
+$('.select2me').select2();"
+                               class="btn btn-flat btn-default btn-sm"><i
+                                        class="fa fa-plus"></i></a>
+                            <button title="Guardar" type="submit"
+                                    class="btn btn-flat btn-success btn-sm"><i
+                                        class="fa fa-save"></i></button>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for receipe in entities %}
+                        <tr {% if receipe.isActivo() == false %}   style="  color:#a7a7a7; text-decoration: line-through" {% endif %} >
+                            {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                            <td>{{ receipe.sisgerCode }}</td>
+                            <td>
+                                {% if receipe.tipo %}
+                                    {% if receipe.tipo == 'Gasto' %}
+                                        <span class="label label-danger">GASTO</span>
+                                    {% elseif receipe.tipo == 'Costo' %}
+                                        <span class="label label-warning">COSTO</span>
+                                    {% elseif receipe.tipo == 'Costo recurrente' %}
+                                        <span class="label label-warning">COSTO RECURRENTE</span>
+                                    {% else %}
+                                        <span class="label label-success">INGRESO</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="label label-success">INGRESO</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ receipe.fecha|date('d/m/Y') }}</td>
+                            <td>{% if receipe.importe < 0 %}
+                                    <label style="color: #8b0000">{{ receipe.importe }} USD</label>
+                                {% else %}
+                                    <label style="color: #008000">{{ receipe.importe }} USD</label>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ receipe.metodoPago }}</td>
+                            <td>{% if receipe.entrada %}{{ receipe.entrada.banking.name }}{% else %}  <span
+                                        class="label label-default">Sin especificar</span>{% endif %}</td>
+                            <td> {% if receipe.tipo %}
+                                    {% if receipe.tipo == 'Gasto' %}
+                                        {{ receipe.pagueA }}
+                                    {% elseif receipe.tipo == 'Costo' %}
+                                        {{ receipe.pagueA }}
+                                    {% elseif receipe.tipo == 'Costo recurrente' %}
+                                        {{ receipe.pagueA }}
+                                    {% else %}
+                                        {{ receipe.recibiDe }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ receipe.recibiDe }}
+
+                                {% endif %}
+                            </td>
+                            <td> {% if receipe.tipo %}
+                                    {% if receipe.tipo == 'Gasto' %}
+                                        {% for concepto in receipe.conceptosGasto %}
+                                            <span class="label label-default">  {{ concepto }}</span>&nbsp;
+                                        {% endfor %}
+                                    {% elseif receipe.tipo == 'Costo' %}
+                                        {% for concepto in receipe.conceptosCosto %}
+                                            <span class="label label-default">  {{ concepto }}</span>&nbsp;
+                                        {% endfor %}
+                                    {% elseif receipe.tipo == 'Costo recurrente' %}
+                                        {% for concepto in receipe.inventarios %}
+                                            <span class="label label-default">  {{ concepto }}</span>&nbsp;
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td>{{ receipe.detalles }}</td>
+                            <td>
+                                {% if receipe.expediente %}
+                                    <a href="{{ path('reply_show', { 'id': receipe.expediente.id }) }}">{{ receipe.expediente.sisgerCode }}</a>
+                                {% endif %}
+                            </td>
+
+                            <td style="text-align: center">
+                                <div class="mailbox-controls">
+                                    <div class="btn-group">
+                                        <a title="Generar PDF" id="show_button" target="_blank"
+                                           href="{{ path('recibo_generate_pdf', { 'reciboId': receipe.id}) }}"
+                                           class="btn btn-flat btn-danger btn-sm"><i class="fa fa-file-pdf-o"></i>
+                                        </a>
+
+                                        {% if app.user.role.name == "ROLE_SUPER_ADMIN" %}
+                                            {% if receipe.isActivo() %}
+                                                <a title="Cancelar" id="cancel_button" data-toggle="modal"
+                                                   type="button"
+                                                   data-target="#myModalHorizontal1" tabindex="-1"
+                                                   data-id="{{ receipe.id }}"
+                                                   href="#"
+                                                   class="btn btn-flat btn-default btn-sm"><i
+                                                            class="fa fa-remove"></i></a>
+                                            {% else %}
+                                                <a title="Activar" id="activate_button"
+                                                   href="{{ path('recibo_activate', { 'id': receipe.id }) }}"
+                                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-check"></i>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+
+            <div id="table-footer" class="text-right">
+                {{ knp_pagination_render(entities) }}
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalHorizontal1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Cancelar recibo
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form action="{{ path('recibo_cancel') }}" role="form" id="cancelRecibo" method="get"
+                          class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red"
+                                                                        class="required">*&nbsp;</span>Motivo</label>
+
+                            <div class="col-sm-10">
+                                <textarea class="form-control" type="text" name="motivo" id="motivo"></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" id="id">
+                    </form>
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn brn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="cancelRecibo" type="submit" class="btn btn-flat btn-primary">
+                        <i class="fa fa-save"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalHorizontal2" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="putYourTitleHere2">
+
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div id="putContentHere2" class="modal-body">
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <div id="putYourFooterHere2">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript_inline %}
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
+            type="text/javascript"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/backend/global/plugins/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/backend/others/accounting.js-master/accounting.js') }}"></script>
+    <script>
+        var rows_temp_index = 1;
+        $('.date-picker').datepicker({
+            autoclose: true
+        });
+    </script>
+    <script>
+        $("#recibo_importe_desde").TouchSpin({
+            buttondown_class: 'btn blue',
+            buttonup_class: 'btn blue',
+            min: 0,
+            max: '9 999 999',
+            step: 0.01,
+            decimals: 2,
+            boostat: 5,
+            maxboostedstep: 10,
+            prefix: '$'
+        });
+        $("#recibo_importe_hasta").TouchSpin({
+            buttondown_class: 'btn blue',
+            buttonup_class: 'btn blue',
+            min: 0,
+            max: '9 999 999',
+            step: 0.01,
+            decimals: 2,
+            boostat: 5,
+            maxboostedstep: 10,
+            prefix: '$'
+        });
+
+    </script>
+
+    <script>
+        var table = $('#table');
+
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": true,
+            "newestOnTop": false,
+            "progressBar": false,
+            "rtl": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": 300,
+            "hideDuration": 1000,
+            "timeOut": 10000,
+            "extendedTimeOut": 1000,
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+
+        function lanzarOk(mensaje) {
+            Command: toastr["success"](mensaje);
+        }
+
+        function lanzarError(mensaje) {
+            Command: toastr["error"](mensaje);
+        }
+
+    </script>
+    <script>
+        function updateSearchBox(selectTipo) {
+            var tipo = selectTipo.value;
+            if (tipo == '') {
+                document.getElementById('recibo_concepto').disabled = true;
+                document.getElementById('recibo_recibi_de').disabled = true;
+            } else {
+                var html = '<option value=""></option>';
+                document.getElementById('recibo_concepto').disabled = false;
+                if (tipo == 'Ingreso') {
+                    {% for servicio in workspace.currentWorkspace.getServices() %}
+                    html = html + '<option value="{{ servicio.id }}">' + "{{ servicio.name }}" + '</option>';
+                    {% endfor %}
+                    $('#recibo_concepto').html(html);
+                } else if (tipo == 'Costo') {
+                    {% for servicio in workspace.currentWorkspace.getConceptosCosto() %}
+                    html = html + '<option value="{{ servicio.id }}">' + "{{ servicio.nombre }}" + '</option>';
+                    {% endfor %}
+                    $('#recibo_concepto').html(html);
+                }
+                else if (tipo == 'Costo recurrente') {
+                    {% for servicio in workspace.currentWorkspace.getInventarios() %}
+                    html = html + '<option value="{{ servicio.id }}">' + "{{ servicio.nombre }}" + '</option>';
+                    {% endfor %}
+                    $('#recibo_concepto').html(html);
+                }
+                else if (tipo == 'Gasto') {
+                    {% for servicio in workspace.currentWorkspace.getConceptosGasto() %}
+                    html = html + '<option value="{{ servicio.id }}">' + "{{ servicio.nombre }}" + '</option>';
+                    {% endfor %}
+                    $('#recibo_concepto').html(html);
+                }
+                document.getElementById('recibo_recibi_de').disabled = false;
+            }
+        }
+    </script>
+    <script>
+        $(document).on("click", '#cancel_button', function (e) {
+            var id = $(this).data('id');
+            $("#id").val(id);
+        });
+
+    </script>
+    <script>
+        $(document).on("click", '#receipe_gasto_button', function (e) {
+            e.preventDefault();
+            var $form = null,
+                url = $(this).data('path'),
+                method = 'post';
+            $.ajax({
+                data: null,
+                type: method,
+                url: url,
+                success: function (response) {
+                    $('#putContentHere2').html(response);
+                    $('#putYourFooterHere2').html('<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">Cerrar</button><button form="newReceipe" type="submit" class="btn btn-flat btn-danger"><i class="fa fa-file-pdf-o"></i> Generar</button>');
+                    $('#putYourTitleHere2').html('Generar recibo de gasto');
+                    $('#myModalHorizontal2').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $("#belraysa_backendbundle_gasto_importe").TouchSpin({
+                        buttondown_class: 'btn red',
+                        buttonup_class: 'btn red',
+                        min: 0,
+                        max: '9 999 999',
+                        step: 0.01,
+                        decimals: 2,
+                        boostat: 5,
+                        maxboostedstep: 10,
+                        prefix: '$'
+                    });
+                    stopPageLoading();
+                }
+            });
+        });
+        $(document).on("click", '#receipe_costo_button', function (e) {
+            e.preventDefault();
+            var $form = null,
+                url = $(this).data('path'),
+                method = 'post';
+            $.ajax({
+                data: null,
+                type: method,
+                url: url,
+                success: function (response) {
+                    $('#putContentHere2').html(response);
+                    $('#putYourFooterHere2').html('<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">Cerrar</button><button form="newReceipe" type="submit" class="btn btn-flat btn-danger"><i class="fa fa-file-pdf-o"></i> Generar</button>');
+                    $('#putYourTitleHere2').html('Generar recibo de costo');
+                    $('#myModalHorizontal2').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $("#belraysa_backendbundle_costo_importe").TouchSpin({
+                        buttondown_class: 'btn red',
+                        buttonup_class: 'btn red',
+                        min: 0,
+                        max: '9 999 999',
+                        step: 0.01,
+                        decimals: 2,
+                        boostat: 5,
+                        maxboostedstep: 10,
+                        prefix: '$'
+                    });
+                    stopPageLoading();
+                }
+            });
+        });
+        $(document).on("click", '#receipe_costorecurrente_button', function (e) {
+            e.preventDefault();
+            var $form = null,
+                url = $(this).data('path'),
+                method = 'post';
+            $.ajax({
+                data: null,
+                type: method,
+                url: url,
+                success: function (response) {
+                    $('#putContentHere2').html(response);
+                    $('#putYourFooterHere2').html('<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">Cerrar</button><button form="newReceipe" type="submit" class="btn btn-flat btn-danger"><i class="fa fa-file-pdf-o"></i> Generar</button>');
+                    $('#putYourTitleHere2').html('Generar recibo de costo recurrente');
+                    $('#myModalHorizontal2').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $("#belraysa_backendbundle_costorecurrente_importe").TouchSpin({
+                        buttondown_class: 'btn red',
+                        buttonup_class: 'btn red',
+                        min: 0,
+                        max: '9 999 999',
+                        step: 0.01,
+                        decimals: 2,
+                        boostat: 5,
+                        maxboostedstep: 10,
+                        prefix: '$'
+                    });
+                    stopPageLoading();
+                }
+            });
+        });
+    </script>
+    <script>
+        function addRow() {
+
+            //generales
+            var table = document.getElementById("table");
+            var rowCount = rows_temp_index;
+            rows_temp_index = rows_temp_index + 1;
+            var row = table.insertRow(1);
+            row.id = rowCount;
+
+            //id
+            var cell1 = row.insertCell(0);
+            var input_group_div = document.createElement("div");
+            var i = document.createElement("i");
+            i.className = "fa fa-key";
+            input_group_div.appendChild(i);
+            cell1.appendChild(input_group_div);
+
+            //tipo
+            var cell2 = row.insertCell(1);
+            var input_group_div = document.createElement("div");
+
+            var element2 = document.createElement("select");
+            element2.required = true;
+            element2.name = "egreso[" + rowCount + "][tipo]";
+            element2.className = "form-control select2me";
+
+            var option = document.createElement("option");
+            option.value = 'gasto';
+            option.text = 'Gasto'
+            element2.appendChild(option);
+
+            var option = document.createElement("option");
+            option.value = 'costo';
+            option.text = 'Costo'
+            element2.appendChild(option);
+
+            var option = document.createElement("option");
+            option.value = 'costo recurrente';
+            option.text = 'Costo recurrente'
+            element2.appendChild(option);
+
+            var element9 = document.createElement("select");
+            element9.required = true;
+            element9.name = "egreso[" + rowCount + "][conceptos][]";
+            element9.className = "form-control select2me multiple";
+            element9.multiple = "multiple";
+
+            $(element2).on("change", element2, function (e) {
+                startPageLoading();
+
+                for(l = 0; l< element9.childNodes.length; i++){
+                    element9.removeChild(element9.childNodes[l]);
+                }
+
+                var tipo = element2;
+                tipo = tipo[tipo.selectedIndex].label;
+                if (tipo == 'Gasto') {
+                    {% for concepto in ws.getConceptosGasto() %}
+                    var option = document.createElement("option");
+                    option.value = '{{ concepto.id }}';
+                    option.text = '{{ concepto.nombre }}';
+                    element9.appendChild(option);
+                    {% endfor %}
+                } else if (tipo == 'Costo') {
+                    {% for concepto in ws.getConceptosCosto() %}
+                    var option = document.createElement("option");
+                    option.value = '{{ concepto.id }}';
+                    option.text = '{{ concepto.nombre }}';
+                    element9.appendChild(option);
+                    {% endfor %}
+                } else {
+                    {% for concepto in ws.getInventarios() %}
+                    var option = document.createElement("option");
+                    option.value = '{{ concepto.id }}';
+                    option.text = '{{ concepto.nombre }}';
+                    element9.appendChild(option);
+                    {% endfor %}
+                }
+                stopPageLoading();
+            });
+
+            input_group_div.appendChild(element2);
+            cell2.appendChild(input_group_div);
+
+            //fecha
+            var cell3 = row.insertCell(2);
+            var input_group_div = document.createElement("div");
+            input_group_div.className = "input-group";
+            var element3 = document.createElement("input");
+            element3.type = "text";
+            element3.required = true;
+            element3.name = "egreso[" + rowCount + "][fecha]";
+            element3.className = "form-control input-inline date-picker"
+            input_group_div.appendChild(element3);
+            cell3.appendChild(input_group_div);
+
+            //importe
+            var cell4 = row.insertCell(3);
+            var input_group_div = document.createElement("div");
+            var element4 = document.createElement("input");
+            element4.type = "text";
+            element4.required = true;
+            element4.name = "egreso[" + rowCount + "][importe]";
+            element4.className = "form-control importe"
+            input_group_div.appendChild(element4);
+            cell4.appendChild(input_group_div);
+
+
+            //suma
+        /*    var cell5 = row.insertCell(4);
+            var input_group_div = document.createElement("div");
+            var element5 = document.createElement("input");
+            element5.type = "text";
+            element5.name = "egreso[" + rowCount + "][suma]";
+            element5.required = true;
+            element5.className = "form-control"
+            element5.placeholder = "Suma";
+            input_group_div.appendChild(element5);
+            cell5.appendChild(input_group_div);*/
+
+            //metodo de pago
+            var cell6 = row.insertCell(4);
+            var input_group_div = document.createElement("div");
+            var element6 = document.createElement("select");
+            element6.required = true;
+            var element7 = document.createElement("select");
+            element7.required = false;
+            element6.name = "egreso[" + rowCount + "][metodoPago]";
+            element6.className = "form-control select2me";
+
+            {% for metodo in metodosPago %}
+            var option = document.createElement("option");
+            option.value = '{{ metodo.id }}';
+            option.text = '{{ metodo.name }}';
+            element6.appendChild(option);
+            {% endfor %}
+
+            $(element6).on("change", element6, function (e) {
+                startPageLoading();
+                var pm = element6;
+                pm = pm[pm.selectedIndex].label;
+
+                var url = '{{ path('banking_payment') }}',
+                    method = 'post';
+                $.ajax({
+                    data: {'pm': pm},
+                    type: method,
+                    url: url,
+                    success: function (response) {
+                        var opciones = '';
+                        for (i = 0; i < response.length; i++) {
+                            //        alert(response);
+                            opciones = opciones +
+                                '<option value = "' + response[i].id + '">' + response[i].name + '</option>';
+                        }
+                        $(element7).html(opciones);
+                        stopPageLoading();
+                    }
+                });
+            });
+
+            input_group_div.appendChild(element6);
+            cell6.appendChild(input_group_div);
+
+            //Banking
+            var cell7 = row.insertCell(5);
+            var input_group_div = document.createElement("div");
+            element7.name = "egreso[" + rowCount + "][banking]";
+            element7.id = "banking-" + rowCount;
+            element7.className = "form-control select2me";
+            input_group_div.appendChild(element7);
+            cell7.appendChild(input_group_div);
+
+            //pague a
+            var cell8 = row.insertCell(6);
+            var input_group_div = document.createElement("div");
+
+            var element8 = document.createElement("input");
+            element8.type = "text";
+            element8.name = "egreso[" + rowCount + "][a]";
+            element8.className = "form-control";
+            element8.placeholder = "Pagué a"
+            element8.required = true;
+            input_group_div.appendChild(element8);
+            cell8.appendChild(input_group_div);
+
+            //conceptos
+            var cell9 = row.insertCell(7);
+            var input_group_div = document.createElement("div");
+            input_group_div.appendChild(element9);
+            cell9.appendChild(input_group_div);
+
+            //detalles
+            var cell10 = row.insertCell(8);
+            var input_group_div = document.createElement("div");
+            var element10 = document.createElement("textarea");
+            element10.required = true;
+            element10.name = "egreso[" + rowCount + "][detalles]";
+            element10.className = "form-control"
+            input_group_div.appendChild(element10);
+            cell10.appendChild(input_group_div);
+
+            //expediente
+            var cell11 = row.insertCell(9);
+            var input_group_div = document.createElement("div");
+            var element11 = document.createElement("select");
+            element11.name = "egreso[" + rowCount + "][expediente]";
+            element11.className = "form-control select2me";
+            var option = document.createElement("option");
+            option.text = '';
+            option.value = '';
+            element11.appendChild(option);
+            {% for expediente in ws.getReplies() %}
+            var option = document.createElement("option");
+            option.value = '{{ expediente.id }}';
+            option.text = '{{ expediente.sisgerCode }}'
+            element11.appendChild(option);
+            {% endfor %}
+
+            input_group_div.appendChild(element11);
+            cell11.appendChild(input_group_div);
+
+
+            //acciones
+            var cell12 = row.insertCell(10);
+            var input_group_div = document.createElement("div");
+
+            cell12.appendChild(input_group_div);
+
+            var mailbox_controls = document.createElement("div");
+            mailbox_controls.className = "mailbox-controls";
+
+            var btn_group = document.createElement("div");
+            btn_group.className = "btn-group";
+
+            /*  var save = document.createElement("a");
+              save.className = "btn btn-flat btn-success btn-sm";
+              save.type = "btn";
+              save.title = "Guardar";
+              i = document.createElement("i");
+              i.className = "fa fa-save";
+              save.appendChild(i);*/
+
+            var remove = document.createElement("a");
+            remove.className = "btn btn-flat btn-default btn-sm";
+            remove.type = "btn";
+            remove.title = "Eliminar";
+            i = document.createElement("i");
+            i.className = "fa fa-trash-o";
+            remove.appendChild(i);
+
+            //   btn_group.appendChild(save);
+            btn_group.appendChild(remove);
+
+            /*    $(save).on("click", save, function (e) {
+                    startPageLoading();
+                    document.getElementById('save-id').value = row.id;
+                    alert(document.getElementById('save-id').value);
+                    var $form = $('#form-egresos'),
+                        url = $form.attr('action'),
+                        method = $form.attr('method');
+                    /*$.ajax({
+                        data: $form.serialize(),
+                        type: method,
+                        url: url,
+                        success: function (response) {
+
+                            document.getElementById('save-id').value = "";
+                            stopPageLoading();*/
+            /*   $('#myModalHorizontal1').modal('hide');
+               var $service_selector = $('#belraysa_backendbundle_reply_services');
+               $service_selector.append('<option value="' + response[response.length - 1].id + '">' + response[response.length - 1].name + '</option>');*/
+
+            /*  }
+          });*/
+            /* });*/
+
+            $(remove).on("click", remove, function (e) {
+                deleteRow(row)
+            });
+
+            mailbox_controls.appendChild(btn_group);
+            input_group_div.appendChild(mailbox_controls);
+            cell12.appendChild(input_group_div);
+
+            //actualizar conceptos al crear row
+            var tipo = element2;
+            tipo = tipo[tipo.selectedIndex].label;
+            for(l = 0; l< element9.childNodes.length; i++){
+                element9.removeChild(element9.childNodes[l]);
+            }
+            if (tipo == 'Gasto') {
+                {% for concepto in ws.getConceptosGasto() %}
+                var option = document.createElement("option");
+                option.value = '{{ concepto.id }}';
+                option.text = '{{ concepto.nombre }}';
+                element9.appendChild(option);
+                {% endfor %}
+            } else if (tipo == 'Costo') {
+                {% for concepto in ws.getConceptosCosto() %}
+                var option = document.createElement("option");
+                option.value = '{{ concepto.id }}';
+                option.text = '{{ concepto.nombre }}';
+                element9.appendChild(option);
+                {% endfor %}
+            } else {
+                {% for concepto in ws.getInventarios() %}
+                var option = document.createElement("option");
+                option.value = '{{ concepto.id }}';
+                option.text = '{{ concepto.nombre }}';
+                element9.appendChild(option);
+                {% endfor %}
+            }
+
+            //actualizar banking al crear row
+            var pm = element6;
+            pm = pm[pm.selectedIndex].label;
+
+            var url = '{{ path('banking_payment') }}',
+                method = 'post';
+            $.ajax({
+                data: {'pm': pm},
+                type: method,
+                url: url,
+                success: function (response) {
+                    var opciones = '';
+                    for (i = 0; i < response.length; i++) {
+                        //        alert(response);
+                        opciones = opciones +
+                            '<option value = "' + response[i].id + '">' + response[i].name + '</option>';
+                    }
+                    $(element7).html(opciones);
+                }
+            });
+        }
+
+        function deleteRow(row) {
+
+            try {
+                var table = document.getElementById("table");
+
+                table.deleteRow(row.rowIndex);
+
+
+            } catch (e) {
+                alert(e);
+            }
+        }
+
+    </script>
+
+
+
+{% endblock %}

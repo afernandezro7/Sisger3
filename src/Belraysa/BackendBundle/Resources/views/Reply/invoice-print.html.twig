@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Invoice</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/bootstrap/css/bootstrap.min.css') }}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/dist/css/AdminLTE.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/dist/css/skins/skin-custom.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/iCheck/all.css') }}">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="{{ asset('bundles/backend/lte/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/dist/js/app.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/iCheck/icheck.min.js') }}"></script>
+
+    <![endif]-->
+</head>
+<body onload="window.print();">
+<div class="wrapper">
+<!-- Content Header (Page header) -->
+<!-- Main content -->
+<section class="invoice">
+<!-- title row -->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="col-sm-12">
+            <img class="pull-right" height=50px"
+                 onError="this.onerror=null;this.src='{{ asset('uploads/images/belraysa.png') }}';"
+                 src="{{ asset('uploads/agencyLogos/'~reply.user.workspace.logo) }}">
+        </div>
+        <div class="page-header" align="center">
+
+
+            <p align="center" style="display: inline; "><strong><u>EXPEDIENTE DE CLIENTES</u></strong></p>
+
+        </div>
+        <!-- /.col -->
+    </div>
+</div>
+<!-- info row -->
+<div class="row invoice-info">
+<div class="col-xs-12 table-responsive">
+
+    <table class="col-xs-12 table table-responsive">
+        <tbody>
+        <tr>
+            <td colspan="2" style="border-top:none;padding: 0px">
+                Expediente:
+                <small>
+                    {{ reply.sisgerCode }}</small>
+                <br>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td style="border-top-color: #fff;padding: 0px" colspan="1" class="col-sm-1"><strong>Nombre y
+                    Apellidos:</strong></td>
+            <td style="border-top-color: #fff;padding: 0px" colspan="7"
+                class="col-sm-11"> {{ reply.precioVentaLider[0].cliente.firstName }} {{ reply.precioVentaLider[0].cliente.lastName }}
+                <hr style="margin-top: 0px; border-top:1px solid #a7a5a5">
+            </td>
+        </tr>
+
+        </tr>
+        <tr>
+            <td style="border-top-color: #fff;padding: 0px" colspan="1" class="col-sm-1"><strong>Fechas: </strong></td>
+            <td style="border-top-color: #fff;padding: 0px" colspan="1" class="col-sm-1">
+                Del: {{ reply.beginDate|date('d/m/Y') }} al {{ reply.finishDate|date('d/m/Y') }}
+                <hr style="margin-top: 0px; border-top:1px solid #a7a5a5">
+            </td>
+            <td style="border-top-color: #fff;padding: 0px" colspan="1" class="col-sm-1"><strong>Cant. noches: </strong></td>
+            <td style="border-top-color: #fff;padding: 0px" colspan="1" class="col-sm-1">
+            {{ noches }} noches
+                <hr style="margin-top: 0px; border-top:1px solid #a7a5a5">
+            </td>
+            <td style="border-top-color: #fff;padding: 0px" class="col-sm-1" align="right"><strong>Vendedor: </strong>
+            </td>
+            <td align="center" style="border-top-color: #fff;padding: 0px"
+                class="col-sm-1"> {{ reply.user.firstName }} {{ reply.user.lastName }}
+                <hr style="margin-top: 0px; border-top:1px solid #a7a5a5">
+            </td>
+        </tr>
+        <tr>
+            <td style="border-top-color: #fff;padding: 0px" class="col-sm-1"><strong>Cantidad de Pax: </strong></td>
+            <td align="center" style="border-top-color: #fff;padding: 0px" class="col-sm-1">  {{ reply.pax }}
+                <hr style="margin-top: 0px; border-top:1px solid #a7a5a5">
+            </td>
+
+            <td style="border-top-color: #fff;padding: 0px" class="col-sm-1" align="right"><strong>Precio: </strong>
+            </td>
+            <td align="center" style="border-top-color: #fff;padding: 0px" class="col-sm-1">${{ reply.price }}
+                <hr style="margin-top: 0px; border-top:1px solid #a7a5a5">
+            </td>
+
+        </tr>
+        <tr>
+            <td style="border-top-color: #fff;padding: 0px" colspan="8" class="col-sm-12"><strong>Servicios
+                    contratados: </strong>
+            </td>
+        </tr>
+        <tr>
+            {% set ids = {} %}
+            {% for s in reply.services %}
+                {% set ids = ids|merge({(loop.index0): s.id}) %}
+            {% endfor %}
+            <td style="border-top-color: #fff;padding: 0px;width: 67%" colspan="8">
+                {% for service in services %}
+
+                    <div style="width: 25%;float: left">
+                        <input type="checkbox" disabled
+                               value="{{ service.id }}" {% for id in ids %}{% if service.id == id %} checked="true" {% endif %}{% endfor %}> {{ service.name }}
+                    </div>
+
+
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td style="border-top-color: #fff" colspan="1" class="col-sm-1"><strong>Teléfonos: </strong></td>
+            <td style="border-top-color: #fff" colspan="7" class="col-sm-11">
+                {% if  reply.precioVentaLider[0].cliente.phones %}
+                    {{ reply.precioVentaLider[0].cliente.phones }}
+                    <hr style="margin: 0px; border-top:1px solid #a7a5a5">
+                {% else %}
+                    <br>
+                    <hr style="margin: 0px; border-top:1px solid #a7a5a5">
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td style="border-top-color: #fff" colspan="1" class="col-sm-1"><strong>Correo: </strong></td>
+            <td style="border-top-color: #fff" colspan="7" class="col-sm-11">
+                {% if  reply.precioVentaLider[0].cliente.email %}
+                    {{ reply.precioVentaLider[0].cliente.email }}
+                    <hr style="margin: 0px; border-top:1px solid #a7a5a5">
+                {% else %}
+                    <br>
+                    <hr style="margin: 0px; border-top:1px solid #a7a5a5">
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <td align="center" style="border-top-color: #fff" colspan="8" class="col-sm-12">
+                <strong>Observaciones: </strong></td>
+        </tr>
+        <tr>
+            <td style="border-top-color: #fff" colspan="8"
+                class="col-sm-12"> {{ reply.observations }}
+                {% if reply.observations %}
+                    <hr style="margin-top: 0px; border-top:1px solid #a7a5a5">
+                    <hr style="margin-top: 30px; border-top:1px solid #a7a5a5">
+                    <hr style="margin-top: 30px; border-top:1px solid #a7a5a5">
+                {% else %}
+                    <hr style="border-top:1px solid #a7a5a5">
+                    <hr style="margin-top: 30px; border-top:1px solid #a7a5a5">
+                    <hr style="margin-top: 30px; border-top:1px solid #a7a5a5">
+                {% endif %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<!-- /.row -->
+{# <div class="col-xs-12 table-responsive">
+     <table id="dinamicTable" class="table table-striped">
+         <thead>
+         <tr>
+             <th>PRECIO</th>
+             <th>COSTO</th>
+             <th>ABONOS</th>
+             <th>UTILIDAD BRUTA</th>
+             <th>UTILIDAD REAL</th>
+         </tr>
+         </thead>
+         <tbody>
+         {% for anexo in reply.anexos %}
+             <tr>
+                 <td>{% if anexo.price !=0 %}{{ anexo.price }}{% else %}&nbsp;{% endif %}</td>
+                 <td>{% if anexo.cost !=0 %}{{ anexo.cost }}{% else %}c{% endif %}</td>
+                 <td>{% if anexo.abonos !=0 %}{{ anexo.abonos }}{% else %}&nbsp;{% endif %}</td>
+                 <td>{% if anexo.uNeta !=0 %}{{ anexo.uNeta }}{% else %}&nbsp;{% endif %}</td>
+                 <td>{% if anexo.uBruta !=0 %}{{ anexo.uBruta }}{% else %}&nbsp;{% endif %}</td>
+             </tr>
+         {% endfor %}
+         </tbody>
+     </table>
+     <br>
+     <div align="center">
+         <label>1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 1 0 - 11 - 12 - 13 - 14 - 15 - 16 - 17 - 18 - 19 - 20
+             - 21 - 22 - 23 - 24 - 25 - 26 - 27 - 28 - 29 - 30</label>
+     </div>
+     <br>
+     <br>
+     <br>
+     <!-- /.box-body -->
+ </div>#}
+<div class="col-xs-12 table-responsive">
+    <table id="dinamicTable" class="table">
+        <thead>
+        <tr>
+            <th style="border: 1px solid #a7a5a5">PRECIO</th>
+            <th style="border: 1px solid #a7a5a5">COSTO</th>
+            <th style="border: 1px solid #a7a5a5">ABONOS</th>
+            <th style="border: 1px solid #a7a5a5">UTILIDAD BRUTA</th>
+            <th style="border: 1px solid #a7a5a5">UTILIDAD REAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td style="border: 1px solid #a7a5a5">
+                {#<div class="input-group">
+                    <div class="input-group-addon box-default">
+                        $
+                    </div>
+                    <input name="anexoprice[]" class="form-control" type="text">  </div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {#  <div class="input-group">
+                    <div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexocost[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {# <div class="input-group">
+                     <div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexoabono[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {#< <div class="input-group">
+                     {#<div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexouneta[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {# <div class="input-group">
+                   <div class="input-group-addon box-default">
+                        $
+                    </div>
+                    <input name="anexoubruta[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #a7a5a5">
+                {#<div class="input-group">
+                    <div class="input-group-addon box-default">
+                        $
+                    </div>
+                    <input name="anexoprice[]" class="form-control" type="text">  </div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {#  <div class="input-group">
+                    <div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexocost[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {# <div class="input-group">
+                     <div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexoabono[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {#< <div class="input-group">
+                     {#<div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexouneta[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {# <div class="input-group">
+                   <div class="input-group-addon box-default">
+                        $
+                    </div>
+                    <input name="anexoubruta[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #a7a5a5">
+                {#<div class="input-group">
+                    <div class="input-group-addon box-default">
+                        $
+                    </div>
+                    <input name="anexoprice[]" class="form-control" type="text">  </div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {#  <div class="input-group">
+                    <div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexocost[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {# <div class="input-group">
+                     <div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexoabono[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {#< <div class="input-group">
+                     {#<div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexouneta[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {# <div class="input-group">
+                   <div class="input-group-addon box-default">
+                        $
+                    </div>
+                    <input name="anexoubruta[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #a7a5a5">
+                {#<div class="input-group">
+                    <div class="input-group-addon box-default">
+                        $
+                    </div>
+                    <input name="anexoprice[]" class="form-control" type="text">  </div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {#  <div class="input-group">
+                    <div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexocost[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {# <div class="input-group">
+                     <div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexoabono[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {#< <div class="input-group">
+                     {#<div class="input-group-addon box-default">
+                         $
+                     </div>
+                     <input name="anexouneta[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+            <td style="border: 1px solid #a7a5a5">
+                {# <div class="input-group">
+                   <div class="input-group-addon box-default">
+                        $
+                    </div>
+                    <input name="anexoubruta[]" class="form-control" type="text"></div>#}
+                &nbsp;
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="clearfix"></div>
+</div>
+<!-- /.content-wrapper -->
+</section>
+</div>
+</body>
+</html>

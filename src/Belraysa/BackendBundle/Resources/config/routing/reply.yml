@@ -1,0 +1,118 @@
+reply:
+    path:     /{ws}/index
+    defaults: { _controller: "BackendBundle:Reply:index" }
+
+reply_index_by_user:
+    path:     /user/{id}/ws/{ws}/index_by_user
+    defaults: { _controller: "BackendBundle:Reply:indexByUser" }
+
+reply_index_by_client:
+    path:     /cliente/{id}/ws/{ws}/index
+    defaults: { _controller: "BackendBundle:Reply:indexByClient" }
+
+reply_all:
+    path:     /index_all
+    defaults: { _controller: "BackendBundle:Reply:indexAll" }
+
+reply_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Reply:show" }
+
+reply_voucher:
+    path:     /{id}/voucher
+    defaults: { _controller: "BackendBundle:Reply:voucher" }
+
+reply_receipe:
+    path:     /{id}/receipe
+    defaults: { _controller: "BackendBundle:Reply:receipe" }
+
+reply_print:
+    path:     /{id}/print
+    defaults: { _controller: "BackendBundle:Reply:print" }
+
+reply_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Reply:new" }
+
+reply_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Reply:create" }
+    requirements: { _method: post }
+
+reply_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Reply:edit" }
+
+reply_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Reply:update" }
+    requirements: { _method: post|put }
+
+reply_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Reply:delete" }
+
+reply_batch_delete:
+    path: /{ws}/reply_batch_delete
+    defaults: { _controller: "BackendBundle:Reply:batchDelete" }
+    requirements: { _method: post }
+
+
+reply_batch_delete_all:
+    path: /reply_batch_delete_all
+    defaults: { _controller: "BackendBundle:Reply:batchDeleteAll" }
+    requirements: { _method: post }
+
+
+getReplies:
+    path:     /getReplies
+    defaults: { _controller: "BackendBundle:Reply:getReplies" }
+
+get_replies_by_operators:
+    path:  /get_replies_by_operators
+    defaults: { _controller: "BackendBundle:Reply:getLengthByOperator" }
+
+get_replies_by_operators_ws:
+    path:  /get_replies_by_operators_ws
+    defaults: { _controller: "BackendBundle:Reply:getLengthByOperatorWS" }
+
+reply_by_month_year:
+    path:  /{month}/{year}/get_replies_by_month_year
+    defaults: { _controller: "BackendBundle:Reply:getRepliesByMonthYear" }
+
+reply_by_month_year_and_ws:
+    path:  /{month}/{year}/{ws}/get_replies_by_month_year_and_ws
+    defaults: { _controller: "BackendBundle:Reply:getRepliesByMonthYearAndWS" }
+
+reply_by_year:
+    path:  /{year}/get_replies_by_year
+    defaults: { _controller: "BackendBundle:Reply:getRepliesByYear" }
+
+reply_by_year_and_ws:
+    path:  /{year}/{ws}/get_replies_by_year_and_ws
+    defaults: { _controller: "BackendBundle:Reply:getRepliesByYearAndWS" }
+
+reply_report:
+    path:     /generate_reply_report
+    defaults: { _controller: "BackendBundle:Reply:generateReport" }
+
+reply_xls:
+    path:     /xls
+    defaults: { _controller: "BackendBundle:Reply:xls" }
+
+reply_report_by_ws:
+    path:     /{ws}/generate_reply_report_by_ws
+    defaults: { _controller: "BackendBundle:Reply:generateReportByWS" }
+
+reply_filter_by_ws:
+    path:     /{ws}/filtrar
+    defaults: { _controller: "BackendBundle:Reply:filtrarPorWS" }
+
+reply_filter_tree_by_ws:
+    path:      /{month}/{year}/{usuario}/{ws}/filtrar_tree
+    defaults: { _controller: "BackendBundle:Reply:filtrarTreePorWS" }
+
+
+reply_filter:
+    path:     /filtrar
+    defaults: { _controller: "BackendBundle:Reply:filtrar" }

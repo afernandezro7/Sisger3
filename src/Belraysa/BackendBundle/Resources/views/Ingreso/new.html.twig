@@ -1,0 +1,193 @@
+<form action="{{ path('ingreso_create') }}" role="form" id="newReceipe"
+      method="post" {{ form_enctype(form) }}
+      class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Fecha</label>
+
+        <div class="col-sm-9">
+            {{ form_widget(form.fecha, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.fecha) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Total a pagar</label>
+
+        <div class="col-sm-9">
+            <div class="input-inline">
+                {{ form_widget(form.saldoAnterior, {'attr' : {'class' : 'form-control' }}) }}
+
+                {{ form_errors(form.saldoAnterior) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Importe</label>
+
+        <div class="col-sm-9">
+            <div class="input-inline">
+                {{ form_widget(form.importe, {'attr' : {'class' : 'form-control' }}
+                ) }}
+                {{ form_errors(form.importe) }}
+            </div>
+        </div>
+    </div>    
+    <div class="form-group" id="fechaLim" style="visibility:hidden">
+        <label class="col-sm-12" style="color:red;text-align:center;">Se crear&aacute; una cuenta por cobrar, especifique la fecha l&iacute;mite</label>
+        <label class="col-sm-3 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Fecha L&iacute;mite</label>
+
+        <div class="col-sm-9">
+            {{ form_widget(form.fechaLimite, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.fechaLimite) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Recib&iacute; de</label>
+
+        <div class="col-sm-9">
+            {{ form_widget(form.cliente, {'attr' : {'class' : 'form-control select2', 'style':'width:100%' }}) }}
+            {{ form_errors(form.cliente) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>La suma de</label>
+
+        <div class="col-sm-9">
+            {{ form_widget(form.suma, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.suma) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Servicios</label>
+
+        <div class="col-sm-9">
+            {{ form_widget(form.servicios, {'attr' : {'class' : 'form-control select2 multiple','style':'width: 100%;', 'multiple':'multiple' }}
+            ) }}
+            {{ form_errors(form.servicios) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Detalles</label>
+
+        <div class="col-sm-9">
+            {{ form_widget(form.detalles, {'attr' : {'class' : 'form-control ' }}) }}
+            {{ form_errors(form.detalles) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>M&eacute;todo de pago</label>
+
+        <div class="col-sm-9">
+            {{ form_widget(form.metodoPago, {'attr' : {'class' : 'form-control select2','style':'width: 100%;', 'onchange':'updateBanking();' }}
+            ) }}
+            {{ form_errors(form.metodoPago) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Cuenta</label>
+
+        <div class="col-sm-9">
+
+
+            <select id="belraysa_backendbundle_ingreso_banking" name="receptor" class="form-control select2"
+                    style="width: 100%">
+
+            </select>
+        </div>
+    </div>
+    
+        
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Expediente</label>
+
+        <div class="col-sm-9">
+            {{ form_widget(form.refExpediente, {'attr' : {'class' : 'form-control', 'placeholder': entity.expediente.sisgerCode }}
+            ) }}
+
+            {{ form_errors(form.refExpediente) }}
+        </div>
+    </div>
+
+    {% if app.user.firma %}
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-4 simple-checkbox">
+                <input type="checkbox" class="minimal" name="firmar"></input>
+                <label for="item-enabled">Firmar</label>
+            </div>
+        </div>
+    {% endif %}
+    <input type="hidden" value="{{ entity.expediente }}" name="idReply">
+    {{ form_rest(form) }}
+</form>
+
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script>
+    $(".select2").select2();
+
+    updateBanking();
+
+    function updateBanking() {
+        startPageLoading();
+        var pm = document.getElementById('belraysa_backendbundle_ingreso_metodoPago');
+        pm = pm[pm.selectedIndex].label;
+
+        var url = '{{ path('banking_payment') }}',
+            method = 'post';
+        $.ajax({
+            data: {'pm': pm},
+            type: method,
+            url: url,
+            success: function (response) {
+                var opciones = '';
+                for (i = 0; i < response.length; i++) {
+                    //        alert(response);
+                    opciones = opciones +
+                        '<option value = "' + response[i].id + '">' + response[i].name + '</option>';
+                }
+                $('#belraysa_backendbundle_ingreso_banking').html(opciones);
+                stopPageLoading();
+            }
+        });
+    }
+    function generateRecibo(){
+        // return confirm('Are you sure you wish to delete?');
+        // startPageLoading();
+        return false;
+    }
+
+    function verificarCxC(){
+        var importe = $('#belraysa_backendbundle_ingreso_importe').val();
+        var total = $('#belraysa_backendbundle_ingreso_saldoAnterior').val();
+
+        if(total != "" && importe != ""){
+            if(total != importe){
+                //$('#fechaLim').val('');
+                document.getElementById('fechaLim').style.visibility = 'visible';
+            }
+            else{
+                $('#fechaLim').val(new Date().toJSON().slice(0,10).split('-').reverse().join('/'));
+                document.getElementById('fechaLim').style.visibility = 'hidden';
+            }
+        }
+    }
+
+    $('#belraysa_backendbundle_ingreso_saldoAnterior').on('change', function(){
+        verificarCxC();
+    });
+
+    $('#belraysa_backendbundle_ingreso_importe').on('change', function(){
+        verificarCxC();
+    });
+
+</script>

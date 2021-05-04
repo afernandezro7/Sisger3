@@ -1,0 +1,31 @@
+<form action="{{ path('tipocontenedor_create') }}" role="form" id="newTipoContenedor" method="post" {{ form_enctype(form) }}
+      class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Nombre</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.nombre, {'attr' : {'class' : 'form-control','placeholder':'Nombre' }}) }}
+            {{ form_errors(form.nombre) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Volumen (M3)</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.volumenM3, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.volumenM3) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Peso Max (Kg)</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.maxPesoKg, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.maxPesoKg) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+</form>

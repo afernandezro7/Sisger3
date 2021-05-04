@@ -1,0 +1,89 @@
+user:
+    path:     /
+    defaults: { _controller: "BackendBundle:User:index" }
+
+user_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:User:show" }
+
+user_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:User:new" }
+
+user_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:User:create" }
+    requirements: { _method: post }
+
+user_load_workspace_nomencladores:
+    path:     /workspace_nomencladores
+    defaults: { _controller: "BackendBundle:User:loadWorkspaceNomencladores" }
+
+user_load_workspace_nomencladores_new_user:
+    path:     /workspace_nomencladores_new_user
+    defaults: { _controller: "BackendBundle:User:loadWorkspaceNomencladoresUserNew" }
+
+user_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:User:edit" }
+
+user_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:User:update" }
+    requirements: { _method: post|put }
+
+user_update_password:
+    path:     /{id}/update_password
+    defaults: { _controller: "BackendBundle:User:updatePassword" }
+    requirements: { _method: post|put }
+
+user_update_avatar:
+    path:     /{id}/update_avatar
+    defaults: { _controller: "BackendBundle:User:updateAvatar" }
+    requirements: { _method: post|put }
+
+user_update_permisos:
+    path:     /{id}/update_permisos
+    defaults: { _controller: "BackendBundle:User:updatePermisos" }
+    requirements: { _method: post|put }
+
+user_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:User:delete" }
+
+user_batch_delete:
+    path: /user_batch_delete
+    defaults: { _controller: "BackendBundle:User:batchDelete" }
+    requirements: { _method: post }
+
+user_switch_workspace:
+    pattern:  /{name}/switch
+    defaults: { _controller: "BackendBundle:User:switchWorkspace" }
+
+user_get_length:
+    pattern:  /get_users_length
+    defaults: { _controller: "BackendBundle:User:getLength" }
+
+user_get_operators:
+    path:  /get_operators
+    defaults: { _controller: "BackendBundle:User:getOperators" }
+
+user_get_operators_by_ws:
+    path:  /get_operators_by_ws
+    defaults: { _controller: "BackendBundle:User:getOperatorsByWs" }
+
+user_verificar_password:
+    path:  /verificar_password
+    defaults: { _controller: "BackendBundle:User:verificarPassword" }
+
+user_verificar_username:
+    path:  /verificar_username
+    defaults: { _controller: "BackendBundle:User:verificarUsername" }
+
+user_verificar_letra:
+    path:  /verificar_letra
+    defaults: { _controller: "BackendBundle:User:verificarLetra" }
+
+user_filter:
+    path:  /filter
+    defaults: { _controller: "BackendBundle:User:filtrar" }

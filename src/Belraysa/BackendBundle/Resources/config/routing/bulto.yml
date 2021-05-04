@@ -1,0 +1,36 @@
+bulto:
+    path:     /{concepto}/index
+    defaults: { _controller: "BackendBundle:Bulto:index" }
+
+bulto_show:
+    path:     /show
+    defaults: { _controller: "BackendBundle:Bulto:show" }
+
+bulto_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Bulto:new" }
+
+bulto_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Bulto:create" }
+
+bulto_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Bulto:edit" }
+
+bulto_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Bulto:update" }
+    requirements: { _method: post|put }
+
+bulto_delete:
+    path:     /delete
+    defaults: { _controller: "BackendBundle:Bulto:delete" }
+
+bulto_etiqueta:
+    path:     /etiqueta
+    defaults: { _controller: "BackendBundle:Bulto:etiqueta" }
+
+bulto_barcode:
+    path:     /{id}/{size}/barcode
+    defaults: { _controller: "BackendBundle:Bulto:barcode" }

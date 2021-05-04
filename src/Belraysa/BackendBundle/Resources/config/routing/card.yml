@@ -1,0 +1,38 @@
+card:
+    path:     /
+    defaults: { _controller: "BackendBundle:Card:index" }
+
+card_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Card:show" }
+
+
+card_timeline:
+    path:     /{id}/timeline
+    defaults: { _controller: "BackendBundle:Card:timeline" }
+
+card_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Card:new" }
+
+card_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Card:create" }
+    requirements: { _method: post }
+
+card_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Card:edit" }
+
+card_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Card:update" }
+    requirements: { _method: post|put }
+
+card_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Card:delete" }
+
+card_reporte_por_rango_de_fechas:
+    path:     /{banking}/pdf
+    defaults: { _controller: "BackendBundle:Card:generarReportePDF" }

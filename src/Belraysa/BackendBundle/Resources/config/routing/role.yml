@@ -1,0 +1,35 @@
+role:
+    path:     /
+    defaults: { _controller: "BackendBundle:Role:index" }
+
+role_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Role:show" }
+
+role_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Role:new" }
+
+role_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Role:create" }
+    requirements: { _method: post }
+
+role_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Role:edit" }
+
+role_update:
+    path:     /update
+    defaults: { _controller: "BackendBundle:Role:update" }
+    requirements: { _method: post|put }
+
+role_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Role:delete" }
+
+role_batch_delete:
+    path: /role_batch_delete
+    defaults: { _controller: "BackendBundle:Role:batchDelete" }
+    requirements: { _method: post }
+

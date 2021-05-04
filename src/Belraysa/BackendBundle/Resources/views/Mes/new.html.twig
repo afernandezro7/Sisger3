@@ -1,0 +1,20 @@
+<form action="{{ path('mes_create') }}" role="form" id="newMes" method="post"
+      class="form-horizontal">
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Mes</label></div>
+        <div class="col-sm-10">
+            <div class="input-group date date-picker" data-date-format="mm" data-date-viewmode="months"
+                 data-date-minviewmode="months" data-date-start-date="+0d">
+                <input id="mes" name="mes" type="text" class="form-control">
+												<span class="input-group-btn">
+												<button class="btn default" type="button"><i class="fa fa-calendar"></i>
+                                                </button>
+												</span>
+            </div>
+
+        </div>
+    </div>
+
+</form>

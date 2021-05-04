@@ -1,0 +1,48 @@
+banking:
+    path:     /{ws}/index
+    defaults: { _controller: "BackendBundle:Banking:index" }
+
+banking_all:
+    path:     /indexAll
+    defaults: { _controller: "BackendBundle:Banking:indexAll" }
+
+banking_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Banking:show" }
+
+banking_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Banking:new" }
+
+banking_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Banking:create" }
+    requirements: { _method: post }
+
+banking_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Banking:edit" }
+
+banking_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Banking:update" }
+    requirements: { _method: post|put }
+
+banking_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Banking:delete" }
+
+banking_batch_delete:
+    path: /{workspace}/banking_batch_delete
+    defaults: { _controller: "BackendBundle:Banking:batchDelete" }
+    requirements: { _method: post }
+
+banking_batch_delete_all:
+    path: /banking_batch_delete_all
+    defaults: { _controller: "BackendBundle:Banking:batchDeleteAll" }
+    requirements: { _method: post }
+
+
+banking_payment:
+    path:  /getBankingsByPaymentMethod
+    defaults: { _controller: "BackendBundle:Banking:getBankingsByPaymentMethod" }

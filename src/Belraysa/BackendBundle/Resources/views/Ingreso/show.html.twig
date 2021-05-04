@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Receipe</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Creationdate</th>
+                <td>{{ entity.creationDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Importe</th>
+                <td>{{ entity.importe }}</td>
+            </tr>
+            <tr>
+                <th>Recibide</th>
+                <td>{{ entity.recibide }}</td>
+            </tr>
+            <tr>
+                <th>Suma</th>
+                <td>{{ entity.suma }}</td>
+            </tr>
+            <tr>
+                <th>Concepto</th>
+                <td>{{ entity.concepto }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('receipe') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('receipe_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

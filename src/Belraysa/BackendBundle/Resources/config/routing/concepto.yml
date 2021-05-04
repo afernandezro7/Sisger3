@@ -1,0 +1,49 @@
+concepto:
+    path:     /
+    defaults: { _controller: "BackendBundle:Concepto:index" }
+
+concepto_contenedor:
+    path:     /{contenedor}/indexByContenedor
+    defaults: { _controller: "BackendBundle:Concepto:indexByContenedor" }
+
+concepto_show:
+    path:     /show
+    defaults: { _controller: "BackendBundle:Concepto:show" }
+
+concepto_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Concepto:new" }
+
+concepto_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Concepto:create" }
+    requirements: { _method: post }
+
+concepto_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Concepto:edit" }
+
+concepto_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Concepto:update" }
+    requirements: { _method: post|put }
+
+concepto_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Concepto:delete" }
+
+concepto_hbl:
+    path:     /{id}/hbl
+    defaults: { _controller: "BackendBundle:Concepto:hbl" }
+
+concepto_move:
+    path:     /{id}/move
+    defaults: { _controller: "BackendBundle:Concepto:move" }
+
+concepto_to_hbl:
+    path:     /{id}/to_hbl
+    defaults: { _controller: "BackendBundle:Concepto:toHBL" }
+
+concepto_to_rva:
+    path:     /{id}/to_rva
+    defaults: { _controller: "BackendBundle:Concepto:toRVA" }

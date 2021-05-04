@@ -1,0 +1,201 @@
+index:
+    pattern:  /
+    defaults: { _controller: BackendBundle:Default:index }
+
+login:
+    pattern:  /login
+    defaults: { _controller: BackendBundle:User:login }
+
+login_check:
+    pattern:   /login_check
+
+logout:
+    pattern:   /logout
+
+contact:
+    pattern:  /contact
+    defaults: { _controller: BackendBundle:Contact:contact }
+
+change_skin:
+    pattern:  /{skin}/change_skin
+    defaults: { _controller: BackendBundle:User:changeSkin }
+
+
+
+BackendBundle_phone:
+        resource: "@BackendBundle/Resources/config/routing/phone.yml"
+        prefix:   /phone
+
+BackendBundle_client:
+        resource: "@BackendBundle/Resources/config/routing/client.yml"
+        prefix:   /client
+
+BackendBundle_reply:
+        resource: "@BackendBundle/Resources/config/routing/reply.yml"
+        prefix:   /reply
+
+BackendBundle_service:
+        resource: "@BackendBundle/Resources/config/routing/service.yml"
+        prefix:   /service
+
+BackendBundle_user:
+        resource: "@BackendBundle/Resources/config/routing/user.yml"
+        prefix:   /user
+
+BackendBundle_role:
+        resource: "@BackendBundle/Resources/config/routing/role.yml"
+        prefix:   /role
+
+BackendBundle_agency:
+        resource: "@BackendBundle/Resources/config/routing/agency.yml"
+        prefix:   /agency
+
+BackendBundle_voucher:
+    resource: "@BackendBundle/Resources/config/routing/voucher.yml"
+    prefix:   /voucher
+
+BackendBundle_receipe:
+    resource: "@BackendBundle/Resources/config/routing/receipe.yml"
+    prefix:   /receipe
+
+BackendBundle_recibo:
+    resource: "@BackendBundle/Resources/config/routing/recibo.yml"
+    prefix:   /recibo
+
+BackendBundle_ingreso:
+    resource: "@BackendBundle/Resources/config/routing/ingreso.yml"
+    prefix:   /ingreso
+
+BackendBundle_gasto:
+        resource: "@BackendBundle/Resources/config/routing/gasto.yml"
+        prefix:   /gasto
+
+BackendBundle_costo:
+        resource: "@BackendBundle/Resources/config/routing/costo.yml"
+        prefix:   /costo
+
+BackendBundle_costorecurrente:
+        resource: "@BackendBundle/Resources/config/routing/costorecurrente.yml"
+        prefix:   /costorecurrente
+
+get_replies_length:
+    pattern:  /get_replies_length
+    defaults: { _controller: BackendBundle:Reply:getLength }
+
+get_clients_length:
+    pattern:  /get_clients_length
+    defaults: { _controller: BackendBundle:Client:getLength }
+
+get_services_length:
+    pattern:  /get_services_length
+    defaults: { _controller: BackendBundle:Service:getLength }
+
+get_agencies_length:
+    pattern:  /get_agencies_length
+    defaults: { _controller: BackendBundle:Agency:getLength }
+
+searcher:
+    pattern:  /searcher
+    defaults: { _controller: BackendBundle:Default:searcher }
+
+executeSearch:
+    pattern:  /executeSearch
+    defaults: { _controller: BackendBundle:Default:executeSearch }
+
+
+
+get_document_types:
+    pattern:  /get_document_types
+    defaults: { _controller: BackendBundle:Client:getDocumentTypes }
+
+BackendBundle_document:
+    resource: "@BackendBundle/Resources/config/routing/document.yml"
+    prefix:   /document
+
+BackendBundle_workspace:
+        resource: "@BackendBundle/Resources/config/routing/workspace.yml"
+        prefix:   /workspace
+
+BackendBundle_banking:
+        resource: "@BackendBundle/Resources/config/routing/banking.yml"
+        prefix:   /banking
+
+BackendBundle_bank:
+        resource: "@BackendBundle/Resources/config/routing/bank.yml"
+        prefix:   /bank
+
+BackendBundle_card:
+        resource: "@BackendBundle/Resources/config/routing/card.yml"
+        prefix:   /card
+
+BackendBundle_cash:
+        resource: "@BackendBundle/Resources/config/routing/cash.yml"
+        prefix:   /cash
+
+BackendBundle_traspaso:
+        resource: "@BackendBundle/Resources/config/routing/traspaso.yml"
+        prefix:   /traspaso
+
+BackendBundle_extra:
+        resource: "@BackendBundle/Resources/config/routing/extra.yml"
+        prefix:   /extra
+
+BackendBundle_concepto:
+        resource: "@BackendBundle/Resources/config/routing/concepto.yml"
+        prefix:   /concepto
+
+BackendBundle_ena:
+        resource: "@BackendBundle/Resources/config/routing/ena.yml"
+        prefix:   /ena
+
+BackendBundle_envio:
+        resource: "@BackendBundle/Resources/config/routing/envio.yml"
+        prefix:   /envio
+
+BackendBundle_menaje:
+        resource: "@BackendBundle/Resources/config/routing/menaje.yml"
+        prefix:   /menaje
+
+BackendBundle_mercancia:
+        resource: "@BackendBundle/Resources/config/routing/mercancia.yml"
+        prefix:   /mercancia
+
+BackendBundle_conceptogasto:
+        resource: "@BackendBundle/Resources/config/routing/conceptogasto.yml"
+        prefix:   /conceptogasto
+
+BackendBundle_conceptocosto:
+        resource: "@BackendBundle/Resources/config/routing/conceptocosto.yml"
+        prefix:   /conceptocosto
+
+BackendBundle_inventario:
+        resource: "@BackendBundle/Resources/config/routing/inventario.yml"
+        prefix:   /inventario
+
+BackendBundle_arancel:
+        resource: "@BackendBundle/Resources/config/routing/arancel.yml"
+        prefix:   /arancel
+
+BackendBundle_contenedor:
+        resource: "@BackendBundle/Resources/config/routing/contenedor.yml"
+        prefix:   /contenedor
+
+BackendBundle_tipocontenedor:
+        resource: "@BackendBundle/Resources/config/routing/tipocontenedor.yml"
+        prefix:   /tipocontenedor
+
+BackendBundle_tarifa:
+        resource: "@BackendBundle/Resources/config/routing/tarifa.yml"
+        prefix:   /tarifa
+
+BackendBundle_bulto:
+        resource: "@BackendBundle/Resources/config/routing/bulto.yml"
+        prefix:   /bulto
+
+BackendBundle_anno:
+        resource: "@BackendBundle/Resources/config/routing/anno.yml"
+        prefix:   /anno
+
+BackendBundle_mes:
+        resource: "@BackendBundle/Resources/config/routing/mes.yml"
+        prefix:   /mes

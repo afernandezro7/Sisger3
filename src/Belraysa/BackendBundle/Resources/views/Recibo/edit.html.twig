@@ -1,0 +1,198 @@
+{% set layout = "BackendBundle::G-BRS.html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+
+     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/backend/global/plugins/select2/select2.css') }}"/>
+
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}Recibos{% endblock %}
+  {% block breadtitle %} <h1>Editar recibo {{ entity.sisgerCode() }}</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li>Recibos</li>
+        <li class="active">Editar recibo {{ entity.sisgerCode() }} </li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <form action="{{ path('recibo_update', { 'id': entity.id }) }}" role="form" id="editRecibo" method="post"
+              class="form-horizontal">
+
+            {% if isSuperAdmin %}
+                <div class="form-group">
+                    <div class="col-sm-2"><label class="control-label">Expediente</label></div>
+                    <div class="col-sm-10">
+
+                        {{ form_widget(edit_form.expediente, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', }}
+                        ) }}
+                        {{ form_errors(edit_form.expediente) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2"><label class="control-label">Entorno</label></div>
+                    <div class="col-sm-10">
+
+                        {{ form_widget(edit_form.workspace, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', }}
+                        ) }}
+                        {{ form_errors(edit_form.workspace) }}
+                    </div>
+                </div>
+                {% if entity.tipo == 'Ingreso' %}
+                    <div class="form-group">
+                        <div class="col-sm-2"><label class="control-label">Concepto</label></div>
+                        <div class="col-sm-10">
+                            <select class="select2me multiple" multiple="multiple" name="concepto[]">
+                                {% for concepto in servicios %}
+                                    <option {% if entity.hasServicio(concepto) %}selected{% endif %}
+                                            value="{{ concepto.id }}">{{ concepto.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                {% elseif entity.tipo == 'Gasto' %}
+                    <div class="form-group">
+                        <div class="col-sm-2"><label class="control-label">Concepto</label></div>
+                        <div class="col-sm-10">
+                            <select class="select2me multiple" multiple="multiple" name="concepto[]">
+                                {% for concepto in conceptosGasto %}
+                                    <option {% if entity.hasConcepto(concepto) %}selected{% endif %}
+                                            value="{{ concepto.id }}">{{ concepto.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                {% elseif entity.tipo == 'Costo' %}
+                    <div class="form-group">
+                        <div class="col-sm-2"><label class="control-label">Concepto</label></div>
+                        <div class="col-sm-10">
+
+                            <select class="select2me multiple" multiple="multiple" name="concepto[]">
+                                {% for concepto in conceptosCosto %}
+                                    <option {% if entity.hasConcepto(concepto) %}selected{% endif %}
+                                            value="{{ concepto.id }}">{{ concepto.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        <div class="col-sm-2"><label class="control-label">Concepto</label></div>
+                        <div class="col-sm-10">
+                            <select class="select2me multiple" multiple="multiple" name="concepto[]">
+                                {% for concepto in inventarios %}
+                                    <option {% if entity.hasInventario(concepto) %}selected{% endif %}
+                                            value="{{ concepto.id }}">{{ concepto.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <div class="col-sm-2"><label class="control-label">Detalles</label></div>
+                    <div class="col-sm-10">
+
+                        {{ form_widget(edit_form.detalles, {'attr' : {'class' : 'form-control' ,'style':'width: 100%;', }}
+                        ) }}
+                        {{ form_errors(edit_form.detalles) }}
+                    </div>
+                </div>
+            {% else %}
+                {% if entity.tipo == 'Ingreso' %}
+                    {% for concepto in servicios %}
+                        {% if entity.hasServicio(concepto) %}
+                            <input type="hidden" name="concepto[]" value="{{ concepto.id }}">
+                        {% endif %}
+                    {% endfor %}
+                {% elseif entity.tipo == 'Gasto' %}
+                    {% for concepto in conceptosGasto %}
+                        {% if entity.hasConcepto(concepto) %}
+                            <input type="hidden" name="concepto[]" value="{{ concepto.id }}">
+                        {% endif %}
+                    {% endfor %}
+                {% elseif entity.tipo == 'Costo' %}
+                    {% for concepto in conceptosCosto %}
+                        {% if entity.hasConcepto(concepto) %}
+                            <input type="hidden" name="concepto[]" value="{{ concepto.id }}">
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% for concepto in inventarios %}
+                        {% if entity.hasConcepto(concepto) %}
+                            <input type="hidden" name="concepto[]" value="{{ concepto.id }}">
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <input type="hidden" name="{{ edit_form.vars.name }}[{{ edit_form.expediente.vars.name }}]" value="{{ edit_form.expediente.vars.value }}">
+                <input type="hidden" name="{{ edit_form.vars.name }}[{{ edit_form.workspace.vars.name }}]" value="{{ edit_form.workspace.vars.value }}">
+                <input type="hidden" name="{{ edit_form.vars.name }}[{{ edit_form.detalles.vars.name }}]" value="{{ edit_form.detalles.vars.value }}">
+            {% endif %}
+
+            {% if entity.tipo == 'Ingreso' and entity.cuentaxCobrar == 1 %}
+                <div class="form-group">
+                    <div class="col-sm-2"><label class="control-label">Saldo Pendiente</label></div>
+                    <div class="col-sm-10">
+                        <label class="control-label">{{ entity.saldoPendiente }}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2"><label class="control-label">Nuevo Importe</label></div>
+                    <div class="col-sm-10">
+                        {{ form_widget(edit_form.importe, {'attr' : {'class' : 'form-control' ,'style':'width: 15%;',
+                        'min':0, 'max':entity.saldoPendiente, 'step':0.01 }, 'type':'number'}) }}
+                        {{ form_errors(edit_form.importe) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2"><label class="control-label">Suma</label></div>
+                    <div class="col-sm-10">
+                        {{ form_widget(edit_form.suma, {'attr' : {'class' : 'form-control' ,'style':'width: 100%' } }
+                        ) }}
+                        {{ form_errors(edit_form.suma) }}
+                    </div>
+                </div>
+                {% if not isSuperAdmin %}
+                    <div class="form-group">
+                        <div class="col-sm-2"><label class="control-label">Detalles</label></div>
+                        <div class="col-sm-10">
+                            {{ form_widget(edit_form.detalles, {'attr' : {'class' : 'form-control' ,'style':'width: 100%;', }}
+                            ) }}
+                            {{ form_errors(edit_form.detalles) }}
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <div class="col-sm-2"><label class="control-label">Cuenta</label></div>
+                    <div class="col-sm-10">
+                        <select class="select2me" name="cuenta">
+                            {% for cuenta in cuentas %}
+                                <option {% if cuenta.name == entity.entrada.getBanking().name %}selected{% endif %}
+                                        value="{{ cuenta.id }}">{{ cuenta.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            {% endif %}
+
+            {#{{ form_rest(edit_form) }}#}
+        </form>
+        <button title="Guardar" type="submit" form="editRecibo"
+                class="btn btn-flat btn-success btn-sm pull-right"><i
+                    class="fa fa-save"></i> Guardar
+        </button>
+    </div>
+{% endblock %}
+{% block javascript_inline %}
+
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/backend/global/plugins/select2/select2.min.js') }}"></script>
+
+    <script>
+        $('.select2me').select2({ width: 'resolve' });
+    </script>
+
+{% endblock %}

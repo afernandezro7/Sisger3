@@ -1,0 +1,111 @@
+<form action="{{ path('client_update_1', {'id':entity.id}) }}" role="form" id="editCliente" method="post"
+      class="form-horizontal">
+    <input type="hidden" id="idedit" value="{{ entity.id }}">
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Nombre</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.firstName, {'attr' : {'class' : 'form-control','placeholder':'Nombre' }}) }}
+            {{ form_errors(form.firstName) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Apellidos</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.lastName, {'attr' : {'class' : 'form-control','placeholder':'Apellidos' }}) }}
+            {{ form_errors(form.lastName) }}
+        </div>
+    </div>
+    {% if workspace.currentWorkspace.name == 'L-BRS' %}
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color: red"
+                                                        class="required">*&nbsp;</span>CI</label>
+
+            <div class="col-sm-10">
+                {{ form_widget(form.dni, {'attr' : {'class' : 'form-control' }}) }}
+                {{ form_errors(form.dni) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Pasaporte</label>
+
+            <div class="col-sm-10">
+                {{ form_widget(form.passport, {'attr' : {'class' : 'form-control' }}) }}
+                {{ form_errors(form.passport) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color: red"
+                                                        class="required">*&nbsp;</span>Pa&iacute;s</label>
+
+            <div class="col-sm-10">
+                <select class="form-control crs-country" data-default-value="{{ entity.country }}"
+                        data-region-id="belraysa_backendbundle_client_province_edit"
+                        data-default-option="Seleccione el país"
+                        name="belraysa_backendbundle_client[country]"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color: red"
+                                                        class="required">*&nbsp;</span>Provincia</label>
+
+            <div class="col-sm-10">
+                <select class="form-control"
+                        data-default-option="Seleccione la provincia / estado"
+                        data-default-value="{{ entity.province }}"
+                        name="belraysa_backendbundle_client[province]"
+                        id="belraysa_backendbundle_client_province_edit"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color: red"
+                                                        class="required">*&nbsp;</span>Municipio</label>
+
+            <div class="col-sm-10">
+                {{ form_widget(form.municipality, {'attr' : {'class' : 'form-control' }}) }}
+                {{ form_errors(form.municipality) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color: red"
+                                                        class="required">*&nbsp;</span>Direcci&oacute;n</label>
+
+            <div class="col-sm-10">
+                {{ form_widget(form.address, {'attr' : {'class' : 'form-control' }}) }}
+                {{ form_errors(form.address) }}
+            </div>
+        </div>
+    {% endif %}
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Tel&eacute;fonos(s)</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.phones, {'attr' : {'class' : 'form-control','placeholder':'Escriba uno o más teléfonos separados por /' }}
+            ) }}
+            {{ form_errors(form.phones) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Celular</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.cell, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(form.cell) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Correos(s)</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.email, {'attr' : {'class' : 'form-control','placeholder':'Escriba uno o más correos separados por /' }}
+            ) }}
+            {{ form_errors(form.email) }}
+        </div>
+    </div>
+    <input type="hidden" name="ruta" value="ena">
+    {{ form_rest(form) }}
+</form>

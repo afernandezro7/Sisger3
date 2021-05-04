@@ -1,0 +1,42 @@
+tarifa:
+    path:     /
+    defaults: { _controller: "BackendBundle:Tarifa:index" }
+
+tarifa_upload:
+    path:     /upload
+    defaults: { _controller: "BackendBundle:Tarifa:upload" }
+
+tarifa_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Tarifa:show" }
+
+tarifa_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Tarifa:new" }
+
+tarifa_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Tarifa:create" }
+    requirements: { _method: post }
+
+tarifa_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Tarifa:edit" }
+
+tarifa_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Tarifa:update" }
+    requirements: { _method: post|put }
+
+tarifa_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Tarifa:delete" }
+
+tarifa_batch_delete:
+    path: /tarifa_batch_delete
+    defaults: { _controller: "BackendBundle:Tarifa:batchDelete" }
+    requirements: { _method: post }
+
+tarifa_filter:
+    path:     /filter
+    defaults: { _controller: "BackendBundle:Tarifa:filtrar" }

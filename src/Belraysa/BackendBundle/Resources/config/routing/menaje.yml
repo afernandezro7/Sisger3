@@ -1,0 +1,38 @@
+menaje:
+    path:     /
+    defaults: { _controller: "BackendBundle:Menaje:index" }
+
+menaje_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Menaje:show" }
+
+menaje_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Menaje:new" }
+
+menaje_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Menaje:create" }
+    requirements: { _method: post }
+
+menaje_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Menaje:edit" }
+
+menaje_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Menaje:update" }
+    requirements: { _method: post|put }
+
+menaje_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Menaje:delete" }
+
+menaje_batch_delete:
+    path: /batch_delete
+    defaults: { _controller: "BackendBundle:Menaje:batchDelete" }
+    requirements: { _method: post }
+
+menaje_exp:
+    path:     /{exp_id}/index
+    defaults: { _controller: "BackendBundle:Menaje:indexExp" }

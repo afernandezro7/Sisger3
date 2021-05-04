@@ -1,0 +1,45 @@
+<form id="editDocument" action="{{ path('document_update', { 'id': entity.id }) }}" method="post"
+      class="form-horizontal" {{ form_enctype(edit_form) }} >
+
+
+    <div class="form-group">
+        <label class="control-label col-sm-2"><span style="color: red" class="required">*&nbsp;</span>Nombre</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.name, {'attr' : {'class' : 'form-control','placeholder':'Ej: Pepe' }}
+            ) }}
+            {{ form_errors(edit_form.name) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Tipo</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.type, {'attr' : {'class' : 'form-control select2', 'style':'width: 100%;' }}) }}
+            {{ form_errors(edit_form.type) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Archivo</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.url, {'attr' : {'class' : 'file', 'multiple data-show-upload' : 'false', 'data-show-caption' : 'true', 'showZoom' : 'false' }}
+            ) }}
+            {{ form_errors(edit_form.url) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Cliente</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.client, {'attr' : {'class' : 'form-control select2','data-placeholder':'De click aqui para seleccionar el cliente ' ,'style':'width: 100%;' }}
+            ) }}
+            {{ form_errors(edit_form.client) }}
+        </div>
+    </div>
+
+    {{ form(edit_form) }}
+</form>

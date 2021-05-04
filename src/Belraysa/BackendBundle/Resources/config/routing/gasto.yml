@@ -1,0 +1,30 @@
+gasto:
+    path:     /
+    defaults: { _controller: "BackendBundle:Gasto:index" }
+
+gasto_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Gasto:show" }
+
+gasto_new:
+    path:     /{idReply}/new
+    defaults: { _controller: "BackendBundle:Gasto:new" }
+
+gasto_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Gasto:create" }
+    requirements: { _method: post }
+
+gasto_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Gasto:edit" }
+
+gasto_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Gasto:update" }
+    requirements: { _method: post|put }
+
+gasto_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Gasto:delete" }
+    requirements: { _method: post|delete }

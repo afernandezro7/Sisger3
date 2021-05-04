@@ -1,0 +1,573 @@
+{% set layout = "BackendBundle::" ~ entity.workspace.getName() ~ ".html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.css') }}"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.css') }}"/>
+     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/backend/global/plugins/select2/select2.css') }}"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}"/>
+
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}Editar expediente: {{ entity.sisgerCode }}{% endblock %}
+  {% block breadtitle %} <h1>Editar expediente</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li><a href="{{ path('reply', { 'ws': entity.workspace.getName() }) }}">Expedientes</a></li>
+        <li class="active">Editar expediente: {{ entity.sisgerCode }}</li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+    <!-- BEGIN PORTLET-->
+    <div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="actions">
+
+            <a class="btn btn-circle btn-icon-only btn-default" href="{{ path('reply_new') }}">
+                <i class="fa fa-plus"></i>
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default" href="{{ path('reply_delete', { 'id': entity.id }) }}">
+                <i class="icon-trash"></i>
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="#">
+            </a>
+        </div>
+
+    </div>
+    <div class="portlet-body">
+    <section class="invoice">
+    <!-- title row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="page-header" align="center">
+                <p align="center" style="display: inline; "><u><strong>EXPEDIENTE DE CLIENTES</strong></u></p>
+                <img class="pull-right" height=50px"
+                     onError="this.onerror=null;this.src='{{ asset('uploads/images/belraysa.png') }}';"
+                     src="{{ asset('uploads/images/'~entity.workspace.logo) }}">
+                </h2>
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
+    <!-- info row -->
+    <br>
+
+    <div class="row invoice-info">
+    <form id="editReply" action="{{ path('reply_update', { 'id': entity.id }) }}"
+          method="post"
+          class="form-horizontal">
+    <input type="hidden" name="workspace" value="{{ entity.workspace.id }}">
+
+    <div class="col-sm-12 table-responsive">
+
+    <table class="col-sm-12 table table-hover table-responsive">
+        <tbody>
+        <tr>
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <span class="caption-subject bold uppercase">Rooming List</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    {% form_theme edit_form
+                    'BackendBundle:CollectionTemplates:jquery.collection.html.twig'
+                    'BackendBundle:CollectionTemplates:precioventalider-edit-theme.html.twig' %}
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            {{ form_widget(edit_form.precioVentaLider) }}
+                        </div>
+                    </div>
+                    {% form_theme edit_form
+                    'BackendBundle:CollectionTemplates:jquery.collection.html.twig'
+                    'BackendBundle:CollectionTemplates:precioventa-edit-theme.html.twig' %}
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            {{ form_widget(edit_form.preciosVenta) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tr>
+        <tr>
+            <div class="alert alert-danger display-none">
+                <button class="close" data-dismiss="alert"></button>
+                La fecha de salida debe ser posterior a la fecha de entrada
+            </div>
+            <div class="form-group col-sm-6">
+                <div class="col-sm-2">
+                    <label class="control-label"><span style="color: red"
+                                                       class="required">*&nbsp;</span>Entrada</label>
+                </div>
+                <div class="col-sm-10 input-group">
+                    <div class="input-group-addon box-default">
+                        <span class="fa fa-calendar"></span>
+                    </div>
+                    {{ form_widget(edit_form.beginDate, {'attr' : {'class' : 'form-control' }}
+                    ) }}
+                    {{ form_errors(edit_form.beginDate) }}
+
+                </div>
+            </div>
+            <div class="form-group col-sm-6">
+                <div class="col-sm-2">
+                    <label class="control-label"><span style="color: red"
+                                                       class="required">*&nbsp;</span>Salida</label>
+                </div>
+                <div class="col-sm-10 input-group">
+                    <div class="input-group-addon box-default">
+                        <span class="fa fa-calendar"></span>
+                    </div>
+                    {{ form_widget(edit_form.finishDate, {'attr':{'class':'form-control' }}) }}
+                    {{ form_errors(edit_form.finishDate) }}
+
+                </div>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group col-sm-6">
+                <div class="col-sm-2">
+                    <label class="control-label">Vendedor</label>
+                </div>
+                <div class="col-sm-10 input-group">
+                    <div class="input-group-addon box-default">
+                        <span class="icon-user"></span>
+                    </div>
+                    <input type="text" class="form-control" readonly
+                           value="{{ entity.user.firstName }} {{ entity.user.lastName }}">
+                </div>
+            </div>
+            <div class="form-group col-sm-6">
+                <div class="col-sm-2">
+                    <label class="control-label">Precio</label>
+                </div>
+                <div class="col-sm-10 input-group">
+                    <div class="input-group-addon box-default">
+                        <span class="fa fa-usd"></span>
+                    </div>
+                    <input type="text" class="form-control" value="{{ entity.price }}" readonly>
+
+                </div>
+            </div>
+
+        </tr>
+        <tr>
+            <div class="form-group">
+                <div class="col-sm-12"><label class="control-label"><span style="color: red"
+                                                                          class="required">*&nbsp;</span>Servicios contratados</label>
+                </div>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    {% if app.user.role.name == 'ROLE_SUPER_ADMIN' %}
+                        <div class="input-group">
+
+                            {{ form_widget(edit_form.services, {'attr' : {'class' : 'form-control select2me', 'multiple':'multiple','data-placeholder':'De click aqui para seleccionar los servicios ' ,'style':'width: 100%;' }}
+                            ) }}
+                            {{ form_errors(edit_form.services) }}
+                            <span class="input-group-btn">
+											 <button class="btn btn-default btn-flat" data-toggle="modal"
+                                                     tabindex="-1"
+                                                     data-select2-open="multi-prepend"
+                                                     data-target="#myModalHorizontal1"
+                                                     type="button">
+                                                 <span class="fa fa-plus"></span>
+                                             </button>
+											</span>
+                        </div>
+
+                    {% else %}
+                        <div>
+                            {{ form_widget(edit_form.services, {'attr' : {'class' : 'form-control select2me', 'multiple':'multiple','data-placeholder':'De click aqui para seleccionar los servicios ' ,'style':'width: 100%;' }}
+                            ) }}
+                            {{ form_errors(edit_form.services) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group col-sm-6">
+                <div class="col-sm-2">
+                    <label class="control-label">Tel&eacute;fonos</label>
+                </div>
+                <div class="col-sm-10 input-group">
+                    <div class="input-group-addon box-default">
+                        <span class="icon-call-end"></span>
+                    </div>
+                    <input id="phones" type="text" class="form-control" value="{{ entity.precioVentaLider[0].cliente.phones }}" readonly>
+                </div>
+            </div>
+            <div class="form-group col-sm-6">
+                <div class="col-sm-2">
+                    <label class="control-label">Correo</label>
+                </div>
+                <div class="col-sm-10 input-group">
+                    <div class="input-group-addon box-default">
+                        <span class="icon-envelope"></span>
+                    </div>
+                    <input id="emails" type="text" class="form-control" value="{{ entity.precioVentaLider[0].cliente.email }}" readonly>
+
+                </div>
+            </div>
+
+        </tr>
+
+        <tr>
+            <div class="col-sm-1"><label style="margin-left: -15px" class="control-label">Observaciones</label>
+            </div>
+        </tr>
+
+        <tr>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    {{ form_widget(edit_form.observations, {'attr' : {'class' : 'form-control','placeholder':'Observaciones' }}
+                    ) }}
+                    {{ form_errors(edit_form.observations) }}
+                </div>
+            </div>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+    <table id="dinamicTable" class="table table-striped table-responsive">
+        <thead>
+        <tr>
+            <th>PRECIO</th>
+            <th>COSTO</th>
+            <th>ABONOS</th>
+            <th>UTILIDAD BRUTA</th>
+            <th>UTILIDAD REAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div class="no-print box-footer">
+        <button type="submit" form="editReply" class="btn btn-flat btn-primary pull-right"><i
+                    class="fa fa-save"></i>
+            Guardar
+        </button>
+    </div>
+    {{ form(edit_form) }}
+    </div>
+    </form>
+    </div>
+    </section>
+    </div>
+    </div>
+    <!-- END PORTLET-->
+    </div>
+    <div class="modal fade" id="myModalHorizontal1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Agregar servicio
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    {{ render(controller('BackendBundle:Service:new', {request: app.request})) }}
+                    <div id="newServiceResponse"></div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="newService" type="submit" class="btn btn-flat btn-primary">
+                        <i class="fa fa-save"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript_inline %}
+
+
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/others/collection/jquery.collection.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/backend/global/plugins/select2/select2.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js') }}"
+            type="text/javascript"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/jquery-validation/js/additional-methods.min.js') }}"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Form.init();
+
+        });
+    </script>
+    <script>
+        var Form = function () {
+            return {
+                //main function to initiate the module
+                init: function () {
+                    var form = $('#editReply');
+                    jQuery.validator.addMethod("daterange", function (value, element, params) {
+                        var checkIn = document.getElementById(params).value;
+                        if (checkIn) {
+                            var checkOut = value;
+                            var splittedCheckIn = checkIn.split('-');
+                            var splittedCheckOut = checkOut.split('-');
+                            var checkInDate = new Date(splittedCheckIn[2], splittedCheckIn[1] - 1, splittedCheckIn[0]);
+                            var checkOutDate = new Date(splittedCheckOut[2], splittedCheckOut[1] - 1, splittedCheckOut[0]);
+                            if (checkInDate <= checkOutDate) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            return true;
+                        }
+                    }, "");
+
+
+                    form.validate({
+                        doNotHideMessage: false, //this option enables to show the error/success messages on tab switch.
+                        errorElement: 'span', //default input error message container
+                        errorClass: 'help-block help-block-error', // default input error message class
+                        focusInvalid: false, // do not focus the last invalid input
+                        rules: {
+                            //informacion personal
+                            "belraysa_backendbundle_reply[beginDate]": {
+                                required: true
+                            },
+                            "belraysa_backendbundle_reply[finishDate]": {
+                                required: true,
+                                daterange: "belraysa_backendbundle_reply_beginDate"
+                            },
+                            "belraysa_backendbundle_reply[services][]": {
+                                required: true
+                            }
+
+                        },
+
+                        messages: { // custom messages
+                            "belraysa_backendbundle_reply[beginDate]": {
+                                required: ""
+                            },
+                            "belraysa_backendbundle_reply[finishDate]": {
+                                required: ""
+                            },
+                            "belraysa_backendbundle_reply[services][]": {
+                                required: "Este campo es obligatorio."
+                            }
+
+                        },
+
+
+                        highlight: function (element) { // hightlight error inputs
+                            $(element)
+                                    .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                        },
+
+                        unhighlight: function (element) { // revert the change done by hightlight
+                            $(element)
+                                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                        },
+
+                        submitHandler: function (form) {
+
+                            //add here some ajax code to submit your form or just call form.submit() if you want to submit the form without ajax
+                            startPageLoading();
+                            form.submit();
+                        }
+
+                    });
+
+
+                }
+
+            };
+
+        }();
+
+
+    </script>
+    <script>
+        function clientSelected() {
+
+            var $client = document.getElementById('belraysa_backendbundle_reply_precioVentaLider_0_cliente'),
+                    url = '{{ path('client_data') }}',
+                    method = 'post';
+            $.ajax({
+                data: {'id': $client.value},
+                type: method,
+                url: url,
+                success: function (response) {
+                    var phones = response[0].phones;
+                    var email = response[0].email;
+                    document.getElementById('phones').value = phones;
+                    document.getElementById('emails').value = email;
+                }
+            });
+        }
+    </script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": true,
+            "newestOnTop": false,
+            "progressBar": false,
+            "rtl": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": 300,
+            "hideDuration": 1000,
+            "timeOut": 10000,
+            "extendedTimeOut": 1000,
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+
+        function lanzarOk(mensaje) {
+            Command: toastr["success"](mensaje);
+        }
+        function lanzarError(mensaje) {
+            Command: toastr["error"](mensaje);
+        }
+
+    </script>
+    <script>
+        $('.precioVentaLider').collection({
+            allow_down: false,
+            allow_up: false,
+            min: 1,
+            max: 1
+        });
+        $('.preciosVenta').collection({
+            allow_down: false,
+            allow_up: false,
+            min: 0
+        });
+
+
+    </script>
+    <script>
+
+        $("#newService").submit(function (event) {
+            event.preventDefault();
+            var $form = $(this),
+                    url = $form.attr('action'),
+                    method = $form.attr('method');
+            $.ajax({
+                data: $(this).serialize(),
+                type: method,
+                url: url,
+                success: function (response) {
+                    $('#myModalHorizontal1').modal('hide');
+                    var $service_selector = $('#belraysa_backendbundle_reply_services');
+                    $service_selector.append('<option value="' + response[response.length - 1].id + '">' + response[response.length - 1].name + '</option>');
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,326 @@
+{% set layout = "BackendBundle::L-BRS.html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.css') }}"/>
+     <link rel="stylesheet" type="text/css"
+           href="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.css') }}"/>
+     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/backend/global/plugins/select2/select2.css') }}"/>
+
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}Programaci&oacute;n de env&iacute;os{% endblock %}
+  {% block breadtitle %} <h1>Programaci&oacute;n de env&iacute;os</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li class="active">Programaci&oacute;n de env&iacute;os</li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="portlet light bordered">
+
+                <div class="portlet-body">
+                    <div id="tree_3" class="tree-demo">
+                        <ul>
+                            <li class="root tooltips"
+                                data-tipo="root"
+                                data-jstree='{ "type" : "root" }'>
+                                Programador de env&iacute;os
+                                <ul>
+                                    {% for anno in annos.annos %}
+                                        <li class="anno tooltips"
+                                            data-tipo="anno" data-id="{{ anno.id }}"
+                                            data-jstree='{ "type" : "anno" }'>
+                                            {{ anno.nombre }}
+                                            <ul>
+                                                {% for mes in anno %}
+                                                    <li class="mes tooltips"
+                                                        data-tipo="mes" data-id="{{ mes.id }}"
+                                                        data-jstree='{ "type" : "mes" }'>
+                                                        {{ mes.nombre }}
+                                                        <ul>
+                                                            {% for envio in mes.envios %}
+                                                                <li class="envio tooltips" data-tipo="envio"
+                                                                    data-jstree='{ "type" : "envio" }'
+                                                                    data-edit="{{ path('mercancia_edit', { 'id': envio.id }) }}"
+                                                                    data-move="{{ path('mercancia_move', { 'id': envio.id }) }}"
+                                                                    data-id="{{ envio.id }}">
+                                                                    {{ envio.getIndice() }}
+                                                                    <ul>
+                                                                        {% for contenedor in envio.contenedor %}
+                                                                            <li class="contenedor tooltips"
+                                                                                data-tipo="contenedor"
+                                                                                data-jstree='{ "type" : "contenedor" }'
+                                                                                data-edit="{{ path('mercancia_edit', { 'id': contenedor.id }) }}"
+                                                                                data-move="{{ path('mercancia_move', { 'id': contenedor.id }) }}"
+                                                                                data-id="{{ contenedor.id }}">
+                                                                                {{ contenedor.getCodigo() }}
+                                                                                <ul>
+                                                                                    {% for concepto in envio.conceptos %}
+                                                                                        <li class="concepto tooltips"
+                                                                                            data-tipo="concepto"
+                                                                                            data-jstree='{ "type" : "concepto" }'
+                                                                                            data-edit="{{ path('mercancia_edit', { 'id': concepto.id }) }}"
+                                                                                            data-move="{{ path('mercancia_move', { 'id': concepto.id }) }}"
+                                                                                            data-id="{{ concepto.id }}">
+                                                                                            {{ concepto.getSisgerCode() }}
+                                                                                        </li>
+                                                                                    {% endfor %}
+                                                                                </ul>
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </li>
+
+                                                {% endfor %}
+
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-info no-margin margin-top-10">
+                        Nota: Arrastre conceptos de un contenedor a otro para cambiar su ubicaci&oacute;n. Haga click
+                        derecho encima de un nodo del &aacute;rbol para ver las opciones disponibles.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="portlet light bordered">
+                <div class="portlet-body" id="detalles">
+                    <div style="text-align: center" class="well no-margin">
+                        <h2 style="color: #6c6159">Haga click en un nodo para ver sus detalles.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascript_inline %}
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
+            type="text/javascript"></script>
+
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/backend/global/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/backend/global/plugins/select2/select2.min.js') }}"></script>
+    <script>
+        $("#tree_3").jstree({
+            "core": {
+                "themes": {
+                    "responsive": false
+                }
+                // so that create works
+            },
+            "types": {
+                "root": {
+                    "icon": "fa fa-circle-o icon-state-info",
+                    "valid_children": ''
+                },
+                "anno": {
+                    "icon": "fa fa-circle-o icon-state-info",
+                    "valid_children": ''
+                },
+                "mes": {
+                    "icon": "icon-social-dropbox icon-state-success",
+                    "valid_children": ['mercancia']
+
+                },
+                "envio": {
+                    "icon": "fa fa-barcode",
+                    "valid_children": ['bulto']
+                },
+                "contenedor": {
+                    "icon": "fa fa-barcode",
+                    "valid_children": ['bulto']
+                },
+                "concepto": {
+                    "icon": "fa fa-barcode",
+                    "valid_children": ['bulto']
+                },
+                "#": {
+                    "valid_children": ['concepto']
+                }
+
+            },
+            "contextmenu": {
+                items: customMenu,
+                select_node: false
+            },
+
+            "dnd": {
+                check_while_dragging: false
+            },
+            "plugins": ["contextmenu", "dnd", "state", "types"]
+        })
+        function customMenu(node) {
+            // The default set of all items
+            var currentNode = $('#tree_3').jstree('get_node', node, true);
+            var items = {
+                createAnnoItem: { // The "delete" menu item
+                    label: "Crear año",
+                    action: function () {
+                        $('#modalNewAnno').modal('show');
+                    }
+                },
+
+                createMesItem: { // The "delete" menu item
+                    label: "Crear mes",
+                    action: function () {
+                        document.getElementById('annoid').value = currentNode.data('id');
+                        $('#modalNewMes').modal('show');
+                    }
+                },
+
+                createEnvioItem: { // The "delete" menu item
+                    label: "Crear envío",
+                    action: function () {
+                        var mes = currentNode.data('id');
+                        url = "{{ path('mescontenedor_create') }}";
+                        $.ajax({
+                            data: {'id': mes},
+                            type: 'get',
+                            url: url,
+                            success: function (response) {
+                                //    node = $('#tree_3').jstree('create_node', node, { text: 'Bulto #' + response, icon: 'icon-social-dropbox icon-state-success' });
+                                location.href = "{{ path('mescontenedor') }}";
+
+                            }
+                        });
+                    }
+                },
+
+                agregarConceptoItem: { // The "delete" menu item
+                    label: "Agregar conceptos",
+                    action: function () {
+                        document.getElementById('contenedorid').value = currentNode.data('id');
+                        $('#modalAgregarConceptos').modal('show');
+                    }
+                },
+
+
+                deleteAnnoItem: { // The "delete" menu item
+                    label: "Eliminar año",
+                    action: function () {
+
+                        url = "{{ path('anno_delete') }}";
+                        $.ajax({
+                            data: {'id': currentNode.data('id')},
+                            type: 'get',
+                            url: url,
+                            success: function (response) {
+                                //  $('#tree_3').jstree('delete_node', node, true);
+                                location.href = "{{ path('mescontenedor') }}";
+
+                            }
+                        });
+                    }
+                },
+
+                deleteMesItem: { // The "delete" menu item
+                    label: "Eliminar mes",
+                    action: function () {
+
+                        url = "{{ path('mes_delete') }}";
+                        $.ajax({
+                            data: {'id': currentNode.data('id')},
+                            type: 'get',
+                            url: url,
+                            success: function (response) {
+                                //  $('#tree_3').jstree('delete_node', node, true);
+                                location.href = "{{ path('mescontenedor') }}";
+
+                            }
+                        });
+                    }
+                },
+
+                deleteEnvioItem: { // The "delete" menu item
+                    label: "Quitar envío",
+                    action: function () {
+
+                        url = "{{ path('mescontenedor_delete') }}";
+                        $.ajax({
+                            data: {'id': currentNode.data('id')},
+                            type: 'get',
+                            url: url,
+                            success: function (response) {
+                                //  $('#tree_3').jstree('delete_node', node, true);
+                                location.href = "{{ path('mescontenedor') }}";
+
+                            }
+                        });
+                    }
+                }
+            };
+
+            if (currentNode.hasClass("bulto")) {
+                // Delete the "delete" menu item
+                delete items.deleteMercanciaItem;
+                delete items.editMercanciaItem;
+                delete items.createBultoItem;
+            }
+
+            if (currentNode.hasClass("concepto")) {
+                // Delete the "delete" menu item
+                delete items.deleteBultoItem;
+                delete items.deleteMercanciaItem;
+                delete items.editMercanciaItem;
+                delete items.createMercanciaItem;
+            }
+
+            if (currentNode.hasClass("mercancia")) {
+                // Delete the "delete" menu item
+                delete items.deleteBultoItem;
+                delete items.createBultoItem;
+                delete items.createMercanciaItem;
+            }
+
+            return items;
+        }
+    </script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": true,
+            "newestOnTop": false,
+            "progressBar": false,
+            "rtl": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": 300,
+            "hideDuration": 1000,
+            "timeOut": 10000,
+            "extendedTimeOut": 1000,
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+
+        function lanzarOk(mensaje) {
+            Command: toastr["success"](mensaje);
+        }
+        function lanzarError(mensaje) {
+            Command: toastr["error"](mensaje);
+        }
+    </script>
+
+{% endblock %}

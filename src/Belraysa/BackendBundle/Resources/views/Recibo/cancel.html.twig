@@ -1,0 +1,12 @@
+<form action="{{ path('recibo_cancel', { 'id': entity.id }) }}" role="form" id="cancel" method="get"
+      class="form-horizontal">
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Motivo</label></div>
+        <div class="col-sm-10">
+            <textarea class="form-control" required="required" name="motivo"></textarea>
+        </div>
+    </div>
+
+</form>

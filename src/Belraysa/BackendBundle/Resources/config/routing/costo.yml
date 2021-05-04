@@ -1,0 +1,30 @@
+costo:
+    path:     /
+    defaults: { _controller: "BackendBundle:Costo:index" }
+
+costo_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Costo:show" }
+
+costo_new:
+    path:     /{idReply}/new
+    defaults: { _controller: "BackendBundle:Costo:new" }
+
+costo_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Costo:create" }
+    requirements: { _method: post }
+
+costo_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Costo:edit" }
+
+costo_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Costo:update" }
+    requirements: { _method: post|put }
+
+costo_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Costo:delete" }
+    requirements: { _method: post|delete }

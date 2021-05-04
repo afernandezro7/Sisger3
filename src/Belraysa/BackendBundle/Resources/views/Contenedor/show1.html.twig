@@ -1,0 +1,84 @@
+<p><b>Peso: {{ contenedor.getPesoKg() }} Kg</b></p>
+<p><b>Volumen: {{ contenedor.getVolumenConceptosM3() }} m3</b></p>
+<label><b>ENAs: {{ enas }}</b></label>
+<label><b>Env&iacute;os: {{ envios }}</b></label>
+<label><b>Menajes: {{ menajes }}</b></label>
+<p><b>Total de bultos: {{ total_bultos }}</b></p>
+<div class="tiles">
+    {% if contenedor.estado == 'COMPLETANDO' or contenedor.estado == 'RESERVANDO' %}
+        {% if contenedor.conceptos|length %}
+            <a style="color: white"
+               href="{{ path('contenedor_manifiesto', { 'id': contenedor.id }) }}">
+                <div title="Ver pre-manifiesto" class="tile bg-purple-studio">
+                    <div class="tile-body">
+                        <i class="fa fa-table"></i>
+                    </div>
+                    <div class="tile-object">
+                        <div class="name">
+                            Pre - manifiesto
+                        </div>
+                        <div class="number">
+
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endif %}
+    {% endif %}
+
+    {% if contenedor.estado == 'CERRADO' %}
+        <a style="color: white"
+           href="{{ path('contenedor_manifiesto_1', { 'id': contenedor.id }) }}">
+            <div title="Ver manifiesto V1" class="tile bg-blue-dark">
+                <div class="tile-body">
+                    <i class="fa fa-table"></i>
+                </div>
+                <div class="tile-object">
+                    <div class="name">
+                        Manifiesto
+                    </div>
+                    <div class="number">
+                        V.1
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <a style="color: white"
+           href="{{ path('contenedor_manifiesto_2', { 'id': contenedor.id }) }}">
+            <div title="Ver manifiesto V2" class="tile bg-blue-hoki">
+                <div class="tile-body">
+                    <i class="fa fa-table"></i>
+                </div>
+                <div class="tile-object">
+                    <div class="name">
+                        Manifiesto
+                    </div>
+                    <div class="number">
+                        V.2
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <a style="color: white"
+           href="{{ path('contenedor_manifiesto_3', { 'id': contenedor.id }) }}">
+            <div title="Ver manifiesto V3" class="tile bg-green-meadow">
+                <div class="tile-body">
+                    <i class="fa fa-table"></i>
+                </div>
+                <div class="tile-object">
+                    <div class="name">
+                        Manifiesto
+                    </div>
+                    <div class="number">
+                        V.3
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% endif %}
+
+</div>
+
+

@@ -1,0 +1,61 @@
+<form action="{{ path('traspaso_create') }}" role="form" id="newTraspaso"
+      method="post" {{ form_enctype(form) }}
+      class="form-horizontal">
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Importe</label>
+
+        <div class="col-sm-10">
+            <div class="input-inline">
+                {{ form_widget(form.importe, {'attr' : {'class' : 'form-control', 'placeholder':'Desde' }}
+                ) }}
+                {{ form_errors(form.importe) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>La suma de</label>
+
+        <div class="col-sm-10">
+            {{ form_widget(form.suma, {'attr' : {'class' : 'form-control' }}) }}
+            {{ form_errors(form.suma) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Concepto</label>
+
+        <div class="col-sm-10">
+            <textarea name="concept" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Origen</label>
+
+        <div class="col-sm-10">
+
+            {{ form_widget(form.origen, {'attr' : {'class' : 'form-control select2','style':'width: 100%;' }}
+            ) }}
+            {{ form_errors(form.origen) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color: red"
+                                                    class="required">*&nbsp;</span>Destino</label>
+
+        <div class="col-sm-10">
+
+            {{ form_widget(form.destino, {'attr' : {'class' : 'form-control select2','style':'width: 100%;' }}
+            ) }}
+            {{ form_errors(form.destino) }}
+        </div>
+    </div>
+
+    {{ form_rest(form) }}
+</form>
+

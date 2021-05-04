@@ -1,0 +1,195 @@
+{% extends "BackendBundle::layout.html.twig" %}
+{% block stylesheets_inline %}
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.css') }}"
+          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/iCheck/minimal/grey.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/select2/dist/css/select2.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/toastr-master/build/toastr.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/bootstrap-fileinput-master/css/fileinput.css') }}">
+{% endblock %}
+
+{% block title %}Listado de documentos{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Listado de documentos
+            </h1>
+
+            <ol class="breadcrumb">
+                <li><a href="{{ path('index') }}"><i class="fa fa-home"></i> Inicio</a></li>
+                <li class="active">Documentos</li>
+            </ol>
+        </section>
+        <br>
+        <section class="content">
+            <div class="row">
+                <form id="batch_action_form_delete" action="{{ path('document_batch_delete') }}" method="post">
+                    <table class="table table-hover" id="datatable">
+                        <thead>
+                        <tr>
+                            <th class="sorting_asc_disabled sorting_desc_disabled">
+                                <input id="selectall" name="batch_action_checkbox[]" type="checkbox"
+                                       class="flat-red">
+                            </th>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Cliente</th>
+                            <th style="text-align: center">
+                                <div class="btn-group">
+                                    <a title="Crear documento nuevo" data-toggle="modal" type="button"
+                                       data-target="#myModalHorizontal" data-path="{{ path('document_new') }}"
+                                       id="new_button" tabindex="-1" class="btn btn-flat btn-default btn-sm"><i
+                                                class="fa fa-plus"></i>
+                                    </a>
+                                    <a id="batch-delete-button" data-toggle="confirmation" type="submit" title="Eliminar seleccionados"
+                                       class="btn btn-flat btn-default btn-sm"><i
+                                                class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for document in entities %}
+                            <tr>
+                                <td>
+                                    <input name="batch_action_checkbox[]" type="checkbox" value="{{ document.id }}"
+                                           class="flat-red selectable">
+                                </td>
+                                <td>{{ document.name }}</td>
+                                <td>{{ document.type }}</td>
+                                <td>
+                                    {% if document.client %}
+                                        {{ document.client.firstName }} {{ document.client.lastName }}
+                                    {% else %}
+                                        <span class="label label-default">Sin asignar</span>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: center">
+                                    <div style="align-content: center" class="mailbox-controls">
+                                        <div class="btn-group">
+                                            {% if document.url %}
+                                                <a title="Ver archivo"
+                                                   href="{{ asset('uploads/clientDocuments/' ~ document.url) }}"
+                                                   class="btn btn-flat btn-default btn-sm"><i
+                                                            class="fa fa-eye"></i></a>
+                                            {% endif %}
+                                            <a title="Editar datos del documento" id="edit_button"
+                                               data-toggle="modal"
+                                               type="button"
+                                               data-target="#myModalHorizontal1" tabindex="-1"
+                                               data-path="{{ path('document_edit', { 'id': document.id }) }}"
+                                               href="#" class="btn btn-flat btn-default btn-sm"><i
+                                                        class="fa fa-edit"></i></a>
+                                            <a data-toggle="confirmation" title="Eliminar"
+                                               href="{{ path('document_delete', { 'id': document.id }) }}"
+                                               class="btn btn-flat btn-default btn-sm"><i
+                                                        class="fa fa-trash-o"></i></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <!-- /.col -->
+
+            <!-- /.row -->
+        </section>
+
+    </div><!-- /.content-wrapper -->
+    {# modals #}
+    <div class="modal fade" id="myModalHorizontal" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Registrar documento nuevo
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    {{ render(controller('BackendBundle:document:new', {request: app.request})) }}
+                    <div id="newDocumentResponse"></div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="newDocument" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalHorizontal1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="putYourTitleHere">
+
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div id="putContentHere" class="modal-body">
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <div id="putYourFooterHere">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript_inline %}
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/PopConfirm-master/jquery.popconfirm.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/toastr-master/toastr.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/bootstrap-fileinput-master/js/fileinput.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/bootstrap-fileinput-master/js/locales/es.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/document.js') }}"></script>
+    <script>
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+    </script>
+{% endblock %}

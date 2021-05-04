@@ -1,0 +1,29 @@
+anno:
+    path:     /
+    defaults: { _controller: "BackendBundle:Anno:index" }
+
+anno_show:
+    path:     /show
+    defaults: { _controller: "BackendBundle:Anno:show" }
+
+anno_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Anno:new" }
+
+anno_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Anno:create" }
+    requirements: { _method: post }
+
+anno_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Anno:edit" }
+
+anno_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Anno:update" }
+    requirements: { _method: post|put }
+
+anno_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Anno:delete" }

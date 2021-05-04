@@ -1,0 +1,30 @@
+costorecurrente:
+    path:     /
+    defaults: { _controller: "BackendBundle:CostoRecurrente:index" }
+
+costorecurrente_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:CostoRecurrente:show" }
+
+costorecurrente_new:
+    path:     /{idReply}/new
+    defaults: { _controller: "BackendBundle:CostoRecurrente:new" }
+
+costorecurrente_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:CostoRecurrente:create" }
+    requirements: { _method: post }
+
+costorecurrente_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:CostoRecurrente:edit" }
+
+costorecurrente_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:CostoRecurrente:update" }
+    requirements: { _method: post|put }
+
+costorecurrente_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:CostoRecurrente:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,29 @@
+mes:
+    path:     /
+    defaults: { _controller: "BackendBundle:Mes:index" }
+
+mes_show:
+    path:     /show
+    defaults: { _controller: "BackendBundle:Mes:show" }
+
+mes_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Mes:new" }
+
+mes_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Mes:create" }
+    requirements: { _method: post }
+
+mes_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Mes:edit" }
+
+mes_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Mes:update" }
+    requirements: { _method: post|put }
+
+mes_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Mes:delete" }

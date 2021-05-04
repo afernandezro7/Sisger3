@@ -1,0 +1,158 @@
+{% extends "BackendBundle::layout.html.twig" %}
+{% block stylesheets_inline %}
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.css') }}"
+          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/daterangepicker/daterangepicker.css') }}">
+{% endblock %}
+
+{% block title %}Listado de vouchers {% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Listado de vouchers <a href="#" id="search-button" class="btn btn-flat btn-default btn-sm"
+                                       data-toggle="control-sidebar"><i class="fa fa-search"></i></a>
+            </h1>
+
+            <ol class="breadcrumb">
+                <li><a href="{{ path('index') }}"><i class="fa fa-home"></i> Inicio</a></li>
+                <li>{{ workspace.name }}</li>
+                <li class="active">Vouchers</li>
+            </ol>
+        </section>
+        <br>
+        <section class="content">
+            <div id="filteredArea" class="row">
+                <table class="table table-hover" id="datatable">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Expediente</th>
+                        <th>Espacio</th>
+                        <th>Fecha de entrada</th>
+                        <th>Fecha de salida</th>
+                        <th>Fecha de creacion</th>
+                        <th>Cantidad de personas</th>
+                        <th>Proveedor</th>
+
+                        <th style="text-align: center">
+                            Acciones
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for voucher in entities %}
+                        <tr {% if voucher.isActivo() == false %}   style="  color:#a7a7a7; " {% endif %}>
+                            {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                            <td>{{ voucher.sisgerCode }}</td>
+                            <td>
+                                <a href="{{ path('reply_show', { 'id': voucher.reply.id }) }}">{{ voucher.reply.sisgerCode }}</a>
+                            </td>
+                            <td><span class="label label-default">{% if voucher.workspace %}{{ voucher.workspace.name }}{% else %}Sin asignar{% endif %}</span></td>
+                            <td>{{ voucher.beginDate|date('d/m/Y') }}</td>
+                            <td>{{ voucher.finishDate|date('d/m/Y') }}</td>
+                            <td>{{ voucher.creationDate|date('d/m/Y') }}</td>
+                            <td>{{ voucher.pax }}</td>
+                            <td>{{ voucher.provider }}</td>
+                            <td style="text-align: center">
+                                <div class="mailbox-controls">
+                                    <div class="btn-group">
+                                        <a title="Generar PDF" id="show_button"
+                                           href="{{ path('voucher_generate_pdf', { 'voucherId': voucher.id }) }}"
+                                           class="btn btn-flat btn-danger btn-sm"><i class="fa fa-file-pdf-o"></i>
+                                        </a>
+
+                                        {% if app.user.id == voucher.user.id or app.user.role.name == "ROLE_SUPER_ADMIN" %}
+                                            {% if voucher.isActivo() %}
+                                                <a title="Cancelar" id="cancel_button" data-toggle="confirmation"
+                                                   href="{{ path('voucher_cancel', { 'id': voucher.id }) }}"
+                                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-remove"></i>
+                                                </a>
+                                            {% else %}
+                                                <a title="Activar" id="activate_button"
+                                                   href="{{ path('voucher_activate', { 'id': voucher.id }) }}"
+                                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-check"></i>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    {{ knp_pagination_render(entities) }}
+                </div>
+            </div>
+            <!-- /.col -->
+
+            <!-- /.row -->
+        </section>
+
+    </div><!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside id="search-sidebar" class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li class="active"><a href="#control-sidebar-range-tab" data-toggle="tab"><i class="fa fa-calendar"></i></a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="active tab-pane" id="control-sidebar-range-tab">
+                <h3 class="control-sidebar-heading">Filtrar por rango de fechas de creaci&oacute;n</h3>
+
+                <form id="report" target="_blank"
+                      action="{{ path('generate_voucher_report_by_ws', {'ws':workspace.id  }) }}" method="post">
+                    <div class="form-group">
+
+                        <input id="daterange" name="daterange" type="text"
+                               name="datefilter"
+                               placeholder="Seleccione un rango de fechas de creaci&oacute;n"
+                               class="form-control"/>
+
+                    </div>
+                </form>
+
+
+                <button type="submit" title="Generar PDF" id="filter_button" form="report"
+                        href="#"
+                        class="btn btn-flat btn-danger col-sm-12"><i class="fa fa-file-pdf-o"></i> Generar reporte
+                </button>
+
+            </div>
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+{% endblock %}
+{% block javascript_inline %}
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/daterangepicker/moment.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/toastr-master/toastr.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/PopConfirm-master/jquery.popconfirm.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/voucher.js') }}"></script>
+    <script>
+        $(".item-tree").removeClass("active");
+
+        $("#voucher").addClass("active");
+    </script>
+    <script>
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+    </script>
+{% endblock %}

@@ -1,0 +1,109 @@
+<form action="{{ path('envio_update', { 'id': entity.id }) }}" role="form" id="edit" method="post"
+      class="form-horizontal">
+    {% if entity.estado == 'RVA' %}
+        <div class="form-group form-md-checkboxes">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-10">
+                <div class="md-checkbox-inline">
+                    <div class="md-checkbox">
+                        <input onclick="updateContenedoresEdit();" name="estado" type="checkbox" id="checkbox7"
+                               class="md-check">
+                        <label for="checkbox7">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            HBL </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2"><label>Fecha (HBL)</label>
+            </div>
+            <div class="col-sm-10">
+                <div class="input-group date date-picker" data-date-format="dd-mm-yyyy">
+                    <input type="text" class="form-control" id="belraysa_backendbundle_ena_edit_code" name="sisgerCode">
+												<span class="input-group-btn">
+												<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+												</span>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Expediente</label>
+        </div>
+        <div class="input-icon input-icon-sm col-sm-5">
+            <i style="margin-top: 5px">E-</i>
+            <input class="form-control form-filter input-sm" name="expediente" type="text" value="{{ entity.expediente.id }}" required="">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Nombre RTTE</label>
+        </div>
+        <div class="col-sm-10">
+
+            {{ form_widget(edit_form.remitenteNombre, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(edit_form.remitenteNombre) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>C&eacute;dula RTTE</label>
+        </div>
+        <div class="col-sm-10">
+
+            {{ form_widget(edit_form.remitenteCedula, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(edit_form.remitenteCedula) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Consignado</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(edit_form.consignado, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', }}
+            ) }}
+            {{ form_errors(edit_form.consignado) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Contenedor</label></div>
+        <div class="col-sm-10">
+            {% if entity.estado == 'RVA' %}
+                {{ form_widget(edit_form.contenedor, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', }}
+                ) }}
+                {{ form_errors(edit_form.contenedor) }}
+            {% else %}
+                {{ form_widget(edit_form.contenedor, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', 'disabled':'disabled' }}
+                ) }}
+                {{ form_errors(edit_form.contenedor) }}
+            {% endif %}
+        </div>
+    </div>
+
+
+    {{ form_rest(edit_form) }}
+</form>
+<script>
+    if ("{{ entity.estado }}" == 'RVA') {
+        updateContenedoresEdit();
+        function updateContenedoresEdit() {
+            if (document.getElementById('checkbox7').checked) {
+                document.getElementById('belraysa_backendbundle_envio_edit_contenedor').disabled = true;
+                document.getElementById('belraysa_backendbundle_ena_edit_code').disabled = false;
+            } else {
+                document.getElementById('belraysa_backendbundle_envio_edit_contenedor').disabled = false;
+                document.getElementById('belraysa_backendbundle_ena_edit_code').disabled = true;
+            }
+        }
+    }
+</script>

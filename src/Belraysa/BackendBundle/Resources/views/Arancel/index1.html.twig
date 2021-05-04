@@ -1,0 +1,251 @@
+{% extends "BackendBundle::layout.html.twig" %}
+{% block stylesheets_inline %}
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.css') }}"
+          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/tree/dist/themes/default/style.min.css') }}"
+          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/iCheck/all.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/toastr-master/build/toastr.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/select2/dist/css/select2.min.css') }}">
+    <link href="{{ asset('bundles/backend/lte/plugins/datepicker/datepicker3.css') }}" type="text/css" rel="stylesheet"
+          xmlns="http://www.w3.org/1999/html"/>
+
+{% endblock %}
+
+{% block title %}Aranceles{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Aranceles
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('index') }}"><i class="fa fa-home"></i> Inicio</a></li>
+                <li>L-BRS</li>
+                <li class="active">Aranceles</li>
+            </ol>
+        </section>
+        <br>
+        <section class="content">
+
+            <div class="row">
+                <table class="table table-hover" id="datatable">
+                    <thead>
+                    <tr>
+                        <th>Cap&iacute;tulo</th>
+                        <th>Art&iacute;culos</th>
+                        <th>UM</th>
+                        <th>Cantidad</th>
+                        <th>Arancel</th>
+                        <th>Observaciones</th>
+                        <th style="text-align: center">
+                            <div class="mailbox-controls">
+                                <div class="btn-group">
+                                    <a title="Registrar arancel" data-toggle="modal" type="button"
+                                       data-target="#modalNewArancel"
+                                       tabindex="-1" class="btn btn-flat btn-default btn-sm"><i
+                                                class="fa fa-plus"></i>
+                                    </a>
+                                    <a title="Importar aranceles" data-toggle="modal" type="button"
+                                       data-target="#grid-modal-upload"
+                                       tabindex="-1" class="btn btn-flat btn-default btn-sm"><i
+                                                class="fa fa-upload"></i>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arancel in entities %}
+                        <tr>
+                            <td>
+                                {{ arancel.capitulo }}
+                            </td>
+                            {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                            <td>{{ arancel.articulos }}</td>
+
+                            <td>
+                                {{ arancel.um }}
+                            </td>
+                            <td>
+                                {{ arancel.cantidad }}
+                            </td>
+                            <td>
+                                {{ arancel.arancel }}
+                            </td>
+                            <td>
+                                {{ arancel.observaciones }}
+                            </td>
+                            <td style="text-align: center">
+                                <div class="mailbox-controls">
+                                    <div class="btn-group">
+
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.col -->
+
+            <!-- /.row -->
+        </section>
+
+    </div><!-- /.content-wrapper -->
+
+    <div class="modal fade" id="modalNewArancel" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        Registrar arancel
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    {{ include("BackendBundle:Arancel:new.html.twig") }}
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="newArancel" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="grid-modal-upload" tabindex="-1" role="dialog" aria-labelledby="grid-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="grid-modalLabel">Importar</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ path('arancel_upload') }}" method="post" enctype="multipart/form-data"
+                          class="form-horizontal" id="upload-arancel">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Archivo</label>
+
+                            <div class="col-sm-10">
+                                <input id="path" name="path" type="file" class="file"/>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default" data-dismiss="modal"><i
+                                class="fa fa-times-circle"></i> Cerrar
+                    </button>
+                    <button id="modal-save" type="submit" form="upload-arancel" class="btn btn-flat btn-primary"><i
+                                class="fa fa-check-circle"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalEdit" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        Editar datos
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div id="modalEditContent" class="modal-body">
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="edit" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript_inline %}
+
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/PopConfirm-master/jquery.popconfirm.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/toastr-master/toastr.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/js/aranceles.js') }}"></script>
+    <script>
+        $(".item-tree").removeClass("active");
+        $("#aranceles").addClass("active");
+        $('#datatable').DataTable(
+            {
+                "columns": [
+                    {"orderable": false},
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    {"orderable": false}
+                ]
+            }
+        );
+    </script>
+    <script>
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+
+
+    </script>
+{% endblock %}

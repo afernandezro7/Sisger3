@@ -1,0 +1,74 @@
+{% extends "BackendBundle::layout.html.twig" %}
+  {% block stylesheets_inline %}
+      <link rel="stylesheet"
+            href="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.css') }}"
+            xmlns="http://www.w3.org/1999/html">
+      <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/iCheck/minimal/grey.css') }}">
+      <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/select2/dist/css/select2.min.css') }}">
+      <link rel="stylesheet"
+            href="{{ asset('bundles/backend/lte/plugins/toastr-master/build/toastr.css') }}">
+  {% endblock %}
+
+{% block title %}Buscar{% endblock %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content-header">
+
+            <ol class="breadcrumb">
+                <li><a href="{{ path('index') }}"><i class="fa fa-home"></i> Inicio</a></li>
+                <li class="active">Buscador</li>
+            </ol>
+        </section>
+        <br>
+        <section class="content">
+            <div class="row">
+                <form id="search" action="{{ path('executeSearch') }}" method="post"
+                      class="form-horizontal">
+                    <div align="center">
+                        <img height="92px"
+                             src="{{ asset('bundles/backend/images/festisite_google.png') }}"
+                             alt="SISGEC Search">
+                        <br>
+
+                        <div class="input-group col-sm-6">
+                            <input type="text" name="criteria" id="criteria"
+                                   class="form-control">
+                      <span class="input-group-btn">
+                                <button type="submit" form="search" class="btn btn-flat btn-primary">Buscar</button>
+                      </span>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <br>
+
+            <!-- /.col -->
+            <div id="searchResponse"></div>
+            <!-- /.row -->
+        </section>
+
+    </div><!-- /.content-wrapper -->
+{% endblock %}
+
+{% block javascript_inline %}
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/PopConfirm-master/jquery.popconfirm.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/toastr-master/toastr.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/searcher.js') }}"></script>
+    <script>
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+    </script>
+
+{% endblock %}

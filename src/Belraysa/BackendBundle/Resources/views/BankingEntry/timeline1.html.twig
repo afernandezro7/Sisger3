@@ -1,0 +1,310 @@
+{% set layout = "BackendBundle::" ~ ws.getName() ~ ".html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link href="{{ asset('bundles/backend/admin/pages/css/timeline.css') }}" rel="stylesheet" type="text/css"/>
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}{{ entity.type }} | {{ entity.name }}{% endblock %}
+  {% block breadtitle %} <h1>{{ entity.type }} | {{ entity.name }}</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li class="active">{{ entity.type }} | {{ entity.name }}</li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% if entradas|length > 0 %}
+            <div class="timeline">
+                <!-- TIMELINE ITEM -->
+                {% for date in entradas %}
+                    {% for entrada in date %}
+                        {% set color = {'Ingreso':'bg-green', 'Egreso': 'bg-red'} %}
+                        {% set icon = {'Ingreso':'fa fa-arrow-down', 'Egreso': 'fa fa-arrow-up' } %}
+                        {% if workspace.currentWorkspace.name == 'G-BRS' %}
+
+                            <div class="timeline-item">
+                                <div class="timeline-badge">
+                                    {% set photo = '' %}
+                                    {% if entrada.recibo %}{% set photo = entrada.recibo.usuario.photo %}{% elseif entrada.origenTraspaso %}{% set photo = entrada.origenTraspaso.user.photo %}{% elseif entrada.destinoTraspaso %}{% set photo = entrada.destinoTraspaso.user.photo %}{% else %}{% set photo =  entrada.extra.usuario.photo %}{% endif %}
+                                    <img style="width: 80px; height: 80px" class="timeline-badge-userpic"
+                                         src="{{ asset('uploads/usersPhotos/'~photo) }}">
+                                </div>
+
+                                <div class="timeline-body">
+                                    <div class="timeline-body-arrow">
+                                    </div>
+                                    <div class="timeline-body-head">
+                                        <div class="timeline-body-head-caption">
+                                            <a href="javascript:;"
+                                               class="timeline-body-title font-blue-madison">{% if entrada.recibo %}{{ entrada.recibo.usuario.firstName }}{% elseif entrada.origenTraspaso %}{{ entrada.origenTraspaso.user.firstName }}{% elseif entrada.destinoTraspaso %}{{ entrada.destinoTraspaso.user.firstName }}{% else %}{{ entrada.extra.usuario.firstName }}{% endif %}</a>
+                                            <span class="timeline-body-time font-grey-cascade">{{ entrada.getDate()|date('d M. Y H:i') }}</span>
+                                        </div>
+                                        <div class="timeline-body-head-actions">
+                                            {% if entrada.recibo %}
+                                                <h3 class="timeline-header">
+                                                    <label class="label label-default">{{ entrada.recibo.sisgerCode }}</label>
+                                                    {% if entrada.credit > 0 %}
+                                                        <label class="label label-success">Cr&eacute;dito: {{ entrada.credit }}
+                                                            USD</label>
+                                                    {% else %}
+                                                        <label class="label label-danger">D&eacute;bito: {{ entrada.debit }}
+                                                            USD</label>
+                                                    {% endif %}
+                                                    {% if entrada.balance > 0 %}
+                                                        <label class="label label-success">Balance: {{ entrada.balance }}
+                                                            USD</label>
+                                                    {% else %}
+                                                        <label class="label label-danger">Balance: {{ entrada.balance }}
+                                                            USD</label>
+                                                    {% endif %}
+                                                </h3>
+                                            {% elseif entrada.origenTraspaso %}
+                                                <h3 class="timeline-header">
+                                                    <label class="label label-default">{{ entrada.origenTraspaso.sisgerCode }}</label>
+                                                    {% if entrada.credit > 0 %}
+                                                        <label class="label label-success">Cr&eacute;dito: {{ entrada.credit }}
+                                                            USD</label>
+                                                    {% else %}
+                                                        <label class="label label-danger">D&eacute;bito: {{ entrada.debit }}
+                                                            USD</label>
+                                                    {% endif %}
+                                                    {% if entrada.balance > 0 %}
+                                                        <label class="label label-success">Balance: {{ entrada.balance }}
+                                                            USD</label>
+                                                    {% else %}
+                                                        <label class="label label-danger">Balance: {{ entrada.balance }}
+                                                            USD</label>
+                                                    {% endif %}
+                                                </h3>
+                                            {% elseif entrada.destinoTraspaso %}
+                                                <h3 class="timeline-header">
+                                                    <label class="label label-default">{{ entrada.destinoTraspaso.sisgerCode }}</label>
+                                                    {% if entrada.credit > 0 %}
+                                                        <label class="label label-success">Cr&eacute;dito: {{ entrada.credit }}
+                                                            USD</label>
+                                                    {% else %}
+                                                        <label class="label label-danger">D&eacute;bito: {{ entrada.debit }}
+                                                            USD</label>
+                                                    {% endif %}
+                                                    {% if entrada.balance > 0 %}
+                                                        <label class="label label-success">Balance: {{ entrada.balance }}
+                                                            USD</label>
+                                                    {% else %}
+                                                        <label class="label label-danger">Balance: {{ entrada.balance }}
+                                                            USD</label>
+                                                    {% endif %}
+                                                </h3>
+                                            {% else %}
+                                                <h3 class="timeline-header">
+                                                    <label class="label label-default">{{ entrada.extra.sisgerCode }}</label>
+                                                    {% if entrada.credit > 0 %}
+                                                        <label class="label label-success">Cr&eacute;dito: {{ entrada.credit }}
+                                                            USD</label>
+                                                    {% else %}
+                                                        <label class="label label-danger">D&eacute;bito: {{ entrada.debit }}
+                                                            USD</label>
+                                                    {% endif %}
+                                                    {% if entrada.balance > 0 %}
+                                                        <label class="label label-success">Balance: {{ entrada.balance }}
+                                                            USD</label>
+                                                    {% else %}
+                                                        <label class="label label-danger">Balance: {{ entrada.balance }}
+                                                            USD</label>
+                                                    {% endif %}
+                                                </h3>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="timeline-body-content">
+                                        <span class="font-grey-cascade">{{ entrada.details }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+
+                            <div class="timeline-item">
+                                <div class="timeline-badge">
+
+                                    {% if entrada.recibo %}
+                                        {% if entrada.recibo.workspace %}
+                                            {% if entrada.recibo.workspace.id == workspace.currentWorkspace.id %}
+                                                <img style="width: 80px; height: 80px" class="timeline-badge-userpic"
+                                                     src="{{ asset('uploads/usersPhotos/'~entrada.recibo.usuario.photo) }}">
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                </div>
+
+                                <div class="timeline-body">
+                                    <div class="timeline-body-arrow">
+                                    </div>
+                                    <div class="timeline-body-head">
+                                        <div class="timeline-body-head-caption">
+                                            <a href="javascript:;"
+                                               class="timeline-body-title font-blue-madison">
+                                                {% if entrada.recibo %}
+                                                    {% if entrada.recibo.workspace %}
+                                                        {% if entrada.recibo.workspace.id == workspace.currentWorkspace.id %}
+                                                            {{ entrada.recibo.usuario.firstName }}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </a>
+                                            <span class="timeline-body-time font-grey-cascade">{{ entrada.getDate()|date('d M. Y H:i') }}</span>
+                                        </div>
+                                        <div class="timeline-body-head-actions">
+                                            {% if entrada.recibo %}
+                                                <h3 class="timeline-header">
+                                                    {% if entrada.recibo.workspace %}
+                                                        {% if entrada.recibo.workspace.id == workspace.currentWorkspace.id %}
+                                                            <label class="label label-default">{{ entrada.recibo.sisgerCode }}</label>
+                                                            {% if entrada.credit > 0 %}
+                                                                <label class="label label-success">Cr&eacute;dito: {{ entrada.credit }}
+                                                                    USD</label>
+                                                            {% else %}
+                                                                <label class="label label-danger">D&eacute;bito: {{ entrada.debit }}
+                                                                    USD</label>
+                                                            {% endif %}
+                                                            {% if entrada.balance > 0 %}
+                                                                <label class="label label-success">Balance: {{ entrada.balance }}
+                                                                    USD</label>
+                                                            {% else %}
+                                                                <label class="label label-danger">Balance: {{ entrada.balance }}
+                                                                    USD</label>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if entrada.recibo.tipo == 'Ingreso' %}
+                                                                <span class="label label-success">Ingreso registrado {% if entrada.recibo.workspace %} en el entorno {{ entrada.recibo.workspace.name }}{% endif %}</span>
+                                                            {% else %}
+                                                                <span class="label label-danger">Egreso registrado {% if entrada.recibo.workspace %} en el entorno {{ entrada.recibo.workspace.name }}{% endif %}</span>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if entrada.recibo.tipo == 'Ingreso' %}
+                                                            <span class="label label-success">Ingreso registrado {% if entrada.recibo.workspace %} en el entorno {{ entrada.recibo.workspace.name }}{% endif %}</span>
+                                                        {% else %}
+                                                            <span class="label label-danger">Egreso registrado {% if entrada.recibo.workspace %} en el entorno {{ entrada.recibo.workspace.name }}{% endif %}</span>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </h3>
+                                            {% elseif entrada.origenTraspaso %}
+                                                <h3 class="timeline-header">
+                                                    <span class="label label-danger">Traspaso registrado </span>
+                                                </h3>
+                                            {% elseif entrada.destinoTraspaso %}
+                                                <span class="label label-success">Traspaso registrado </span>
+                                            {% else %}
+                                                {% if entrada.extra.importe >= 0 %}
+                                                    <span class="label label-success">Operaci&oacute;n extra registrada </span>
+                                                {% else %}
+                                                    <span class="label label-danger">Operaci&oacute;n extra registrada </span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="timeline-body-content">
+                                        {% if entrada.recibo %}
+                                            {% if entrada.recibo.workspace %}
+                                                {% if entrada.recibo.workspace.id == workspace.currentWorkspace.id %}
+                                                    <span class="font-grey-cascade">{{ entrada.details }}</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <!-- END PAGE CONTENT-->
+        {% else %}
+            No se han efectuado movimientos en la entidad
+        {% endif %}
+    </div>
+
+
+{% endblock %}
+    {% block javascript_inline %}
+        <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
+                type="text/javascript"></script>
+
+        <script src="{{ asset('bundles/backend/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+        <script src="{{ asset('bundles/backend/lte/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+
+        <script>
+            var table = $('#table');
+
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": true,
+                "newestOnTop": false,
+                "progressBar": false,
+                "rtl": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "showDuration": 300,
+                "hideDuration": 1000,
+                "timeOut": 10000,
+                "extendedTimeOut": 1000,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+            {% for flashMessage in app.session.flashbag.get('danger') %}
+            lanzarError("{{ flashMessage }}");
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+            lanzarOk("{{ flashMessage }}");
+            {% endfor %}
+
+            function lanzarOk(mensaje) {
+                Command: toastr["success"](mensaje);
+            }
+
+            function lanzarError(mensaje) {
+                Command: toastr["error"](mensaje);
+            }
+
+            /* SPARKLINE CHARTS
+             * ----------------
+             * Create a inline charts with spark line
+             */
+
+            //-----------------
+            //- SPARKLINE BAR -
+            //-----------------
+            $('.sparkbar').each(function () {
+                var $this = $(this);
+                $this.sparkline('html', {
+                    type: 'bar',
+                    height: $this.data('height') ? $this.data('height') : '30',
+                    barColor: $this.data('color'),
+                    defaultPixelsPerValue: 3,
+                    width: "auto",
+                    composite: !1,
+                    tagValuesAttribute: "values",
+                    tagOptionsPrefix: "spark",
+                    enableTagOptions: !1,
+                    enableHighlight: !0,
+                    highlightLighten: 1.4,
+                    tooltipSkipNull: !0,
+                    tooltipPrefix: "",
+                    tooltipSuffix: " USD",
+                    disableHiddenCheck: !1,
+                    numberFormatter: !1,
+                    numberDigitGroupCount: 3,
+                    numberDigitGroupSep: " ",
+                    numberDecimalMark: ".",
+                    disableTooltips: !1,
+                    disableInteraction: !1
+                });
+            });
+
+        </script>
+
+    {% endblock %}

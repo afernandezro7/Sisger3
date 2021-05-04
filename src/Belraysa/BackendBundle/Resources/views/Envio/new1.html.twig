@@ -1,0 +1,79 @@
+<form action="{{ path('envio_create') }}" role="form" id="newEnvio" method="post" {{ form_enctype(form) }}
+      class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-2"><label>Fecha (HBL)</label>
+        </div>
+        <div class="col-sm-10">
+            <div class="input-group date date-picker" data-date-format="dd-mm-yyyy">
+                <input type="text" class="form-control" id="belraysa_backendbundle_ena_code" name="sisgerCode">
+												<span class="input-group-btn">
+												<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+												</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Expediente</label>
+        </div>
+        <div class="input-icon input-icon-sm col-sm-5">
+            <i style="margin-top: 5px">E-</i>
+            {% if exp_id != 0 %}
+                <input class="form-control form-filter input-sm" name="expediente" value="{{ exp_id }}" type="text" required="">
+            {% else %}
+                <input class="form-control form-filter input-sm" name="expediente" type="text" required="">
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Nombre RTTE</label>
+        </div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.remitenteNombre, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(form.remitenteNombre) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>C&eacute;dula RTTE</label>
+        </div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.remitenteCedula, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(form.remitenteCedula) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Consignado</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.consignado, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', }}
+            ) }}
+            {{ form_errors(form.consignado) }}
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Contenedor</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.contenedor, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', }}
+            ) }}
+            {{ form_errors(form.contenedor) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Estado</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.estado, {'attr' : {'class' : 'form-control select2me' ,'style':'width: 100%;', }}
+            ) }}
+            {{ form_errors(form.estado) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+</form>

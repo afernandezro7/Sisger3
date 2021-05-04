@@ -1,0 +1,34 @@
+conceptogasto:
+    path:     /{ws}/index
+    defaults: { _controller: "BackendBundle:ConceptoGasto:index" }
+
+conceptogasto_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:ConceptoGasto:new" }
+
+conceptogasto_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:ConceptoGasto:create" }
+    requirements: { _method: post }
+
+conceptogasto_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:ConceptoGasto:edit" }
+
+conceptogasto_update:
+    path:     /update
+    defaults: { _controller: "BackendBundle:ConceptoGasto:update" }
+    requirements: { _method: post|put }
+
+conceptogasto_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:ConceptoGasto:delete" }
+
+conceptogasto_batch_delete:
+    path: /{ws}/conceptogasto_batch_delete
+    defaults: { _controller: "BackendBundle:ConceptoGasto:batchDelete" }
+    requirements: { _method: post }
+
+conceptogasto_filter:
+    path:     /filter
+    defaults: { _controller: "BackendBundle:ConceptoGasto:filter" }

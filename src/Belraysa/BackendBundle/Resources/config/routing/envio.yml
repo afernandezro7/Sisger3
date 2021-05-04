@@ -1,0 +1,38 @@
+envio:
+    path:     /
+    defaults: { _controller: "BackendBundle:Envio:index" }
+
+envio_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Envio:show" }
+
+envio_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Envio:new" }
+
+envio_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Envio:create" }
+    requirements: { _method: post }
+
+envio_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Envio:edit" }
+
+envio_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Envio:update" }
+    requirements: { _method: post|put }
+
+envio_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Envio:delete" }
+
+envio_batch_delete:
+    path: /batch_delete
+    defaults: { _controller: "BackendBundle:Envio:batchDelete" }
+    requirements: { _method: post }
+
+envio_exp:
+    path:     /{exp_id}/index
+    defaults: { _controller: "BackendBundle:Envio:indexExp" }

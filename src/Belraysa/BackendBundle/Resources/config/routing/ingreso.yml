@@ -1,0 +1,61 @@
+ingreso:
+    path:     /{workspace}/index
+    defaults: { _controller: "BackendBundle:Ingreso:index" }
+
+ingreso_all:
+    path:     /all
+    defaults: { _controller: "BackendBundle:Ingreso:indexAll" }
+
+ingreso_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Ingreso:show" }
+
+ingreso_new:
+    path:     /{idReply}/new
+    defaults: { _controller: "BackendBundle:Ingreso:new" }
+
+ingreso_reply:
+    path:     /{idReply}/ingresos
+    defaults: { _controller: "BackendBundle:Ingreso:indexByReply" }
+
+ingreso_export_reply:
+    path:     /{idReply}/exportar_ingresos
+    defaults: { _controller: "BackendBundle:Ingreso:exportByReply" }
+
+ingreso_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Ingreso:create" }
+    requirements: { _method: post }
+
+ingreso_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Ingreso:edit" }
+
+ingreso_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Ingreso:update" }
+    requirements: { _method: post|put }
+
+ingreso_cancel:
+    path:     /{id}/cancel
+    defaults: { _controller: "BackendBundle:Ingreso:cancel" }
+
+ingreso_activate:
+    path:     /{id}/activate
+    defaults: { _controller: "BackendBundle:Ingreso:activate" }
+
+getIngresos:
+    path:     /getIngresos
+    defaults: { _controller: "BackendBundle:Ingreso:getIngresos" }
+
+ingreso_generate_pdf:
+    path:     /invoice/{reciboId}/pdf
+    defaults: { _controller: "BackendBundle:Ingreso:generateIngresoPDF" }
+
+generate_ingreso_report:
+    path:     /generar_reporte_ingresos
+    defaults: { _controller: "BackendBundle:Ingreso:generateReport" }
+
+generate_ingreso_report_by_ws:
+    path:     /{ws}/generar_reporte_ingresos_por_ws
+    defaults: { _controller: "BackendBundle:Ingreso:generateReportByWs" }

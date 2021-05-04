@@ -1,0 +1,224 @@
+{% extends "BackendBundle::layout.html.twig" %}
+{% block stylesheets_inline %}
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.css') }}"
+          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/iCheck/minimal/grey.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/toastr-master/build/toastr.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/select2/dist/css/select2.min.css') }}">
+{% endblock %}
+
+{% block title %}Tipos de contenedor{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Tipos de contenedor
+            </h1>
+
+            <ol class="breadcrumb">
+                <li><a href="{{ path('index') }}"><i class="fa fa-home"></i> Inicio</a></li>
+                <li class="active">Tipos de contenedor</li>
+            </ol>
+        </section>
+        <br>
+        <section class="content">
+            <div class="row">
+                <form id="batch_action_form_delete" action="{{ path('tipocontenedor_batch_delete') }}" method="post">
+                    <table class="table table-hover" id="datatable">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input id="selectall" name="batch_action_checkbox[]" type="checkbox"
+                                       class="flat-red">
+                            </th>
+                            <th>Nombre</th>
+                            <th>Volumen</th>
+                            <th>Max. Kgs</th>
+                            <th style="text-align: center">
+                                <div class="mailbox-controls">
+                                    <div class="btn-group">
+                                            <a title="Crear tipo de contenedor" data-toggle="modal" type="button"
+                                               data-target="#myModalHorizontal" tabindex="-1"
+                                               class="btn btn-flat btn-default btn-sm"><i
+                                                        class="fa fa-plus"></i>
+                                            </a>
+
+                                            <a title="Eliminar seleccionados" data-toggle="confirmation" type="submit"
+                                               id="batch-delete-button"
+                                               class="btn btn-flat btn-default btn-sm"><i
+                                                        class="fa fa-trash-o"></i>
+                                            </a>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for tipo in entities %}
+                            <tr>
+                                {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                                <td>
+                                    <input name="batch_action_checkbox[]" type="checkbox" value="{{ tipo.id }}"
+                                           class="flat-red selectable">
+                                </td>
+                                <td>{{ tipo.nombre }}</td>
+                                <td>{{ tipo.volumenM3 }} M3</td>
+                                <td>{{ tipo.maxPesoKg }} Kg</td>
+                                <td style="text-align: center">
+                                    <div class="mailbox-controls">
+                                        <div class="btn-group">
+                                                <a title="Editar tipo de contenedor" id="edit_button" data-toggle="modal"
+                                                   type="button"
+                                                   data-target="#myModalHorizontal1" tabindex="-1"
+                                                   data-name="{{ tipo.nombre }}"
+                                                   data-volumen="{{ tipo.volumenM3 }}"
+                                                   data-peso="{{ tipo.maxPesoKg }}"
+                                                   data-id="{{ tipo.id }}"
+                                                   href="#"
+                                                   class="btn btn-flat btn-default btn-sm"><i
+                                                            class="fa fa-edit"></i></a>
+                                                <a data-toggle="confirmation" title="Eliminar"
+                                                   href="{{ path('tipocontenedor_delete', { 'id': tipo.id }) }}"
+                                                   class="btn btn-flat btn-default btn-sm"><i
+                                                            class="fa fa-trash-o"></i></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </form>
+
+            </div>
+            <!-- /.col -->
+
+            <!-- /.row -->
+        </section>
+
+    </div><!-- /.content-wrapper -->
+
+    {# modals #}
+    <div class="modal fade" id="myModalHorizontal" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Crear tipo de contenedor nuevo
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    {{ render(controller('BackendBundle:TipoContenedor:new', {request: app.request})) }}
+                    <div id="newTipoContenedorResponse"></div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="newTipoContenedor" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# modals #}
+    <div class="modal fade" id="myModalHorizontal1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Editar tipo de contenedor
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form action="{{ path('tipocontenedor_update') }}" role="form" id="editTipoContenedor" method="post"
+                          class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Nombre</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="nombre" id="nombre">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Volumen (M3)</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="volumenM3" id="volumenM3">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Peso Max (Kgs)</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="maxPesoKg" id="maxPesoKg">
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" id="id">
+                    </form>
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-flat btn-default"
+                            data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button form="editTipoContenedor" type="submit" class="btn btn-flat btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript_inline %}
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/PopConfirm-master/jquery.popconfirm.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/toastr-master/toastr.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/tipoContenedor.js') }}"></script>
+    <script>
+        $(".select2").select2();
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+    </script>
+
+{% endblock %}

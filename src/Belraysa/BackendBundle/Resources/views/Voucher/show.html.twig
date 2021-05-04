@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Voucher</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Begindate</th>
+                <td>{{ entity.beginDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Finishdate</th>
+                <td>{{ entity.finishDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Creationdate</th>
+                <td>{{ entity.creationDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Pax</th>
+                <td>{{ entity.pax }}</td>
+            </tr>
+            <tr>
+                <th>Provider</th>
+                <td>{{ entity.provider }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('voucher') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('voucher_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

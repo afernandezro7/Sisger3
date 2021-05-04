@@ -1,0 +1,38 @@
+document:
+    path:     /
+    defaults: { _controller: "BackendBundle:Document:index" }
+
+document_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Document:show" }
+
+document_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Document:new" }
+
+document_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Document:create" }
+    requirements: { _method: post }
+
+document_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Document:edit" }
+
+document_update:
+    path:      /{id}/update
+    defaults: { _controller: "BackendBundle:Document:update" }
+    requirements: { _method: post|put }
+
+document_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Document:delete" }
+
+document_batch_delete:
+    path: /document_batch_delete
+    defaults: { _controller: "BackendBundle:Document:batchDelete" }
+    requirements: { _method: post }
+
+document_client:
+    path:     /{idClient}/documents
+    defaults: { _controller: "BackendBundle:Document:indexByClient" }

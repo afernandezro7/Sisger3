@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description=" content="Sistema de Gesti&oacute;n de Reservas">
+    <meta name="author" content="Belraysa Tours and Travel Group S.A"/>
+    <meta name="generator" content="Symfony 2.3.20"/>
+
+    <title>{% block title %} {% endblock %} SISGER III v1.3 </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+
+    {% block stylesheets %}
+        <!-- Bootstrap 3.3.6 -->
+        <link rel="stylesheet" href="{{ asset('bundles/backend/lte/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/backend/lte/dist/css/AdminLTE.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/iCheck/minimal/grey.css') }}">
+        <link rel="stylesheet"
+              href="{{ asset('bundles/backend/lte/plugins/toastr-master/build/toastr.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/backend/css/login.css') }}">
+
+
+
+    {% endblock %}
+
+    {% block stylesheets_inline %}
+    {% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('uploads/images/belraysa_logo.png') }}"/>
+
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <h2 style="font-weight: 600; color: #ffffff; background-color: #808080; opacity: .4;
+        filter: alpha(opacity=70)">SISGER III</h2>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Autent&iacute;quese para iniciar sesi&oacute;n</p>
+
+        <form id="login-form" action="{{ path('login_check') }}" method="post">
+            <div class="form-group has-feedback">
+                <input id="username" name="_username" class="form-control" placeholder="Usuario">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" id="password" name="_password" class="form-control"
+                       placeholder="Contrase&ntilde;a">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-7">
+                    <div class="checkbox">
+                        <input type="checkbox" class="minimal"> Recu&eacute;rdame
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-5">
+                    <button id="entrar" type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+</body>
+<script src="{{ asset('bundles/backend/lte/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+<script src="{{ asset('bundles/backend/lte/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/backend/lte/plugins/toastr-master/toastr.js') }}"></script>
+<script src="{{ asset('bundles/backend/lte/plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('bundles/backend/js/login.js') }}"></script>
+<script>
+    {% if error %}
+
+    var mensaje = "{{ error.messageKey|trans(error.messageData, 'security') }}";
+    lanzarError(mensaje);
+
+    {% endif %}
+</script>
+
+</html>

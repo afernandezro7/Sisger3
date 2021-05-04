@@ -1,0 +1,60 @@
+<form action="{{ path('arancel_create') }}" role="form" id="newArancel" method="post" {{ form_enctype(form) }}
+      class="form-horizontal">
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Cap&iacute;tulo</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.capitulo, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(form.capitulo) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Art&iacute;culos</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.articulos, {'attr' : {'class' : 'form-control' , }}
+            ) }}
+            {{ form_errors(form.articulos) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">UM</label></div>
+        <div class="col-sm-10">
+            {{ form_widget(form.um, {'attr' : {'class' : 'form-control select2' , 'style':'width:100%' }}
+            ) }}
+            {{ form_errors(form.um) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Cantidad</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.cantidad, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(form.cantidad) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Arancel</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.arancel, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(form.arancel) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Obs.</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(form.observaciones, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(form.observaciones) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+</form>

@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Arancel</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Capitulo</th>
+                <td>{{ entity.capitulo }}</td>
+            </tr>
+            <tr>
+                <th>Articulos</th>
+                <td>{{ entity.articulos }}</td>
+            </tr>
+            <tr>
+                <th>Um</th>
+                <td>{{ entity.um }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad</th>
+                <td>{{ entity.cantidad }}</td>
+            </tr>
+            <tr>
+                <th>Arancel</th>
+                <td>{{ entity.arancel }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ entity.observaciones }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('arancel') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('arancel_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "::base.html.twig" %}
+  {% block stylesheet_inline %}
+  {% endblock %}
+  {% block breadcrumbs %}
+      <!-- BEGIN BREADCRUMBS -->
+      <div class="breadcrumbs">
+          {% block breadtitle %} <h1>log&iacute;stica Belraysa</h1> {% endblock %}
+          <ol class="breadcrumb">
+              <li><a href="{{ path('index') }}">log&iacute;stica Belraysa</a></li>
+              {% block breadcrumb %}
+
+              {% endblock %}
+          </ol>
+      </div>
+      <!-- END BREADCRUMBS -->
+  {% endblock %}
+
+            {% block container %}
+
+            {% endblock %}
+  {% block quicksidebar %}
+
+  {% endblock %}
+{% block javascript_inline %}
+{% endblock %}
+
+
+

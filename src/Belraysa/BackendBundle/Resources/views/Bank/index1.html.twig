@@ -1,0 +1,223 @@
+{% extends "BackendBundle::layout.html.twig" %}
+{% block stylesheets_inline %}
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.css') }}"
+          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/tree/dist/themes/default/style.min.css') }}"
+          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('bundles/backend/lte/plugins/toastr-master/build/toastr.css') }}">
+    <style>
+        .dropdown-menu {
+            right: 0 !important;
+            left: auto !important;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}Banco | {{ entity.name }}{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+               Banco | {{ entity.name }} <a href="#" id="search-button" class="btn btn-flat btn-default btn-sm"
+                                                   data-toggle="control-sidebar"><i class="fa fa-search"></i></a>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('index') }}"><i class="fa fa-home"></i> Inicio</a></li>
+                <li>{{ workspace.name }}</li>
+                <li class="active">Banco | {{ entity.name }}</li>
+            </ol>
+        </section>
+        <br>
+        <section class="content">
+
+            <div class="row">
+
+                <table class="table table-hover" id="entradas">
+                    <thead>
+                    <tr>
+                        <th>Referencia</th>
+                        <th>Fecha</th>
+                        <th>Detalles</th>
+                        <th>Cr&eacute;dito</th>
+                        <th>D&eacute;bito</th>
+                        <th>Balance (inicial = {{ entity.initBalance }} USD)</th>
+                        <th>Responsable</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entrada in entradas %}
+                        <tr>
+                            <td>
+                                <b>{% if entrada.recibo %}{{ entrada.recibo.sisgerCode }}{% elseif entrada.origenTraspaso %}{{ entrada.origenTraspaso.sisgerCode }}{% elseif entrada.destinoTraspaso %}{{ entrada.destinoTraspaso.sisgerCode }}{% else %}{{ entrada.extra.sisgerCode }}{% endif %}</b>
+                            </td>
+                            <td>{{ entrada.date|date('d/m/Y  H:i') }}</td>
+                            <td>{{ entrada.details }}</td>
+                            <td>{% if entrada.credit > 0 %}<label style="color: green">{{ entrada.credit }}
+                                    USD</label>{% else %}<label style="color: grey">0 USD</label>{% endif %}</td>
+                            <td>{% if entrada.debit < 0 %}<label style="color: #8b0000">{{ entrada.debit }}
+                                    USD</label>{% else %}<label style="color: grey">0 USD</label>{% endif %}</td>
+                            <td><b>{% if entrada.balance > 0 %}<label style="color: green">{{ entrada.balance }}
+                                        USD</label>{% else %}<label style="color: darkred">{{ entrada.balance }}
+                                        USD</label>{% endif %}</b></td>
+                            <td>{% if entrada.recibo %}{{ entrada.recibo.usuario.firstName }}{% elseif entrada.origenTraspaso %}{{ entrada.origenTraspaso.user.firstName }}{% elseif entrada.destinoTraspaso %}{{ entrada.destinoTraspaso.user.firstName }}{% else %}{{ entrada.extra.usuario.firstName }}{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+            <!-- /.col -->
+
+            <!-- /.row -->
+        </section>
+
+    </div><!-- /.content-wrapper -->
+    <!-- Control Sidebar -->
+    <aside id="search-sidebar" class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li class="active"><a href="#control-sidebar-range-tab" data-toggle="tab"><i class="fa fa-calendar"></i></a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="active tab-pane" id="control-sidebar-range-tab">
+                <h3 class="control-sidebar-heading">Filtrar por rango de fechas de creaci&oacute;n</h3>
+
+                <form id="filter" target="_blank"
+                      action="{{ path('bank_reporte_por_rango_de_fechas', {'banking': entity.id}) }}" method="post">
+                    <div class="form-group">
+
+                        <input id="daterange" name="daterange" type="text"
+                               name="datefilter"
+                               placeholder="Seleccione un rango de fechas"
+                               class="form-control"/>
+
+                    </div>
+                </form>
+
+                <div style="text-align: center">
+                    <button type="submit" title="Generar PDF" id="pdf_button" form="filter" name="pdf"
+                            href="#"
+                            class="btn btn-flat btn-danger"><i class="fa fa-file-pdf-o"></i>
+                    </button>
+                    <button type="submit" title="Filtrar" id="filter_button" form="filter" name="filter"
+                            href="#"
+                            class="btn btn-flat btn-danger"><i class="fa fa-filter"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+{% endblock %}
+
+{% block javascript_inline %}
+
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{ asset('bundles/backend/lte/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/daterangepicker/moment.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/toastr-master/toastr.js') }}"></script>
+    <script>
+        $(".item-tree").removeClass("active");
+        $("#banking").addClass("active");
+        $('#entradas').DataTable(
+            {
+                "columns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                "sort": false
+            }
+        );
+
+
+        $('#search-button').click(function (e) {
+            if ($('#search-sidebar').hasClass("control-sidebar-open")) {
+                $('#search-button').html("<i class='fa fa-search'></i>");
+            } else {
+                $('#search-button').html("<i class='fa fa-remove'></i>");
+            }
+        });
+
+        $('#filteredArea').click(function (e) {
+            if ($('#search-sidebar').hasClass("control-sidebar-open")) {
+                $('#search-sidebar').removeClass("control-sidebar-open");
+                $('#search-sidebar').addClass("control-sidebar-close");
+                $('#search-button').html("<i class='fa fa-search'></i>");
+            }
+        });
+
+
+        $('input[name="datefilter"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+
+        $('input[name="datefilter"]').on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        });
+
+        $('input[name="datefilter"]').on('cancel.daterangepicker', function (ev, picker) {
+            $(this).val('');
+        });
+        var now = new Date();
+        $('#daterange').daterangepicker({maxDate: now, autoApply: true});
+    </script>
+    <script>
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": true,
+            "newestOnTop": false,
+            "progressBar": false,
+            "rtl": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": 300,
+            "hideDuration": 1000,
+            "timeOut": 10000,
+            "extendedTimeOut": 1000,
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        function lanzarOk(mensaje) {
+            Command: toastr["success"](mensaje);
+        }
+
+        function lanzarError(mensaje) {
+            Command: toastr["error"](mensaje);
+        }
+
+
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+        lanzarError("{{ flashMessage }}");
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        lanzarOk("{{ flashMessage }}");
+        {% endfor %}
+
+
+    </script>
+{% endblock %}

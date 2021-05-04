@@ -1,0 +1,133 @@
+<form action="{{ path('mercancia_update', { 'id': entity.id }) }}" role="form" id="edit"
+      method="post" {{ form_enctype(edit_form) }}
+      class="form-horizontal" onsubmit="return check();">
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Descripci&oacute;n</label>
+        </div>
+        <div class="col-sm-10">
+
+            {{ form_widget(edit_form.descripcion, {'attr' : {'class' : 'form-control' }}
+            ) }}
+            {{ form_errors(edit_form.descripcion) }}
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Arancel</label></div>
+        <div class="col-sm-10">
+                {{ form_widget(edit_form.arancel, {'attr' : {'class' : 'form-control select2me', 'style':'width:100%' }}
+                ) }}
+                {{ form_errors(edit_form.arancel) }}
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Vol&uacute;men</label></div>
+        <div class="col-sm-7">
+            <input id="volumen_edit2" type="text" name="volumen" class="form-control" value="{{ entity.volumenM3}}">
+        </div>
+        <div class="col-sm-2">
+            <select name="umaltura" class="form-control select2me">
+                <option value="cm">m3</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Altura</label></div>
+        <div class="col-sm-7">
+            <input id="altura_edit2" type="text" name="altura" class="form-control" value="{{ entity.alturaCm }}">
+        </div>
+        <div class="col-sm-2">
+            <select name="umaltura" class="form-control select2me">
+                <option value="cm">cm</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Ancho</label></div>
+        <div class="col-sm-7">
+            <input id="ancho_edit2" type="text" name="ancho" class="form-control" value="{{ entity.anchoCm }}">
+        </div>
+        <div class="col-sm-2">
+            <select name="umancho" class="form-control select2me">
+                <option value="cm">cm</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Profundidad</label>
+        </div>
+        <div class="col-sm-7">
+            <input id="profundidad_edit2" type="text" name="profundidad" class="form-control" value="{{ entity.profundidadCm }}">
+        </div>
+        <div class="col-sm-2">
+            <select name="umprofundidad" class="form-control select2me">
+                <option value="cm">cm</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label"><span style="color: red"
+                                                                 class="required">*&nbsp;</span>Peso</label></div>
+        <div class="col-sm-7">
+            <input type="text" required name="peso" class="form-control" value="{{ entity.pesoKg }}">
+        </div>
+        <div class="col-sm-2">
+            <select name="umpeso" class="form-control select2me">
+                <option value="kgs">Kgs</option>
+                <option value="lbs">Lbs</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label class="control-label">Tarifa Mar&iacute;tima</label></div>
+        <div class="col-sm-10">
+
+            {{ form_widget(edit_form.tarifa, {'attr' : {'class' : 'form-control select2me', 'style':'width:100%' }}
+            ) }}
+            {{ form_errors(edit_form.tarifa) }}
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="input-inline">
+                {{ form_widget(edit_form.tarifaAlternativa, {'attr' : {'class' : 'form-control', 'style':'width:100%' }}
+                ) }}
+                {{ form_errors(edit_form.tarifaAlternativa) }}
+            </div>
+        </div>
+    </div>
+
+    {{ form(edit_form) }}
+</form>
+<script>
+
+    $("#belraysa_backendbundle_mercancia_tarifaAlternativa").TouchSpin({
+        buttondown_class: 'btn blue',
+        buttonup_class: 'btn blue',
+        min: 0,
+        max: '9 999 999',
+        step: 0.01,
+        decimals: 2,
+        boostat: 5,
+        maxboostedstep: 10,
+        prefix: '$'
+    });
+
+    function check(){
+        if($('#volumen_edit2').val() == '' && ($('#ancho_edit2').val() == '' || $('#altura_edit2').val() == '' || $('#profundidad_edit2').val() == '')){
+            alert('Debe llenar el campo volumen o los campos altura, ancho y profundidad');
+            return false;
+        }
+    }
+</script>

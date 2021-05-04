@@ -1,0 +1,477 @@
+[06-Aug-2019 20:12:12 UTC] PHP Fatal error:  Class 'Proxies\__CG__\Belraysa\BackendBundle\Entity\Role' not found in /home2/sisger/sisger3/vendor/doctrine/common/lib/Doctrine/Common/Proxy/AbstractProxyFactory.php on line 121
+[06-Aug-2019 20:12:18 UTC] PHP Warning:  mkdir(): Disk quota exceeded in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 137
+[06-Aug-2019 20:12:18 UTC] PHP Warning:  file_put_contents(/home/sisger/sisger3/app/cache/dev/profiler/33/76/757633): failed to open stream: No such file or directory in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 153
+[06-Aug-2019 20:12:18 UTC] PHP Warning:  mkdir(): Disk quota exceeded in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 137
+[06-Aug-2019 20:12:19 UTC] PHP Warning:  file_put_contents(/home/sisger/sisger3/app/cache/dev/profiler/83/13/7d1383): failed to open stream: No such file or directory in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 153
+[06-Aug-2019 20:12:19 UTC] PHP Warning:  mkdir(): Disk quota exceeded in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 137
+[06-Aug-2019 20:12:19 UTC] PHP Warning:  file_put_contents(/home/sisger/sisger3/app/cache/dev/profiler/46/bc/13bc46): failed to open stream: No such file or directory in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 153
+[06-Aug-2019 20:14:28 UTC] PHP Warning:  mkdir(): Disk quota exceeded in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 137
+[06-Aug-2019 20:14:28 UTC] PHP Warning:  file_put_contents(/home/sisger/sisger3/app/cache/dev/profiler/8b/b2/75b28b): failed to open stream: No such file or directory in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 153
+[06-Aug-2019 20:14:28 UTC] PHP Warning:  mkdir(): Disk quota exceeded in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 137
+[06-Aug-2019 20:14:28 UTC] PHP Warning:  file_put_contents(/home/sisger/sisger3/app/cache/dev/profiler/e5/44/3b44e5): failed to open stream: No such file or directory in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 153
+[06-Aug-2019 20:14:29 UTC] PHP Warning:  mkdir(): Disk quota exceeded in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 137
+[06-Aug-2019 20:14:29 UTC] PHP Warning:  file_put_contents(/home/sisger/sisger3/app/cache/dev/profiler/0c/0d/0b0d0c): failed to open stream: No such file or directory in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 153
+[06-Aug-2019 20:15:24 UTC] PHP Warning:  mkdir(): Disk quota exceeded in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 137
+[06-Aug-2019 20:15:24 UTC] PHP Warning:  file_put_contents(/home/sisger/sisger3/app/cache/dev/profiler/60/46/a44660): failed to open stream: No such file or directory in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 153
+[06-Aug-2019 20:15:24 UTC] PHP Warning:  mkdir(): Disk quota exceeded in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/FileProfilerStorage.php on line 137
+[06-Aug-2019 20:15:24 UTC] PHP Warning:  file_put_contents(/home/sisger/sisger3/app/cache/dev/profiler/2e/e5/c6e52e): failed to open stream: No such file or directory in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profi[07-Aug-2019 21:26:42 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[07-Aug-2019 21:26:42 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[07-Aug-2019 21:26:43 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[07-Aug-2019 21:26:43 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[07-Aug-2019 21:26:43 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[07-Aug-2019 21:26:43 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[07-Aug-2019 21:26:43 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[07-Aug-2019 21:27:38 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[15-Aug-2019 13:46:46 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[02-Sep-2019 21:41:46 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 482
+[02-Sep-2019 21:42:11 UTC] PHP Fatal error:  Call to a member function getConcepto() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 475
+[11-Sep-2019 13:43:47 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[12-Sep-2019 17:08:35 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[14-Sep-2019 13:54:48 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[15-Sep-2019 15:44:10 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[15-Sep-2019 15:49:36 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 482
+[27-Sep-2019 13:41:34 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[12-Oct-2019 14:02:50 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[15-Oct-2019 15:03:33 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[05-Nov-2019 17:54:27 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[12-Nov-2019 18:21:41 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[25-Nov-2019 19:56:17 UTC] PHP Fatal error:  Call to a member function addMercancia() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 425
+[26-Nov-2019 17:14:34 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[28-Nov-2019 14:04:42 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[06-Dec-2019 12:32:54 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[17-Dec-2019 16:39:23 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[21-Dec-2019 15:15:58 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[26-Dec-2019 16:28:00 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[26-Dec-2019 18:00:09 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[26-Dec-2019 18:00:14 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[26-Dec-2019 18:00:29 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[28-Dec-2019 16:37:00 UTC] PHP Fatal error:  Call to a member function format() on a non-object in /home2/sisger/sisger3/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/DateTimeType.php on line 53
+[08-Jan-2020 14:36:40 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[27-Jan-2020 21:21:49 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[29-Jan-2020 14:37:54 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[29-Jan-2020 16:17:57 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[29-Jan-2020 19:56:50 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[07-Feb-2020 21:45:41 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[07-Feb-2020 21:46:45 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[07-Feb-2020 21:46:59 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[11-Feb-2020 13:21:41 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[12-Feb-2020 13:24:20 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[13-Feb-2020 13:32:02 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[17-Feb-2020 20:31:34 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[18-Feb-2020 13:21:46 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[19-Feb-2020 13:53:37 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[19-Feb-2020 21:26:03 UTC] PHP Fatal error:  Call to a member function format() on a non-object in /home2/sisger/sisger3/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/DateTimeType.php on line 53
+[19-Feb-2020 21:30:38 UTC] PHP Fatal error:  Call to a member function format() on a non-object in /home2/sisger/sisger3/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/DateTimeType.php on line 53
+[20-Feb-2020 14:44:36 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[20-Feb-2020 14:47:06 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[10-Mar-2020 14:35:09 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[12-Mar-2020 20:35:21 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[13-Mar-2020 14:34:11 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 74
+[15-Mar-2020 19:28:14 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[31-Mar-2020 15:55:22 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[13-Apr-2020 18:05:38 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[13-Apr-2020 18:06:16 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[13-Apr-2020 18:06:45 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[13-Apr-2020 18:11:23 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[22-Apr-2020 19:30:07 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[22-Apr-2020 19:30:07 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[22-Apr-2020 19:30:08 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[22-Apr-2020 19:30:08 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[22-Apr-2020 19:30:08 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[22-Apr-2020 19:30:08 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[22-Apr-2020 19:30:09 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[22-Apr-2020 19:30:09 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[24-Apr-2020 14:25:29 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[18-May-2020 16:13:48 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[26-May-2020 17:46:59 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[05-Jun-2020 16:19:48 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[06-Jun-2020 19:11:54 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[06-Jun-2020 19:11:54 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[06-Jun-2020 19:11:54 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[06-Jun-2020 19:11:54 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[06-Jun-2020 19:11:54 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[06-Jun-2020 19:11:54 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[06-Jun-2020 19:11:55 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[11-Jun-2020 22:20:04 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[18-Jul-2020 18:07:38 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[01-Aug-2020 12:38:07 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/.git/HEAD')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/.git/HEAD')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Object(Closure), Obj in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[06-Aug-2020 21:31:35 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[07-Aug-2020 18:38:26 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[20-Aug-2020 05:44:26 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 74
+[21-Aug-2020 15:40:14 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[21-Aug-2020 15:40:44 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[02-Sep-2020 20:17:52 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 20:19:46 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 20:20:53 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 20:21:31 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 20:32:07 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 20:33:18 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 20:36:26 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 20:39:54 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 20:41:28 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 20:41:40 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 21:16:27 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/DefaultController.php on line 435
+[02-Sep-2020 21:16:39 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 21:18:05 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 21:34:43 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 21:35:03 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 21:43:23 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 21:50:13 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 21:51:19 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 21:51:34 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 21:52:20 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[02-Sep-2020 21:52:51 UTC] PHP Fatal error:  Call to a member function getName() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Workspace.php on line 27
+[27-Sep-2020 05:17:56 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[27-Sep-2020 19:47:19 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[27-Sep-2020 19:53:46 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[27-Sep-2020 19:55:32 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[27-Sep-2020 20:05:33 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[27-Sep-2020 20:07:03 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[27-Sep-2020 20:35:44 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[27-Sep-2020 20:37:31 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[27-Sep-2020 23:09:49 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[28-Sep-2020 13:47:33 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[28-Sep-2020 13:49:49 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[28-Sep-2020 14:09:22 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33580297 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[29-Sep-2020 14:53:48 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[29-Sep-2020 21:21:25 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33618937 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[17-Oct-2020 16:53:26 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[13-Nov-2020 16:53:52 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 34050158 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[13-Nov-2020 16:55:30 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 34050158 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Profiler/Profiler.php on line 204
+[16-Nov-2020 18:09:25 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 31457538 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[21-Nov-2020 16:11:00 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[25-Nov-2020 14:03:33 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[26-Nov-2020 20:25:26 UTC] PHP Fatal error:  Call to a member function format() on a non-object in /home2/sisger/sisger3/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/DateTimeType.php on line 53
+[15-Dec-2020 13:09:46 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[18-Dec-2020 06:22:51 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/Routing/Router.php(215): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/EventListener/RouterListener.php(102): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\ in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/EventListener/RouterListener.php on line 116
+[21-Dec-2020 20:47:27 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[21-Dec-2020 21:20:58 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[21-Dec-2020 21:21:29 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[22-Dec-2020 20:14:58 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[22-Dec-2020 20:17:04 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[22-Dec-2020 20:19:52 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 74
+[22-Dec-2020 20:20:45 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[05-Jan-2021 22:19:35 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 24904467 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[05-Jan-2021 22:21:24 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 31196003 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[13-Jan-2021 17:41:00 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[13-Jan-2021 17:41:17 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[13-Jan-2021 19:42:08 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320
+[29-Jan-2021 20:03:36 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 17827499 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[29-Jan-2021 20:05:33 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 25167188 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[08-Feb-2021 22:35:50 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 22282664 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[08-Feb-2021 22:49:50 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 22282664 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[09-Feb-2021 16:09:47 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 22282664 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[09-Feb-2021 16:11:46 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 22282664 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[09-Feb-2021 16:35:39 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 22282664 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[10-Feb-2021 14:15:27 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[19-Feb-2021 06:00:08 UTC] PHP Fatal error:  Uncaught exception 'RuntimeException' with message 'Could not create cache directory "/home2/sisger/sisger3/app/cache/prod/annotations".' in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php:673
+Stack trace:
+#0 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php(103): Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension->registerAnnotationsConfiguration(Array, Object(Symfony\Component\DependencyInjection\ContainerBuilder), Object(Symfony\Component\DependencyInjection\Loader\XmlFileLoader))
+#1 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Compiler/MergeExtensionConfigurationPass.php(50): Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension->load(Array, Object(Symfony\Component\DependencyInjection\ContainerBuilder))
+#2 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/ in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php on line 673
+[26-Feb-2021 06:38:16 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/Routing/Router.php(215): appProdUrlMatcher->match('/.git/config')
+#1 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/EventListener/RouterListener.php(102): Symfony\Component\Routing\Router->match('/.git/config')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseE in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/EventListener/RouterListener.php on line 116
+[09-Mar-2021 15:35:23 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 524288 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[09-Mar-2021 15:43:45 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 14681212 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[09-Mar-2021 15:47:48 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 14681212 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[09-Mar-2021 16:03:57 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 14681212 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[17-Mar-2021 14:21:12 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[24-Mar-2021 15:31:03 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[27-Mar-2021 14:25:03 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[27-Mar-2021 14:25:03 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[01-Apr-2021 20:03:35 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[01-Apr-2021 20:03:36 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[02-Apr-2021 00:03:54 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 525325 bytes) in /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/DataCollector/DataCollector.php on line 27
+[03-Apr-2021 14:07:19 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[09-Apr-2021 00:13:04 UTC] PHP Warning:  SessionHandler::write(): write failed: Disk quota exceeded (122) in /home2/sisger/sisger3/app/cache/prod/classes.php on line 412
+[09-Apr-2021 00:13:05 UTC] PHP Warning:  SessionHandler::write(): write failed: Disk quota exceeded (122) in /home2/sisger/sisger3/app/cache/prod/classes.php on line 412
+[09-Apr-2021 00:13:43 UTC] PHP Warning:  SessionHandler::write(): write failed: Disk quota exceeded (122) in /home2/sisger/sisger3/app/cache/prod/classes.php on line 412
+[17-Apr-2021 11:13:33 UTC] PHP Fatal error:  Uncaught exception 'Symfony\Component\Routing\Exception\ResourceNotFoundException' in /home2/sisger/sisger3/app/cache/prod/appProdUrlMatcher.php:3065
+Stack trace:
+#0 /home2/sisger/sisger3/app/cache/prod/classes.php(1208): appProdUrlMatcher->match('/uploads/usersP...')
+#1 /home2/sisger/sisger3/app/cache/prod/classes.php(1870): Symfony\Component\Routing\Router->match('/uploads/usersP...')
+#2 [internal function]: Symfony\Component\HttpKernel\EventListener\RouterListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#3 /home2/sisger/sisger3/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Debug/TraceableEventDispatcher.php(460): call_user_func(Array, Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#4 [internal function]: Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher->Symfony\Component\HttpKernel\Debug\{closure}(Object(Symfony\Component\HttpKernel\Event\GetResponseEvent))
+#5 /home2/sisger/sisger3/app/cache/prod/classes.php(1665): call_user_func(Obje in /home2/sisger/sisger3/app/cache/prod/classes.php on line 1881
+[19-Apr-2021 21:18:24 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[19-Apr-2021 21:20:54 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[19-Apr-2021 21:43:31 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[19-Apr-2021 21:47:01 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[19-Apr-2021 21:47:01 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[19-Apr-2021 21:47:01 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[19-Apr-2021 21:47:26 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[19-Apr-2021 21:47:52 UTC] PHP Fatal error:  Call to a member function getMaxPesoKg() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/ConceptoController.php on line 453
+[23-Apr-2021 19:41:52 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 482
+[23-Apr-2021 19:42:26 UTC] PHP Fatal error:  Call to a member function getConcepto() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 67
+[23-Apr-2021 20:00:21 UTC] PHP Fatal error:  Call to a member function getArancel() on a non-object in /home2/sisger/sisger3/src/Belraysa/BackendBundle/Controller/MercanciaController.php on line 320

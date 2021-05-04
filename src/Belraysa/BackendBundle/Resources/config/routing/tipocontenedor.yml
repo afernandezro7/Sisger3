@@ -1,0 +1,43 @@
+tipocontenedor:
+    path:     /index
+    defaults: { _controller: "BackendBundle:TipoContenedor:index" }
+
+tipocontenedor_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:TipoContenedor:show" }
+
+tipocontenedor_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:TipoContenedor:new" }
+
+tipocontenedor_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:TipoContenedor:create" }
+    requirements: { _method: post }
+
+tipocontenedor_create1:
+    path:     /create_full
+    defaults: { _controller: "BackendBundle:TipoContenedor:create1" }
+    requirements: { _method: post }
+
+tipocontenedor_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:TipoContenedor:edit" }
+
+tipocontenedor_update:
+    path:     /update
+    defaults: { _controller: "BackendBundle:TipoContenedor:update" }
+    requirements: { _method: post|put }
+
+tipocontenedor_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:TipoContenedor:delete" }
+
+tipocontenedor_batch_delete:
+    path: /tipocontenedor_batch_delete
+    defaults: { _controller: "BackendBundle:TipoContenedor:batchDelete" }
+    requirements: { _method: post }
+
+tipocontenedor_filter:
+    path:     /filter
+    defaults: { _controller: "BackendBundle:TipoContenedor:filter" }

@@ -1,0 +1,669 @@
+{% set layout = "BackendBundle::"~workspace.getCurrentWorkspace().getName()~".html.twig" %}
+ {% extends layout %}
+ {% block stylesheet_inline %}
+     <!-- BEGIN PAGE LEVEL STYLES -->
+     <link href="{{ asset('bundles/backend/admin/pages/css/search.css') }}" rel="stylesheet" type="text/css"/>
+     <!-- END PAGE LEVEL STYLES -->
+ {% endblock %}
+{% block title %}Resultados de la b&uacute;squeda{% endblock %}
+  {% block breadtitle %} <h1>Resultados de la b&uacute;squeda</h1> {% endblock %}
+    {% block breadcrumb %}
+        <li class="active">Resultados de la b&uacute;squeda</li>
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+    <div class="col-md-12">
+    <div align="center">
+        <img height="92px"
+             src="{{ asset('bundles/backend/others/images/festisite_google.png') }}"
+             alt="SISGER III Search">
+        <br>
+    </div>
+    <div class="tabbable-line tabbable-full-width">
+    <ul class="nav nav-tabs">
+        <li class="{% if app.request.get('tab') == 'exp' or app.request.get('tab') == '' %}active{% endif %}">
+            <a data-toggle="tab" href="#tab_2_2">
+                Expedientes </a>
+        </li>
+        <li class="{% if app.request.get('tab') == 'rec' %}active{% endif %}">
+            <a data-toggle="tab" href="#tab_1_3">
+                Recibos </a>
+        </li>
+        <li class="{% if app.request.get('tab') == 'vou' %}active{% endif %}">
+            <a data-toggle="tab" href="#tab_1_4">
+                Vouchers </a>
+        </li>
+        <li class="{% if app.request.get('tab') == 'cli' %}active{% endif %}">
+            <a data-toggle="tab" href="#tab_1_5">
+                Clientes </a>
+        </li>
+        <li class="{% if app.request.get('tab') == 'ope' %}active{% endif %}">
+            <a data-toggle="tab" href="#tab_1_6">
+                Operaciones </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+    <div id="tab_2_2" class="tab-pane {% if app.request.get('tab') == 'exp' or app.request.get('tab') == '' %}active{% endif %}">
+        <div class="row search-form-default">
+            <div class="col-md-12">
+                <form action="{{ path('executeSearch') }}" method="GET">
+                    <div class="input-group">
+                        <div class="input-cont">
+                            <input value="{{ query }}" name="criteria" type="text" placeholder="Buscar..."
+                                   class="form-control"/>
+                        </div>
+                                            <span class="input-group-btn">
+												<button type="submit" class="btn green-haze">
+                                                    Buscar &nbsp; <i class="m-icon-swapright m-icon-white"></i>
+                                                </button>
+												</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            {% if replies|length > 0 %}
+                <div class="table-responsive">
+                    <form id="batch_action_form_delete"
+                          action="{{ path('reply_batch_delete', { 'ws': workspace.currentWorkspace.getId() }) }}"
+                          method="POST">
+                        <table class="table table-striped table-bordered table-advance table-hover"
+                               id="table">
+                            <thead>
+                            <tr>
+                                <th class="table-checkbox">
+                                    <input type="checkbox" class="group-checkable"
+                                           data-set="#table .checkboxes"/>
+                                </th>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    L&iacute;der
+                                </th>
+                                <th>
+                                    Fechas
+                                </th>
+                                <th>
+                                    Servicios
+                                </th>
+                                <th>
+                                    Vendedor
+                                </th>
+                                {% if workspace.getCurrentWorkspace().getName() == 'G-BRS' %}
+                                    <th>
+                                        Entorno
+                                    </th>
+                                {% endif %}
+                                <th>
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-flat btn-default"
+                                           href="{{ path('reply_new') }}">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        {% if app.user.role.name == 'ROLE_SUPER_ADMIN' %}
+                                            <button id="batch_delete_button"
+                                                    class="btn btn-sm btn-flat btn-default"
+                                                    type="submit"
+                                                    form="batch_action_form_delete">
+                                                <i class="icon-trash"></i>
+                                            </button>
+                                        {% endif %}
+
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for reply in replies %}
+                                <tr class="odd gradeX">
+                                    <td>
+                                        <input type="checkbox" class="checkboxes"
+                                               value="{{ reply.getId() }}"/>
+                                    </td>
+                                    <td>
+                                        {{ reply.getSisgerCode() }}
+                                    </td>
+                                    <td>{{ reply.precioVentaLider[0].cliente.firstName }} {{ reply.precioVentaLider[0].cliente.lastName }}</td>
+                                    <td>{{ reply.beginDate|date('d/m/Y') }}
+                                        - {{ reply.finishDate|date('d/m/Y') }}</td>
+                                    <td>
+                                        {% for service in reply.services %}
+                                            <span class="label label-default">{{ service.name }}</span>  &nbsp;
+                                        {% endfor %}
+                                    </td>
+                                    <td title="{{ reply.user.firstName }} {{ reply.user.lastName }}">
+                                        {{ reply.user.letra }}
+                                    </td>
+                                    {% if workspace.getCurrentWorkspace().getName() == 'G-BRS' %}
+                                        <td>
+                                            {% if reply.workspace %}
+                                                <span class="label label-default">{{ reply.workspace.name }}</span>
+                                            {% else %}
+                                                <span class="label label-default">Sin asignar</span>
+                                            {% endif %}
+                                        </td>
+                                    {% endif %}
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-sm btn-flat btn-default"
+                                               href="{{ path('reply_show', { 'id': reply.id }) }}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            {% if app.user == reply.user or app.user.role.name == 'ROLE_SUPER_ADMIN' %}
+                                                <a class="btn btn-sm btn-flat btn-default"
+                                                   href="{{ path('reply_edit', { 'id': reply.id }) }}">
+                                                    <i class="icon-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-sm btn-flat btn-default"
+                                                   data-toggle="confirmation"
+                                                   data-href="{{ path('reply_delete', { 'id': reply.id }) }}"
+                                                   data-placement="left" data-btn-ok-label="Continuar"
+                                                   data-btn-cancel-label="Cancelar"
+                                                   data-original-title="¿Está seguro de que desea eliminar?"
+                                                   title=""
+                                                   href="{{ path('reply_delete', { 'id': reply.id }) }}">
+                                                    <i class="icon-trash"></i>
+                                                </a>
+                                            {% endif %}
+                                            {% if reply.vouchers|length > 0 or reply.recibos|length > 0 %}
+                                                <button aria-expanded="false" type="button"
+                                                        class="btn btn-sm btn-flat btn-default dropdown-toggle"
+                                                        data-toggle="dropdown">
+                                                    <i class="fa fa-angle-down"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu">
+                                                    {% if reply.recibos|length > 0 %}
+                                                        <li><a title="Ver recibos" id="receipes_button"
+                                                               href="{{ path('recibo_reply', { 'idReply': reply.id }) }}">
+                                                                Recibos
+                                                            </a></li>
+                                                    {% endif %}
+                                                    {% if reply.vouchers|length > 0 %}
+                                                        <li><a title="Ver vouchers" id="vouchers_button"
+                                                               href="{{ path('voucher_reply', { 'idReply': reply.id }) }}">
+                                                                Vouchers
+                                                            </a></li>
+                                                    {% endif %}
+                                                </ul>
+                                            {% endif %}
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </form>
+                    <div class="text-right">
+                        {{ knp_pagination_render(replies) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+
+    </div>
+    <div id="tab_1_3" class="tab-pane {% if app.request.get('tab') == 'rec' %}active{% endif %}">
+        <div class="row search-form-default">
+            <div class="col-md-12">
+                <form action="{{ path('executeSearch') }}" method="GET">
+                    <div class="input-group">
+                        <div class="input-cont">
+                            <input value="{{ query }}" name="criteria" type="text" placeholder="Buscar..."
+                                   class="form-control"/>
+                        </div>
+                                            <span class="input-group-btn">
+												<button type="submit" class="btn green-haze">
+                                                    Buscar &nbsp; <i class="m-icon-swapright m-icon-white"></i>
+                                                </button>
+												</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            {% if receipes|length > 0 %}
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-bordered table-advance table-hover"
+                           id="table1">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Tipo</th>
+                            <th>Fecha</th>
+                            <th>Importe</th>
+                            <th style="width: 15%">Cuenta</th>
+                            <th>Recib&iacute; de / Pagu&eacute; a</th>
+                            <th style="width: 20%">Concepto</th>
+                            <th>Exp.</th>
+
+                            <th style="text-align: center">
+                                Acciones
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for receipe in receipes %}
+                            <tr {% if receipe.isActivo() == false %}   style="  color:#a7a7a7; text-decoration: line-through" {% endif %} >
+                                {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                                <td>{{ receipe.sisgerCode }}</td>
+                                <td>
+                                    {% if receipe.tipo %}
+                                        {% if receipe.tipo == 'Gasto' %}
+                                            <span class="label label-danger">GASTO</span>
+                                        {% elseif receipe.tipo == 'Costo' %}
+                                            <span class="label label-warning">COSTO</span>
+                                        {% elseif receipe.tipo == 'Costo recurrente' %}
+                                            <span class="label label-warning">COSTO RECURRENTE</span>
+                                        {% else %}
+                                            <span class="label label-success">INGRESO</span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="label label-success">INGRESO</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ receipe.fecha|date('d/m/Y') }}</td>
+                                <td>{% if receipe.importe < 0 %}
+                                        <label style="color: #8b0000">{{ receipe.importe }} USD</label>
+                                    {% else %}
+                                        <label style="color: #008000">{{ receipe.importe }} USD</label>
+                                    {% endif %}
+                                </td>
+                                <td>{% if receipe.entrada %}{{ receipe.entrada.banking.name }}{% else %}  <span
+                                            class="label label-default">Sin especificar</span>{% endif %}</td>
+                                <td> {% if receipe.tipo %}
+                                        {% if receipe.tipo == 'Gasto' %}
+                                            {{ receipe.pagueA }}
+                                        {% elseif receipe.tipo == 'Costo' %}
+                                            {{ receipe.pagueA }}
+                                        {% elseif receipe.tipo == 'Costo recurrente' %}
+                                            {{ receipe.pagueA }}
+                                        {% else %}
+                                            {{ receipe.recibiDe }}
+                                        {% endif %}
+                                    {% else %}
+                                        {{ receipe.recibiDe }}
+
+                                    {% endif %}
+                                </td>
+                                <td>{{ receipe.detalles }}</td>
+                                <td>
+                                    {% if receipe.expediente %}
+                                        <a href="{{ path('reply_show', { 'id': receipe.expediente.id }) }}">{{ receipe.expediente.sisgerCode }}</a>
+                                    {% endif %}
+                                </td>
+
+                                <td style="text-align: center">
+                                    <div class="mailbox-controls">
+                                        <div class="btn-group">
+                                            <a title="Generar PDF" id="show_button" target="_blank"
+                                               href="{{ path('recibo_generate_pdf', { 'reciboId': receipe.id}) }}"
+                                               class="btn btn-flat btn-danger btn-sm"><i class="fa fa-file-pdf-o"></i>
+                                            </a>
+
+                                            {% if app.user.id == receipe.usuario.id or app.user.role.name == "ROLE_SUPER_ADMIN" %}
+                                                {% if receipe.isActivo() %}
+                                                    <a class="btn btn-sm btn-flat btn-default"
+                                                       data-toggle="confirmation"
+                                                       data-href="{{ path('recibo_cancel', { 'id': receipe.id }) }}"
+                                                       data-placement="left" data-btn-ok-label="Continuar"
+                                                       data-btn-cancel-label="Cancelar"
+                                                       data-original-title="¿Está seguro de que desea cancelar?"
+                                                       title=""
+                                                       href="{{ path('recibo_cancel', { 'id': receipe.id }) }}">
+                                                        <i class="fa fa-remove"></i>
+                                                    </a>
+                                                {% else %}
+                                                    <a title="Activar" id="activate_button"
+                                                       href="{{ path('recibo_activate', { 'id': receipe.id }) }}"
+                                                       class="btn btn-flat btn-default btn-sm"><i
+                                                                class="fa fa-check"></i>
+                                                    </a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="text-right">
+                        {{ knp_pagination_render(receipes) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div id="tab_1_4" class="tab-pane {% if app.request.get('tab') == 'vou' %}active{% endif %}">
+        <div class="row search-form-default">
+            <div class="col-md-12">
+                <form action="{{ path('executeSearch') }}" method="GET">
+                    <div class="input-group">
+                        <div class="input-cont">
+                            <input value="{{ query }}" name="criteria" type="text" placeholder="Buscar..."
+                                   class="form-control"/>
+                        </div>
+                                            <span class="input-group-btn">
+												<button type="submit" class="btn green-haze">
+                                                    Buscar &nbsp; <i class="m-icon-swapright m-icon-white"></i>
+                                                </button>
+												</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            {% if vouchers|length > 0 %}
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-bordered table-advance table-hover"
+                           id="table2">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Fecha de entrada</th>
+                            <th>Fecha de salida</th>
+                            <th>Cantidad de personas</th>
+                            <th>Proveedor</th>
+                            <th>Expediente</th>
+                            <th style="text-align: center">
+                                Acciones
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for voucher in vouchers %}
+                            <tr {% if voucher.isActivo() == false %}   style="  color:#a7a7a7; text-decoration: line-through" {% endif %} >
+                                {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                                <td>{{ voucher.sisgerCode }}</td>
+
+                                <td>{{ voucher.beginDate|date('d/m/Y') }}</td>
+                                <td>{{ voucher.finishDate|date('d/m/Y') }}</td>
+                                <td>{{ voucher.pax }}</td>
+                                <td>{{ voucher.provider }}</td>
+                                <td>
+                                    <a href="{{ path('reply_show', { 'id': voucher.reply.id }) }}">{{ voucher.reply.sisgerCode }}</a>
+                                </td>
+                                <td style="text-align: center">
+                                    <div class="mailbox-controls">
+                                        <div class="btn-group">
+                                            <a title="Generar PDF" id="show_button"
+                                               href="{{ path('voucher_generate_pdf', { 'voucherId': voucher.id }) }}"
+                                               class="btn btn-flat btn-danger btn-sm"><i class="fa fa-file-pdf-o"></i>
+                                            </a>
+
+                                            {% if app.user.id == voucher.user.id or app.user.role.name == "ROLE_SUPER_ADMIN" %}
+                                                {% if voucher.isActivo() %}
+                                                    <a class="btn btn-sm btn-flat btn-default"
+                                                       data-toggle="confirmation"
+                                                       data-href="{{ path('voucher_cancel', { 'id': voucher.id }) }}"
+                                                       data-placement="left" data-btn-ok-label="Continuar"
+                                                       data-btn-cancel-label="Cancelar"
+                                                       data-original-title="¿Está seguro de que desea cancelar?"
+                                                       title=""
+                                                       href="{{ path('voucher_cancel', { 'id': voucher.id }) }}">
+                                                        <i class="fa fa-remove"></i>
+                                                    </a>
+                                                {% else %}
+                                                    <a title="Activar" id="activate_button"
+                                                       href="{{ path('voucher_activate', { 'id': voucher.id }) }}"
+                                                       class="btn btn-flat btn-default btn-sm"><i
+                                                                class="fa fa-check"></i>
+                                                    </a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="text-right">
+                        {{ knp_pagination_render(vouchers) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!--end tab-pane-->
+    <div id="tab_1_5" class="tab-pane {% if app.request.get('tab') == 'cli' %}active{% endif %}">
+        <div class="row search-form-default">
+            <div class="col-md-12">
+                <form action="{{ path('executeSearch') }}" method="GET">
+                    <div class="input-group">
+                        <div class="input-cont">
+                            <input value="{{ query }}" name="criteria" type="text" placeholder="Buscar..."
+                                   class="form-control"/>
+                        </div>
+                                            <span class="input-group-btn">
+												<button type="submit" class="btn green-haze">
+                                                    Buscar &nbsp; <i class="m-icon-swapright m-icon-white"></i>
+                                                </button>
+												</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if customers|length > 0 %}
+            <div class="table-responsive">
+                <form id="batch_action_form_delete" action="{{ path('client_batch_delete') }}" method="POST">
+                    <table class="table table-striped table-bordered table-advance table-hover"
+                           id="table3">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" class="group-checkable"
+                                       data-set="#table3 .checkboxes"/>
+                            </th>
+                            <th>Nombre</th>
+                            <th>CI</th>
+                            <th>Pasaporte</th>
+
+                            <th>
+                                <div class="mailbox-controls">
+                                    <button id="batch_delete_button" class="btn btn-flat btn-default btn-sm"
+                                            type="submit"
+                                            form="batch_action_form_delete">
+                                        <i class="icon-trash"></i>
+                                    </button>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for client in customers %}
+                            <tr>
+                                {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                                <td>
+                                    <input type="checkbox" class="checkboxes"
+                                           value="{{ client.getId() }}"/>
+                                </td>
+                                <td>{{ client.firstName }} {{ client.lastName }}</td>
+                                <td>{{ client.dni }}</td>
+                                <td>{{ client.passport }}</td>
+                                <td>
+                                    <div class="mailbox-controls">
+                                        <div class="btn-group">
+                                            {#
+                                            {% if client.replies|length > 0 or client.repliesLeader|length > 0 %}
+                                                <a title="Ver expedientes" id="documents_button"
+                                                   href="{{ path('reply_index_by_client', { 'id': client.id }) }}"
+                                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-folder-open"></i>
+                                                </a>
+                                            {% endif %} #}
+                                            {% if client.documents|length > 0 %}
+                                                <a title="Ver documentos" id="documents_button"
+                                                   href="{{ path('document_client', { 'idClient': client.id }) }}"
+                                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-list"></i>
+                                                </a>
+                                            {% endif %}
+                                            {% if app.user == client.user or app.user.role.name == 'ROLE_SUPER_ADMIN' %}
+
+                                                <a class="btn btn-sm btn-flat btn-default"
+                                                   data-toggle="confirmation"
+                                                   data-href="{{ path('client_delete', { 'id': client.id }) }}"
+                                                   data-placement="left" data-btn-ok-label="Continuar"
+                                                   data-btn-cancel-label="Cancelar"
+                                                   data-original-title="¿Está seguro de que desea eliminar?"
+                                                   title=""
+                                                   href="{{ path('client_delete', { 'id': client.id }) }}">
+                                                    <i class="icon-trash"></i>
+                                                </a>
+                                            {% else %}
+                                                <span class="label label-danger">No hay acciones disponibles</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+                <div class="text-right">
+                    {{ knp_pagination_render(customers) }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div id="tab_1_6" class="tab-pane {% if app.request.get('tab') == 'ope' %}active{% endif %}">
+        <div class="row search-form-default">
+            <div class="col-md-12">
+                <form action="{{ path('executeSearch') }}" method="GET">
+                    <div class="input-group">
+                        <div class="input-cont">
+                            <input value="{{ query }}" name="criteria" type="text" placeholder="Buscar..."
+                                   class="form-control"/>
+                        </div>
+                                            <span class="input-group-btn">
+												<button type="submit" class="btn green-haze">
+                                                    Buscar &nbsp; <i class="m-icon-swapright m-icon-white"></i>
+                                                </button>
+												</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            {% if operaciones|length > 0 %}
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-bordered table-advance table-hover"
+                           id="table1">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Remitente</th>
+                            <th>Consignado</th>
+                            <th>Consignado CI</th>
+                            <th>Passport</th>
+                            <th>Fecha de Creaci&oacute;n</th>
+                            <th>Tipo</th>
+                            <th>Sisger Code</th>
+                            <th>Contenedor</th>
+                            <th>C&oacute;digo</th>
+                            <th>Expediente</th>
+                            {#<th style="text-align: center">
+                                Acciones
+                            </th>#}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for op in operaciones %}
+                            <tr>
+                                <td>{{ op.id }}</td>
+                                <td>{{ op.remitente }}</td>
+                                <td>{{ op.consignado }}</td>
+                                <td>{{ op.consignado.dni }}</td>
+                                <td>{{ op.consignado.passport }}</td>
+                                <td>{{ op.fechaCreacion|date('d/m/Y') }}</td>
+                                <td>{{ op.tipo }}</td>
+                                <td>
+                                    <a href="{{ path('bulto', { 'concepto': op.id }) }}">{{ op.sisgerCode }}</a>
+                                </td>
+                                <td>{{ op.contenedor }}</td>
+                                <td>{{ op.contenedor.codigo }}</td>
+                                <td>
+                                {% if op.expediente %}
+                                    <a href="{{ path('reply_show', { 'id': op.expediente.id }) }}">{{ op.expediente }}</a>
+                                {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="text-right">
+                        {{ knp_pagination_render(operaciones) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!--end tab-pane-->
+    </div>
+    </div>
+    </div>
+    <!--end tabbable-->
+    </div>
+
+{% endblock %}
+{% block javascript_inline %}
+    <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
+            type="text/javascript"></script>
+    <script>
+        var table = $('#table');
+        table.find('.group-checkable').change(function () {
+            var set = jQuery(this).attr("data-set");
+            var checked = jQuery(this).is(":checked");
+            jQuery(set).each(function () {
+                if (checked) {
+                    $(this).attr("checked", true);
+                } else {
+                    $(this).attr("checked", false);
+                }
+            });
+            jQuery.uniform.update(set);
+        });
+
+        var table3 = $('#table3');
+        table3.find('.group-checkable').change(function () {
+            var set = jQuery(this).attr("data-set");
+            var checked = jQuery(this).is(":checked");
+            jQuery(set).each(function () {
+                if (checked) {
+                    $(this).attr("checked", true);
+                } else {
+                    $(this).attr("checked", false);
+                }
+            });
+            jQuery.uniform.update(set);
+        });
+        function ChangeParam(param){
+            var url = new URL(window.location.href);
+
+            var query_string = url.search;
+
+            var search_params = new URLSearchParams(query_string);
+
+            search_params.set('tab', param);
+
+// change the search property of the main url
+            url.search = search_params.toString();
+
+// the new url string
+            var new_url = url.toString();
+            window.location.href = new_url;
+            //window.history.pushState({path:new_url},'',new_url);
+        }
+    </script>
+
+{% endblock %}

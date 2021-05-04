@@ -1,0 +1,750 @@
+{% extends "::base.html.twig" %}
+{% block stylesheets_inline %}
+    <link rel="stylesheet" href="{{ asset('bundles/backend/lte/plugins/daterangepicker/daterangepicker.css') }}">
+{% endblock %}
+
+{% block title %}Panel de administraci&oacute;n{% endblock %}
+    {% if app.user.workspace %}
+        {% if app.session.has('workspace') %}
+            {% set workspace = app.session.get('workspace') %}
+        {% else %}
+            {% set workspace = app.user.workspace %}
+        {% endif %}
+    {% endif %}
+{% block content %}
+
+    <div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Panel de administraci&oacute;n
+            <small>Bienvenido(a), {{ app.user.firstName }}!</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('index') }}"><i class="fa fa-home"></i> Inicio</a></li>
+        </ol>
+    </section>
+    <br>
+    <section class="content">
+    <div class="row">
+    <div class="col-md-12">
+    <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+
+
+        <li {% if workspace.name == 'G-BRS' %}class="active"{% endif %}>
+            <a onclick="$('#loading').html('<div class=se-pre-con></div>');
+                    loading();" href="{{ path('switch_workspace', {'name': 'G-BRS'}) }}">G-BRS</a>
+        </li>
+        <li {% if workspace.name == 'AAVV' %}class="active"{% endif %}>
+            <a onclick="$('#loading').html('<div class=se-pre-con></div>');
+                    loading();" href="{{ path('switch_workspace', {'name': 'AAVV'}) }}">
+                AAVV</a>
+        </li>
+        <li {% if workspace.name == 'C507' %}class="active"{% endif %}>
+            <a onclick="$('#loading').html('<div class=se-pre-con></div>');
+                    loading();" href="{{ path('switch_workspace', {'name': 'C507'}) }}">
+                C507</a>
+        </li>
+        <li {% if workspace.name == 'L-BRS' %}class="active"{% endif %}>
+            <a onclick="$('#loading').html('<div class=se-pre-con></div>');
+                    loading();" href="{{ path('switch_workspace', {'name': 'L-BRS'}) }}">
+                L-BRS</a>
+        </li>
+
+    </ul>
+    <div class="tab-content">
+    <div class="active tab-pane" id="gbrs">
+
+        <h5><b>Clientes y expedientes por vendedor</b></h5>
+        <br>
+
+        <div class="form-group">
+            <div class="col-sm-1"><label class="control-label">Rango</label></div>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </div>
+                    <input id="daterange" name="daterange" type="text"
+                           name="datefilter"
+                           placeholder="Seleccione un rango de fechas"
+                           class="form-control"/>
+                </div>
+            </div>
+            <input type="button" class="col-sm-1 btn btn-flat btn-primary"
+                   id="filter_button"
+                   value="Filtrar">
+        </div>
+
+
+        <div id="chartArea" class="chart">
+            <canvas id="barChart" style="height:230px"></canvas>
+        </div>
+
+        <!-- /.box-body -->
+        <!-- /.box -->
+
+        <div class="row">
+            <div class="col-sm-6 col-xs-6">
+                <div class="description-block border-right">
+                                <span id="total" style="color: rgba(210, 214, 222, 1)" class="description-percentage"><i
+                                            class="fa fa-caret-up"></i></span>
+                    <br>
+                    <span class="description-text">CANTIDAD DE CLIENTES</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6 col-xs-6">
+                <div class="description-block">
+                                <span id="success" style="color: rgba(60,141,188,0.9)"
+                                      class="description-percentage text-green"><i
+                                            class="fa fa-caret-up"></i></span>
+                    <br>
+                    <span class="description-text">CANTIDAD DE EXPEDIENTES</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+        </div>
+    </div>
+    <!-- /.tab-pane -->
+    <div class="tab-pane" id="aavv">
+        <h5><b>Clientes y expedientes por vendedor</b></h5>
+        <br>
+
+        <div class="form-group">
+            <div class="col-sm-1"><label class="control-label">Rango</label></div>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </div>
+                    <input id="daterange" name="daterange" type="text"
+                           name="datefilter"
+                           placeholder="Seleccione un rango de fechas"
+                           class="form-control"/>
+                </div>
+            </div>
+            <input type="button" class="col-sm-1 btn btn-flat btn-primary"
+                   id="filter_button"
+                   value="Filtrar">
+        </div>
+
+
+        <div id="chartArea" class="chart">
+            <canvas id="barChart" style="height:230px"></canvas>
+        </div>
+
+        <!-- /.box-body -->
+        <!-- /.box -->
+
+        <div class="row">
+            <div class="col-sm-6 col-xs-6">
+                <div class="description-block border-right">
+                                <span id="total" style="color: rgba(210, 214, 222, 1)" class="description-percentage"><i
+                                            class="fa fa-caret-up"></i></span>
+                    <br>
+                    <span class="description-text">CANTIDAD DE CLIENTES</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6 col-xs-6">
+                <div class="description-block">
+                                <span id="success" style="color: rgba(60,141,188,0.9)"
+                                      class="description-percentage text-green"><i
+                                            class="fa fa-caret-up"></i></span>
+                    <br>
+                    <span class="description-text">CANTIDAD DE EXPEDIENTES</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="c507">
+        <h5><b>Clientes y expedientes por vendedor</b></h5>
+        <br>
+
+        <div class="form-group">
+            <div class="col-sm-1"><label class="control-label">Rango</label></div>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </div>
+                    <input id="daterange" name="daterange" type="text"
+                           name="datefilter"
+                           placeholder="Seleccione un rango de fechas"
+                           class="form-control"/>
+                </div>
+            </div>
+            <input type="button" class="col-sm-1 btn btn-flat btn-primary"
+                   id="filter_button"
+                   value="Filtrar">
+        </div>
+
+
+        <div id="chartArea" class="chart">
+            <canvas id="barChart" style="height:230px"></canvas>
+        </div>
+
+        <!-- /.box-body -->
+        <!-- /.box -->
+
+        <div class="row">
+            <div class="col-sm-6 col-xs-6">
+                <div class="description-block border-right">
+                                <span id="total" style="color: rgba(210, 214, 222, 1)" class="description-percentage"><i
+                                            class="fa fa-caret-up"></i></span>
+                    <br>
+                    <span class="description-text">CANTIDAD DE CLIENTES</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6 col-xs-6">
+                <div class="description-block">
+                                <span id="success" style="color: rgba(60,141,188,0.9)"
+                                      class="description-percentage text-green"><i
+                                            class="fa fa-caret-up"></i></span>
+                    <br>
+                    <span class="description-text">CANTIDAD DE EXPEDIENTES</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="lbrs">
+        <h5><b>Clientes y expedientes por vendedor</b></h5>
+        <br>
+
+        <div class="form-group">
+            <div class="col-sm-1"><label class="control-label">Rango</label></div>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </div>
+                    <input id="daterange" name="daterange" type="text"
+                           name="datefilter"
+                           placeholder="Seleccione un rango de fechas"
+                           class="form-control"/>
+                </div>
+            </div>
+            <input type="button" class="col-sm-1 btn btn-flat btn-primary"
+                   id="filter_button"
+                   value="Filtrar">
+        </div>
+
+
+        <div id="chartArea" class="chart">
+            <canvas id="barChart" style="height:230px"></canvas>
+        </div>
+
+        <!-- /.box-body -->
+        <!-- /.box -->
+
+        <div class="row">
+            <div class="col-sm-6 col-xs-6">
+                <div class="description-block border-right">
+                                <span id="total" style="color: rgba(210, 214, 222, 1)" class="description-percentage"><i
+                                            class="fa fa-caret-up"></i></span>
+                    <br>
+                    <span class="description-text">CANTIDAD DE CLIENTES</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6 col-xs-6">
+                <div class="description-block">
+                                <span id="success" style="color: rgba(60,141,188,0.9)"
+                                      class="description-percentage text-green"><i
+                                            class="fa fa-caret-up"></i></span>
+                    <br>
+                    <span class="description-text">CANTIDAD DE EXPEDIENTES</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+        </div>
+    </div>
+    <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    </div>
+    <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+    </div>
+    </section>
+
+    </div><!-- /.content-wrapper -->
+{% endblock %}
+{% block javascript_inline %}
+    <script src="{{ asset('bundles/backend/lte/plugins/daterangepicker/moment.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('bundles/backend/lte/plugins/chartjs/Chart.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/dashboard.js') }}"></script>
+
+    <script>
+        if ("{{ workspace.name }}" != 'G-BRS') {
+            $.ajax({
+                data: {'ws': "{{ workspace.id }}"},
+                type: 'post',
+                url: "{{ path('get_clients_by_operators_ws') }}",
+                success: function (total) {
+
+                    $.ajax({
+                        data: {'ws': "{{ workspace.id }}"},
+                        type: 'post',
+                        url: "{{ path('get_replies_by_operators_ws') }}",
+                        success: function (totalSuccess) {
+                            var countTotal = 0;
+                            var countTotalSuccess = 0;
+                            var totalLength = document.getElementById('total');
+                            for (i = 0; i < total.length; i++) {
+                                var countTotal = countTotal + parseInt(total[i]);
+                            }
+                            var text = document.createTextNode(countTotal);
+                            totalLength.appendChild(text);
+                            var totalSuccessLength = document.getElementById('success');
+                            for (i = 0; i < totalSuccess.length; i++) {
+                                var countTotalSuccess = countTotalSuccess + parseInt(totalSuccess[i]);
+                            }
+                            var textSuccess = document.createTextNode(countTotalSuccess);
+                            totalSuccessLength.appendChild(textSuccess);
+                            $.ajax({
+                                data: {"ws": "{{ workspace.id }}"},
+                                type: 'post',
+                                url: "{{ path('get_operators_by_ws') }}",
+                                success: function (response) {
+
+                                    var operators = response;
+                                    $(function () {
+                                        var areaChartData = {
+                                            labels: operators,
+                                            datasets: [
+                                                {
+                                                    label: "Electronics",
+                                                    fillColor: "rgba(210, 214, 222, 1)",
+                                                    strokeColor: "rgba(210, 214, 222, 1)",
+                                                    pointColor: "rgba(210, 214, 222, 1)",
+                                                    pointStrokeColor: "#c1c7d1",
+                                                    pointHighlightFill: "#fff",
+                                                    pointHighlightStroke: "rgba(220,220,220,1)",
+                                                    // data: [20, 25, 30, 15, 12, 30]
+                                                    data: total
+                                                },
+                                                {
+                                                    label: "Digital Goods",
+                                                    fillColor: "rgba(60,141,188,0.9)",
+                                                    strokeColor: "rgba(60,141,188,0.8)",
+                                                    pointColor: "#3b8bba",
+                                                    pointStrokeColor: "rgba(60,141,188,1)",
+                                                    pointHighlightFill: "#fff",
+                                                    pointHighlightStroke: "rgba(60,141,188,1)",
+                                                    // data: [10, 15, 25, 5, 3, 20]
+                                                    data: totalSuccess
+                                                }
+                                            ]
+                                        };
+
+
+                                        //-------------
+                                        //- BAR CHART -
+                                        //-------------
+                                        var barChartCanvas = $("#barChart").get(0).getContext("2d");
+                                        var barChart = new Chart(barChartCanvas);
+                                        var barChartData = areaChartData;
+                                        barChartData.datasets[1].fillColor = "#3c8dbc";
+                                        barChartData.datasets[1].strokeColor = "#3c8dbc";
+                                        barChartData.datasets[1].pointColor = "#00a65a";
+                                        var barChartOptions = {
+                                            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                                            scaleBeginAtZero: true,
+                                            //Boolean - Whether grid lines are shown across the chart
+                                            scaleShowGridLines: true,
+                                            //String - Colour of the grid lines
+                                            scaleGridLineColor: "rgba(0,0,0,.05)",
+                                            //Number - Width of the grid lines
+                                            scaleGridLineWidth: 1,
+                                            //Boolean - Whether to show horizontal lines (except X axis)
+                                            scaleShowHorizontalLines: true,
+                                            //Boolean - Whether to show vertical lines (except Y axis)
+                                            scaleShowVerticalLines: true,
+                                            //Boolean - If there is a stroke on each bar
+                                            barShowStroke: true,
+                                            //Number - Pixel width of the bar stroke
+                                            barStrokeWidth: 2,
+                                            //Number - Spacing between each of the X value sets
+                                            barValueSpacing: 5,
+                                            //Number - Spacing between data sets within X values
+                                            barDatasetSpacing: 1,
+                                            //String - A legend template
+                                            legendTemplate: "d",
+                                            //Boolean - whether to make the chart responsive
+                                            responsive: true,
+                                            maintainAspectRatio: true
+                                        };
+
+                                        barChartOptions.datasetFill = false;
+                                        barChart.Bar(barChartData, barChartOptions);
+                                    });
+                                }
+                            });
+                            //
+                        }
+                    });
+                }
+            });
+        } else {
+            $.ajax({
+                data: null,
+                type: 'post',
+                url: "{{ path('get_clients_by_operators') }}",
+                success: function (total) {
+
+                    $.ajax({
+                        data: null,
+                        type: 'post',
+                        url: "{{ path('get_replies_by_operators') }}",
+                        success: function (totalSuccess) {
+                            var countTotal = 0;
+                            var countTotalSuccess = 0;
+                            var totalLength = document.getElementById('total');
+                            for (i = 0; i < total.length; i++) {
+                                var countTotal = countTotal + parseInt(total[i]);
+                            }
+                            var text = document.createTextNode(countTotal);
+                            totalLength.appendChild(text);
+                            var totalSuccessLength = document.getElementById('success');
+                            for (i = 0; i < totalSuccess.length; i++) {
+                                var countTotalSuccess = countTotalSuccess + parseInt(totalSuccess[i]);
+                            }
+                            var textSuccess = document.createTextNode(countTotalSuccess);
+                            totalSuccessLength.appendChild(textSuccess);
+                            $.ajax({
+                                data: null,
+                                type: 'post',
+                                url: "{{ path('get_operators') }}",
+                                success: function (response) {
+
+                                    var operators = response;
+                                    $(function () {
+                                        var areaChartData = {
+                                            labels: operators,
+                                            datasets: [
+                                                {
+                                                    label: "Electronics",
+                                                    fillColor: "rgba(210, 214, 222, 1)",
+                                                    strokeColor: "rgba(210, 214, 222, 1)",
+                                                    pointColor: "rgba(210, 214, 222, 1)",
+                                                    pointStrokeColor: "#c1c7d1",
+                                                    pointHighlightFill: "#fff",
+                                                    pointHighlightStroke: "rgba(220,220,220,1)",
+                                                    // data: [20, 25, 30, 15, 12, 30]
+                                                    data: total
+                                                },
+                                                {
+                                                    label: "Digital Goods",
+                                                    fillColor: "rgba(60,141,188,0.9)",
+                                                    strokeColor: "rgba(60,141,188,0.8)",
+                                                    pointColor: "#3b8bba",
+                                                    pointStrokeColor: "rgba(60,141,188,1)",
+                                                    pointHighlightFill: "#fff",
+                                                    pointHighlightStroke: "rgba(60,141,188,1)",
+                                                    // data: [10, 15, 25, 5, 3, 20]
+                                                    data: totalSuccess
+                                                }
+                                            ]
+                                        };
+
+
+                                        //-------------
+                                        //- BAR CHART -
+                                        //-------------
+                                        var barChartCanvas = $("#barChart").get(0).getContext("2d");
+                                        var barChart = new Chart(barChartCanvas);
+                                        var barChartData = areaChartData;
+                                        barChartData.datasets[1].fillColor = "#3c8dbc";
+                                        barChartData.datasets[1].strokeColor = "#3c8dbc";
+                                        barChartData.datasets[1].pointColor = "#00a65a";
+                                        var barChartOptions = {
+                                            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                                            scaleBeginAtZero: true,
+                                            //Boolean - Whether grid lines are shown across the chart
+                                            scaleShowGridLines: true,
+                                            //String - Colour of the grid lines
+                                            scaleGridLineColor: "rgba(0,0,0,.05)",
+                                            //Number - Width of the grid lines
+                                            scaleGridLineWidth: 1,
+                                            //Boolean - Whether to show horizontal lines (except X axis)
+                                            scaleShowHorizontalLines: true,
+                                            //Boolean - Whether to show vertical lines (except Y axis)
+                                            scaleShowVerticalLines: true,
+                                            //Boolean - If there is a stroke on each bar
+                                            barShowStroke: true,
+                                            //Number - Pixel width of the bar stroke
+                                            barStrokeWidth: 2,
+                                            //Number - Spacing between each of the X value sets
+                                            barValueSpacing: 5,
+                                            //Number - Spacing between data sets within X values
+                                            barDatasetSpacing: 1,
+                                            //String - A legend template
+                                            legendTemplate: "d",
+                                            //Boolean - whether to make the chart responsive
+                                            responsive: true,
+                                            maintainAspectRatio: true
+                                        };
+
+                                        barChartOptions.datasetFill = false;
+                                        barChart.Bar(barChartData, barChartOptions);
+                                    });
+                                }
+                            });
+                            //
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+
+    <script>
+        $(document).on("click", '#filter_button', function (e) {
+
+            e.preventDefault();
+
+            $('#chartArea').html('<canvas id="barChart" style="height:230px"></canvas>');
+            var range = document.getElementById('daterange').value;
+            var monthSelector = document.getElementsByName("filter");
+            for (i = 0; i < monthSelector.length; i++) {
+                if (monthSelector[i].checked == true) {
+                    var month = monthSelector[i].value;
+                }
+            }
+            if("{{ workspace.name }}" != 'G-BRS') {
+                $.ajax({
+                    data: {'range': range, 'ws': "{{ workspace.id }}"},
+                    type: 'post',
+                    url: "{{ path('get_clients_by_operators_ws') }}",
+                    success: function (total) {
+                        $.ajax({
+                            data: {'range': range, 'ws': "{{ workspace.id }}"},
+                            type: 'post',
+                            url: "{{ path('get_replies_by_operators_ws') }}",
+                            success: function (totalSuccess) {
+                                var countTotal = 0;
+                                var countTotalSuccess = 0;
+                                var totalLength = document.getElementById('total');
+                                $('#total').html('');
+                                for (i = 0; i < total.length; i++) {
+                                    var countTotal = countTotal + parseInt(total[i]);
+                                }
+                                var text = document.createTextNode(countTotal);
+                                totalLength.appendChild(text);
+                                var totalSuccessLength = document.getElementById('success');
+                                $('#success').html('');
+                                for (i = 0; i < totalSuccess.length; i++) {
+                                    var countTotalSuccess = countTotalSuccess + parseInt(totalSuccess[i]);
+                                }
+                                var textSuccess = document.createTextNode(countTotalSuccess);
+                                totalSuccessLength.appendChild(textSuccess);
+                                $.ajax({
+                                    data: {"ws": "{{ workspace.id }}"},
+                                    type: 'post',
+                                    url: "{{ path('get_operators_by_ws') }}",
+                                    success: function (response) {
+
+                                        var operators = response;
+                                        $(function () {
+                                            var areaChartData = {
+                                                labels: operators,
+                                                datasets: [
+                                                    {
+                                                        label: "Electronics",
+                                                        fillColor: "rgba(210, 214, 222, 1)",
+                                                        strokeColor: "rgba(210, 214, 222, 1)",
+                                                        pointColor: "rgba(210, 214, 222, 1)",
+                                                        pointStrokeColor: "#c1c7d1",
+                                                        pointHighlightFill: "#fff",
+                                                        pointHighlightStroke: "rgba(220,220,220,1)",
+                                                        //  data: [20, 25, 30, 15, 12, 30]
+                                                        data: total
+                                                    },
+                                                    {
+                                                        label: "Digital Goods",
+                                                        fillColor: "rgba(60,141,188,0.9)",
+                                                        strokeColor: "rgba(60,141,188,0.8)",
+                                                        pointColor: "#3b8bba",
+                                                        pointStrokeColor: "rgba(60,141,188,1)",
+                                                        pointHighlightFill: "#fff",
+                                                        pointHighlightStroke: "rgba(60,141,188,1)",
+                                                        //  data: [10, 15, 25, 5, 3, 20]
+                                                        data: totalSuccess
+                                                    }
+                                                ]
+                                            };
+                                            //-------------
+                                            //- BAR CHART -
+                                            //-------------
+                                            var barChartCanvas = $("#barChart").get(0).getContext("2d");
+                                            var barChart = new Chart(barChartCanvas);
+                                            var barChartData = areaChartData;
+                                            barChartData.datasets[1].fillColor = "#3c8dbc";
+                                            barChartData.datasets[1].strokeColor = "#3c8dbc";
+                                            barChartData.datasets[1].pointColor = "#00a65a";
+                                            var barChartOptions = {
+                                                //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                                                scaleBeginAtZero: true,
+                                                //Boolean - Whether grid lines are shown across the chart
+                                                scaleShowGridLines: true,
+                                                //String - Colour of the grid lines
+                                                scaleGridLineColor: "rgba(0,0,0,.05)",
+                                                //Number - Width of the grid lines
+                                                scaleGridLineWidth: 1,
+                                                //Boolean - Whether to show horizontal lines (except X axis)
+                                                scaleShowHorizontalLines: true,
+                                                //Boolean - Whether to show vertical lines (except Y axis)
+                                                scaleShowVerticalLines: true,
+                                                //Boolean - If there is a stroke on each bar
+                                                barShowStroke: true,
+                                                //Number - Pixel width of the bar stroke
+                                                barStrokeWidth: 2,
+                                                //Number - Spacing between each of the X value sets
+                                                barValueSpacing: 5,
+                                                //Number - Spacing between data sets within X values
+                                                barDatasetSpacing: 1,
+                                                //String - A legend template
+                                                legendTemplate: "d",
+                                                //Boolean - whether to make the chart responsive
+                                                responsive: true,
+                                                maintainAspectRatio: true
+                                            };
+
+                                            barChartOptions.datasetFill = false;
+                                            barChart.Bar(barChartData, barChartOptions);
+                                        });
+                                    }
+                                });
+                                //
+                            }
+                        });
+                    }
+                });
+            }else{
+                $.ajax({
+                    data: null,
+                    type: 'post',
+                    url: "{{ path('get_clients_by_operators') }}",
+                    success: function (total) {
+
+                        $.ajax({
+                            data: null,
+                            type: 'post',
+                            url: "{{ path('get_replies_by_operators') }}",
+                            success: function (totalSuccess) {
+                                var countTotal = 0;
+                                var countTotalSuccess = 0;
+                                var totalLength = document.getElementById('total');
+                                for (i = 0; i < total.length; i++) {
+                                    var countTotal = countTotal + parseInt(total[i]);
+                                }
+                                var text = document.createTextNode(countTotal);
+                                totalLength.appendChild(text);
+                                var totalSuccessLength = document.getElementById('success');
+                                for (i = 0; i < totalSuccess.length; i++) {
+                                    var countTotalSuccess = countTotalSuccess + parseInt(totalSuccess[i]);
+                                }
+                                var textSuccess = document.createTextNode(countTotalSuccess);
+                                totalSuccessLength.appendChild(textSuccess);
+                                $.ajax({
+                                    data: null,
+                                    type: 'post',
+                                    url: "{{ path('get_operators') }}",
+                                    success: function (response) {
+
+                                        var operators = response;
+                                        $(function () {
+                                            var areaChartData = {
+                                                labels: operators,
+                                                datasets: [
+                                                    {
+                                                        label: "Electronics",
+                                                        fillColor: "rgba(210, 214, 222, 1)",
+                                                        strokeColor: "rgba(210, 214, 222, 1)",
+                                                        pointColor: "rgba(210, 214, 222, 1)",
+                                                        pointStrokeColor: "#c1c7d1",
+                                                        pointHighlightFill: "#fff",
+                                                        pointHighlightStroke: "rgba(220,220,220,1)",
+                                                        // data: [20, 25, 30, 15, 12, 30]
+                                                        data: total
+                                                    },
+                                                    {
+                                                        label: "Digital Goods",
+                                                        fillColor: "rgba(60,141,188,0.9)",
+                                                        strokeColor: "rgba(60,141,188,0.8)",
+                                                        pointColor: "#3b8bba",
+                                                        pointStrokeColor: "rgba(60,141,188,1)",
+                                                        pointHighlightFill: "#fff",
+                                                        pointHighlightStroke: "rgba(60,141,188,1)",
+                                                        // data: [10, 15, 25, 5, 3, 20]
+                                                        data: totalSuccess
+                                                    }
+                                                ]
+                                            };
+
+
+                                            //-------------
+                                            //- BAR CHART -
+                                            //-------------
+                                            var barChartCanvas = $("#barChart").get(0).getContext("2d");
+                                            var barChart = new Chart(barChartCanvas);
+                                            var barChartData = areaChartData;
+                                            barChartData.datasets[1].fillColor = "#3c8dbc";
+                                            barChartData.datasets[1].strokeColor = "#3c8dbc";
+                                            barChartData.datasets[1].pointColor = "#00a65a";
+                                            var barChartOptions = {
+                                                //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                                                scaleBeginAtZero: true,
+                                                //Boolean - Whether grid lines are shown across the chart
+                                                scaleShowGridLines: true,
+                                                //String - Colour of the grid lines
+                                                scaleGridLineColor: "rgba(0,0,0,.05)",
+                                                //Number - Width of the grid lines
+                                                scaleGridLineWidth: 1,
+                                                //Boolean - Whether to show horizontal lines (except X axis)
+                                                scaleShowHorizontalLines: true,
+                                                //Boolean - Whether to show vertical lines (except Y axis)
+                                                scaleShowVerticalLines: true,
+                                                //Boolean - If there is a stroke on each bar
+                                                barShowStroke: true,
+                                                //Number - Pixel width of the bar stroke
+                                                barStrokeWidth: 2,
+                                                //Number - Spacing between each of the X value sets
+                                                barValueSpacing: 5,
+                                                //Number - Spacing between data sets within X values
+                                                barDatasetSpacing: 1,
+                                                //String - A legend template
+                                                legendTemplate: "d",
+                                                //Boolean - whether to make the chart responsive
+                                                responsive: true,
+                                                maintainAspectRatio: true
+                                            };
+
+                                            barChartOptions.datasetFill = false;
+                                            barChart.Bar(barChartData, barChartOptions);
+                                        });
+                                    }
+                                });
+                                //
+                            }
+                        });
+                    }
+                });
+            }
+
+        });
+    </script>
+
+
+{% endblock %}

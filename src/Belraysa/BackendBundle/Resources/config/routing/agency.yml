@@ -1,0 +1,34 @@
+agency:
+    path:     /
+    defaults: { _controller: "BackendBundle:Agency:index" }
+
+agency_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Agency:show" }
+
+agency_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Agency:new" }
+
+agency_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Agency:create" }
+    requirements: { _method: post }
+
+agency_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Agency:edit" }
+
+agency_update:
+    path:     /update
+    defaults: { _controller: "BackendBundle:Agency:update" }
+    requirements: { _method: post|put }
+
+agency_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Agency:delete" }
+
+agency_batch_delete:
+    path: /agency_batch_delete
+    defaults: { _controller: "BackendBundle:Agency:batchDelete" }
+    requirements: { _method: post }

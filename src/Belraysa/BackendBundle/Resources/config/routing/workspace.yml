@@ -1,0 +1,3 @@
+workspace_get_nomencladores:
+    path:     /permisos
+    defaults: { _controller: "BackendBundle:Workspace:permisosAction" }

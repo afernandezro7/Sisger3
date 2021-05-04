@@ -1,0 +1,43 @@
+service:
+    path:     /{ws}/index
+    defaults: { _controller: "BackendBundle:Service:index" }
+
+service_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Service:show" }
+
+service_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Service:new" }
+
+service_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Service:create" }
+    requirements: { _method: post }
+
+service_create1:
+    path:     /create_full
+    defaults: { _controller: "BackendBundle:Service:create1" }
+    requirements: { _method: post }
+
+service_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Service:edit" }
+
+service_update:
+    path:     /update
+    defaults: { _controller: "BackendBundle:Service:update" }
+    requirements: { _method: post|put }
+
+service_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Service:delete" }
+
+service_batch_delete:
+    path: /{ws}/service_batch_delete
+    defaults: { _controller: "BackendBundle:Service:batchDelete" }
+    requirements: { _method: post }
+
+service_filter:
+    path:     /filter
+    defaults: { _controller: "BackendBundle:Service:filter" }

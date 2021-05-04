@@ -1,0 +1,42 @@
+arancel:
+    path:     /
+    defaults: { _controller: "BackendBundle:Arancel:index" }
+
+arancel_upload:
+    path:     /upload
+    defaults: { _controller: "BackendBundle:Arancel:upload" }
+
+arancel_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:Arancel:show" }
+
+arancel_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:Arancel:new" }
+
+arancel_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:Arancel:create" }
+    requirements: { _method: post }
+
+arancel_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:Arancel:edit" }
+
+arancel_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Arancel:update" }
+    requirements: { _method: post|put }
+
+arancel_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:Arancel:delete" }
+
+arancel_batch_delete:
+    path: /arancel_batch_delete
+    defaults: { _controller: "BackendBundle:Arancel:batchDelete" }
+    requirements: { _method: post }
+
+arancel_filter:
+    path:     /filter
+    defaults: { _controller: "BackendBundle:Arancel:filtrar" }

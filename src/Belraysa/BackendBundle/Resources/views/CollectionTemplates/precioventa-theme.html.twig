@@ -1,0 +1,38 @@
+{% block belraysa_backendbundle_precioventa_label %}
+{% endblock %}
+    {% block belraysa_backendbundle_precioventa_errors %}{% endblock %}
+
+    {% block belraysa_backendbundle_precioventa_widget %}
+        <div class="form-group col-sm-10">
+
+
+            <div class="col-sm-1"><label class="control-label"><span style="color: red"
+                                                                     class="required">*&nbsp;</span>Cliente</label></div>
+            <div class="col-sm-5">
+                {{ form_widget(form.cliente, {'attr' : {'class' : 'form-control select2me','style':'width:100%' }}) }}
+                {{ form_errors(form.cliente) }}
+            </div>
+
+            <div class="col-sm-1"><label class="control-label">Precio</label></div>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <div class="input-group-addon box-default">
+                        <span class="fa fa-usd"></span>
+                    </div>
+                    {{ form_widget(form.precio, {'attr' : {'class' : 'form-control','placeholder':'Precio' }}) }}
+                    {{ form_errors(form.precio) }}
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-2">
+            <a href="#" class="collection-remove btn btn-default pull-left" title="Eliminar"><span
+                        class="glyphicon glyphicon-trash"></span></a>
+            <a href="#" class="collection-add btn btn-default pull-left" title="Adicionar"><span
+                        class="glyphicon glyphicon-plus-sign"></span></a>
+        </div>
+        <br>   <br>
+    {% endblock %}
+

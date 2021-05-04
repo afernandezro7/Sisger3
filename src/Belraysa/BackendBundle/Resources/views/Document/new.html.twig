@@ -1,0 +1,45 @@
+<form action="{{ path('document_create') }}" id="newDocument" method="post" {{ form_enctype(form) }}
+      class="form-horizontal">
+    <div class="box-body">
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color: red"
+                                                        class="required">*&nbsp;</span>Nombre</label>
+
+            <div class="col-sm-10">
+                {{ form_widget(form.name, {'attr' : {'class' : 'form-control','placeholder':'Nombre' }}) }}
+                {{ form_errors(form.name) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color: red"
+                                                        class="required">*&nbsp;</span>Tipo</label>
+
+            <div class="col-sm-10">
+                {{ form_widget(form.type, {'attr' : {'class' : 'form-control select2me', 'style':'width: 100%;' }}) }}
+                {{ form_errors(form.type) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Archivo</label>
+
+            <div class="col-sm-10">
+
+                {{ form_widget(form.url, {'attr' : {'class' : 'file', 'multiple data-show-upload' : 'false', 'data-show-caption' : 'true', 'showZoom' : 'false' }}
+                ) }}
+                {{ form_errors(form.url) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Cliente</label>
+
+            <div class="col-sm-10">
+                {{ form_widget(form.client, {'attr' : {'class' : 'form-control select2me','data-placeholder':'De click aqui para seleccionar el cliente ' ,'style':'width: 100%;' }}
+                ) }}
+                {{ form_errors(form.client) }}
+            </div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    <!-- /.box-footer -->
+</form>

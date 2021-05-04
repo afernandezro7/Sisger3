@@ -1,0 +1,100 @@
+<br>
+<table class="table table-hover" id="datatable_vouchers">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Expediente</th>
+        <th>Fecha de entrada</th>
+        <th>Fecha de salida</th>
+        <th>Fecha de creacion</th>
+        <th>Cantidad de personas</th>
+        <th>Proveedor</th>
+        <th>Espacio</th>
+        <th style="text-align: center">
+            Acciones
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for voucher in vouchers %}
+        <tr {% if voucher.isActivo() == false %}   style="  color:#a7a7a7; " {% endif %}>
+            {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+            <td>{{ voucher.sisgerCode }}</td>
+            <td>
+                <a href="{{ path('reply_show', { 'id': voucher.reply.id }) }}">{{ voucher.reply.sisgerCode }}</a>
+            </td>
+            <td>{{ voucher.beginDate|date('d/m/Y') }}</td>
+            <td>{{ voucher.finishDate|date('d/m/Y') }}</td>
+            <td>{{ voucher.creationDate|date('d/m/Y') }}</td>
+            <td>{{ voucher.pax }}</td>
+            <td>{{ voucher.provider }}</td>
+            <td>
+                {% if voucher.reply.workspace %}
+                    <span class="label label-default">{{ voucher.reply.workspace.name }}</span>
+                {% else %}
+                    <span class="label label-default">Sin asignar</span>
+                {% endif %}
+            </td>
+            <td style="text-align: center">
+                <div class="mailbox-controls">
+                    <div class="btn-group">
+                        <a title="Generar PDF" id="show_button"
+                           href="{{ path('voucher_generate_pdf', { 'voucherId': voucher.id}) }}"
+                           class="btn btn-flat btn-danger btn-sm"><i class="fa fa-file-pdf-o"></i>
+                        </a>
+
+                        {% if app.user.id == voucher.user.id or app.user.role.name == "ROLE_SUPER_ADMIN" %}
+                            {% if voucher.isActivo() %}
+                                <a title="Cancelar" id="cancel_button" data-toggle="confirmation"
+                                   href="{{ path('voucher_cancel', { 'id': voucher.id }) }}"
+                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-trash-o"></i>
+                                </a>
+                            {% else %}
+                                <a title="Activar" id="activate_button"
+                                   href="{{ path('voucher_activate', { 'id': voucher.id }) }}"
+                                   class="btn btn-flat btn-default btn-sm"><i class="fa fa-check"></i>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_minimal-grey',
+        radioClass: 'iradio_minimal-grey'
+    });
+
+    $("[data-toggle='confirmation']").popConfirm({
+        title: "¿Está seguro?", // The title of the confirm
+        content: "¿Está seguro de que desea cancelar?", // The message of the confirm
+        placement: "bottom", // The placement of the confirm (Top, Right, Bottom, Left)
+        container: "body", // The html container
+        yesBtn: "Sí",
+        noBtn: "No"
+    });
+
+
+
+    $('#datatable_vouchers').DataTable(
+            {
+                "columns": [
+                    {"orderable": false},
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    {"orderable": false}
+                ],
+                "paginate": true
+            }
+    );
+</script>

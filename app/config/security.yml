@@ -1,0 +1,42 @@
+security:
+    firewalls:
+        backend:
+            pattern:     ^/
+            anonymous:   ~
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                default_target_path: /
+                always_use_default_target_path: true
+            logout:
+                path: logout
+            remember_me:
+                key:      belraysa1234
+                lifetime: 3600
+
+    role_hierarchy:
+
+
+
+    providers:
+        usuarios:
+            entity: { class: Belraysa\BackendBundle\Entity\User, property: username }
+
+    encoders:
+        Belraysa\BackendBundle\Entity\User: { algorithm: sha512, iterations: 10 }
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/agency, roles: [ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_ADMIN] }
+        - { path: ^/payment, roles: [ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_ADMIN]}
+        - { path: ^/contract, roles: [ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_ADMIN]}
+        - { path: ^/email, roles: [ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_ADMIN]}
+        - { path: ^/user/profile, roles: [ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_OPERATOR, ROLE_ADMIN]}
+        - { path: ^/user, roles: [ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_ADMIN, ROLE_OPERATOR]}
+        - { path: ^/hotel/new, roles: [ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_ADMIN]}
+        - { path: ^/hotel/edit, roles: [ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_ADMIN]}
+        - { path: ^/*, roles: [ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_OPERATOR, ROLE_ADMIN]}
+
+
+

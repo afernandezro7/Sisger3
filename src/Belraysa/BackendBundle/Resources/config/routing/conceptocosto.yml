@@ -1,0 +1,34 @@
+conceptocosto:
+    path:     /{ws}/index
+    defaults: { _controller: "BackendBundle:ConceptoCosto:index" }
+
+conceptocosto_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:ConceptoCosto:new" }
+
+conceptocosto_create:
+    path:     /create
+    defaults: { _controller: "BackendBundle:ConceptoCosto:create" }
+    requirements: { _method: post }
+
+conceptocosto_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:ConceptoCosto:edit" }
+
+conceptocosto_update:
+    path:     /update
+    defaults: { _controller: "BackendBundle:ConceptoCosto:update" }
+    requirements: { _method: post|put }
+
+conceptocosto_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:ConceptoCosto:delete" }
+
+conceptocosto_batch_delete:
+    path: /{ws}/conceptocosto_batch_delete
+    defaults: { _controller: "BackendBundle:ConceptoCosto:batchDelete" }
+    requirements: { _method: post }
+
+conceptocosto_filter:
+    path:     /filter
+    defaults: { _controller: "BackendBundle:ConceptoCosto:filter" }
