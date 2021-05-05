@@ -76,7 +76,7 @@ class DefaultController extends Controller
                      $servicioNombre = $receipe->getConcepto();
                      $servicio = null;
 
-     */
+            */
         /*      foreach ($em->getRepository('BackendBundle:Service')->findAll() as $serviceDB) {
                   try {
                       $cercania = levenshtein($servicioNombre, $serviceDB->getName());
@@ -152,7 +152,7 @@ class DefaultController extends Controller
          $em->flush();
 
 
-     }*/
+         }*/
 
         //asignar cliente a los ingresos que ya existian
         /*   $ingresos = $em->getRepository('BackendBundle:Ingreso')->findByCliente(null);
@@ -237,8 +237,8 @@ class DefaultController extends Controller
                $em->flush();
 
            }
-   */
-//Registrando las UM
+        */
+        //Registrando las UM
         $em = $this->getDoctrine()->getManager();
         /*  if (!$em->getRepository('BackendBundle:UM')->findByNombre('Udad')) {
               $um = new UM();
@@ -289,6 +289,8 @@ class DefaultController extends Controller
               $em->flush();
           }*/
         $workspace = $this->get('belraysa.workspace')->getCurrentWorkspace();
+        
+
 
         if (array_key_exists('range', $_GET)) {
             $range = $_GET['range'];
@@ -326,6 +328,8 @@ class DefaultController extends Controller
         $total_debitos = 0;
         $balance_general_faceta = 'recibos';
 
+
+
         if ($workspace->getName() == 'G-BRS') {
             $ws = null;
         } else {
@@ -336,6 +340,7 @@ class DefaultController extends Controller
         $total_gastos = $em->getRepository('BackendBundle:Recibo')->findTotalImporteRecibosByRangeAndType($from, $to, 'Gasto', $ws)[0][1];
         $total_costos = $em->getRepository('BackendBundle:Recibo')->findTotalImporteRecibosByRangeAndType($from, $to, 'Costo', $ws)[0][1];
         $total_costos_recurrentes = $em->getRepository('BackendBundle:Recibo')->findTotalImporteRecibosByRangeAndType($from, $to, 'Costo Recurrente', $ws)[0][1];
+
 
         $total_ingresos = round($total_ingresos, 2);
         $total_gastos = round($total_gastos, 2);
@@ -381,7 +386,7 @@ class DefaultController extends Controller
         }
         $em->flush();*/
 
-
+        
         return $this->render('BackendBundle:Default:' . $workspace->getName() . '.html.twig', array(
             'balance_general' => $balance_pre_json,
             'dash_from' => date_format($from, ('Y-m-d')),
