@@ -163,6 +163,7 @@ class Banking
     /**
 
      * @ORM\OneToMany(targetEntity="Belraysa\BackendBundle\Entity\BankingEntry", mappedBy="banking",cascade={"all"})
+     * @ORM\OrderBy({"date" = "DESC"})
 
      */
 
@@ -334,7 +335,23 @@ class Banking
 
     }
 
+    // /**
 
+    //  * @return mixed
+
+    //  */
+
+    // public function getEntriesLast()
+
+    // {
+    //     $tmp= array();
+    //     for ($i = sizeof($this->entries) - 1; $i >= sizeof($this->entries) - 10; $i--) {
+    //         $tmp[] = $this->entries[$i];
+    //     }
+
+
+    //     return $tmp;
+    // }
 
     /**
 

@@ -289,7 +289,12 @@ class DefaultController extends Controller
               $em->flush();
           }*/
         $workspace = $this->get('belraysa.workspace')->getCurrentWorkspace();
-        
+       
+        //$bankings = $workspace->getBankings();
+        //$entries = $bankings[0]->getEntriesLast();
+        // $entries = $bankings[0]->getEntries();
+       // var_dump($entries);
+       // die();
 
 
         if (array_key_exists('range', $_GET)) {
