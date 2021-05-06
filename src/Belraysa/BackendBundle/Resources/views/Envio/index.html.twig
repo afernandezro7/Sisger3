@@ -18,6 +18,43 @@
     {% endblock %}
 
 {% block content %}
+    {# Buscador #}
+    <div class="row">
+        <div class="table-responsive">
+            <form id="envio_filter_form" action="{{ path('contenedor_filter') }}" method="get">
+                <table class="table table-striped table-bordered table-hover" id="datatable_orders">
+                    <thead>
+					    <tr role="row" class="heading">
+                            <th>
+                                Búsqueda
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
+                        </tr>
+                        <tr role="row" class="filter">
+                            <td>
+                                <input type="text" class="form-control form-filter input-sm" name="query">
+                            </td>
+                            <td>
+                                <div class="btn-group">   
+                                    <button name="buscar" type="submit" class="btn btn-sm blue filter-submit margin-bottom">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+    
+                                    <button type="reset" class="btn btn-sm gray filter-cancel">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
     <div class="row">
     	<input type="hidden" id="exp_id" value="{{ exp_id }}"/>
     	<div class="table-responsive">
@@ -25,7 +62,6 @@
     		<table class="table table-striped table-bordered table-advance table-hover" id="table">
     			<thead>
     				<tr>
-
     					<th>C&oacute;digo</th>
     					<th>Remitente</th>
     					<th>Consignado</th>
@@ -119,6 +155,8 @@
     		</div>
     	</div>
     </div>
+
+    {# modal1--> New Envio #}
     <div class="modal fade" id="modalNewEnvio" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     	<div class="modal-dialog">
     		<div
@@ -152,6 +190,7 @@
     	</div>
     </div>
 
+    {# modal2--> Edit #}
     <div class="modal fade" id="modalEdit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     	<div class="modal-dialog">
     		<div
@@ -182,6 +221,8 @@
     		</div>
     	</div>
     </div>
+
+    {# modal3--> Edit Cliente #}
     <div class="modal fade" id="modalEditCliente" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     	<div class="modal-dialog">
     		<div
