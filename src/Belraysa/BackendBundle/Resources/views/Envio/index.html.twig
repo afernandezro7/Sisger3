@@ -19,242 +19,202 @@
 
 {% block content %}
     <div class="row">
-        <input type="hidden" id="exp_id" value="{{ exp_id }}"/>
-        <div class="table-responsive">
+    	<input type="hidden" id="exp_id" value="{{ exp_id }}"/>
+    	<div class="table-responsive">
 
-            <table class="table table-striped table-bordered table-advance table-hover"
-                   id="table">
-                <thead>
-                <tr>
+    		<table class="table table-striped table-bordered table-advance table-hover" id="table">
+    			<thead>
+    				<tr>
 
-                    <th>C&oacute;digo</th>
-                    <th>Remitente</th>
-                    <th>Consignado</th>
-                    <th>Fecha de registro</th>
-                    <th>Contenedor</th>
-                    <th style="text-align: center">
-                        <div class="mailbox-controls">
-                            <div class="btn-group">
-                                <a title="Crear Envio" data-toggle="modal" type="button" data-backdrop="static"
-                                   data-keyboard="false"
-                                   data-target="#modalNewEnvio" data-path="{{ path('envio_new') }}"
-                                   tabindex="-1" class="btn btn-flat btn-default btn-sm"><i
-                                            class="fa fa-plus"></i>
-                                </a>
-                            </div>
+    					<th>C&oacute;digo</th>
+    					<th>Remitente</th>
+    					<th>Consignado</th>
+    					<th>Fecha de registro</th>
+    					<th>Contenedor</th>
+    					<th style="text-align: center">
+    						<div class="mailbox-controls">
+    							<div class="btn-group">
+    								<a title="Crear Envio" data-toggle="modal" type="button" data-backdrop="static" data-keyboard="false" data-target="#modalNewEnvio" data-path="{{ path('envio_new') }}" tabindex="-1" class="btn btn-flat btn-default btn-sm">
+    									<i class="fa fa-plus"></i>
+    								</a>
+    							</div>
 
-                        </div>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for concepto in entities %}
-                    <tr
-                            {% if concepto.contenedor %}
-                        {% if concepto.contenedor.estado == 'CERRADO' %}
-                            style="  color:#a7a7a7; "
-                        {% endif %}
-                            {% endif %}>
-                        <td>
-                            <img alt="{{ concepto.sisgerCode }}"
-                                 src="{{ path('bulto_barcode', { 'id': concepto.sisgerCode,  'size': 20 }) }}"/>
-                        </td>
-                        {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
-                        <td>
-                          {{ concepto.remitenteNombre }}
-                        </td>
-                        <td>
-                            {% set client = concepto.consignado %}
-                            <a title="Editar datos del cliente" id="edit_cliente_button"
-                               data-path="{{ path('client_edit2', { 'id': client.id }) }}"
-                               href="#">{{ concepto.consignado.firstName }} {{ concepto.consignado.lastName }}</a>
-                        </td>
-                        <td>
-                            {{ concepto.fechaCreacion|date('d/M/Y') }}
-                        </td>
-                        <td>
+    						</div>
+    					</th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    				{% for concepto in entities %}
+    					<tr {% if concepto.contenedor %} {% if concepto.contenedor.estado == 'CERRADO' %} style="  color:#a7a7a7; " {% endif %} {% endif %}>
+    						<td>
+    							<img alt="{{ concepto.sisgerCode }}" src="{{ path('bulto_barcode', { 'id': concepto.sisgerCode, 'size': 20 }) }}"/>
+    						</td>
+    						{#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+    						<td>
+    							{{ concepto.remitenteNombre }}
+    						</td>
+    						<td>
+    							{% set client = concepto.consignado %}
+    							<a title="Editar datos del cliente" id="edit_cliente_button" data-path="{{ path('client_edit2', { 'id': client.id }) }}" href="#">{{ concepto.consignado.firstName }}
+    								{{ concepto.consignado.lastName }}</a>
+    						</td>
+    						<td>
+    							{{ concepto.fechaCreacion|date('d/M/Y') }}
+    						</td>
+    						<td>
 
-                            {% if concepto.getContenedor() %}
-                                <span class="label label-default">{{ concepto.getContenedor() }}</span>
-                            {% else %}
-                                <span class="label label-danger">SIN ASIGNAR</span>
-                            {% endif %}
+    							{% if concepto.getContenedor() %}
+    								<span class="label label-default">{{ concepto.getContenedor() }}</span>
+    							{% else %}
+    								<span class="label label-danger">SIN ASIGNAR</span>
+    							{% endif %}
 
-                        </td>
-                        <td style="text-align: center">
-                            <div class="mailbox-controls">
-                                <div class="btn-group">
-                                    <a title="Ver bultos" id="show_button"
-                                       type="button" onclick="startPageLoading()"
-                                       href="{{ path('bulto', { 'concepto': concepto.id }) }}"
-                                       class="btn btn-flat btn-default btn-sm"><i
-                                                class="icon-social-dropbox"></i>
-                                    </a>
+    						</td>
+    						<td style="text-align: center">
+    							<div class="mailbox-controls">
+    								<div class="btn-group">
+    									<a title="Ver bultos" id="show_button" type="button" onclick="startPageLoading()" href="{{ path('bulto', { 'concepto': concepto.id }) }}" class="btn btn-flat btn-default btn-sm">
+    										<i class="icon-social-dropbox"></i>
+    									</a>
 
-                                    {% if concepto.contenedor == false %}
-                                        <a title="Editar datos" id="edit_button"
-                                           type="button"
-                                           data-path="{{ path('envio_edit', { 'id': concepto.id }) }}"
-                                           href="#" class="btn btn-flat btn-default btn-sm"><i
-                                                    class="icon-pencil"></i></a>
-                                        <a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation"
-                                           data-href="{{ path('envio_delete', { 'id': concepto.id }) }}"
-                                           data-placement="left" data-btn-ok-label="Continuar"
-                                           data-btn-cancel-label="Cancelar"
-                                           data-original-title="¿Está seguro de que desea eliminar?" title=""
-                                           href="{{ path('envio_delete', { 'id': concepto.id }) }}">
-                                            <i class="icon-trash"></i>
-                                        </a>
-                                    {% else %}
-                                        {% if concepto.contenedor.estado != 'CERRADO' %}
-                                            <a title="Editar datos" id="edit_button"
-                                               type="button"
-                                               data-path="{{ path('envio_edit', { 'id': concepto.id }) }}"
-                                               href="#" class="btn btn-flat btn-default btn-sm"><i
-                                                        class="icon-pencil"></i></a>
-                                            <a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation"
-                                               data-href="{{ path('envio_delete', { 'id': concepto.id }) }}"
-                                               data-placement="left" data-btn-ok-label="Continuar"
-                                               data-btn-cancel-label="Cancelar"
-                                               data-original-title="¿Está seguro de que desea eliminar?" title=""
-                                               href="{{ path('envio_delete', { 'id': concepto.id }) }}">
-                                                <i class="icon-trash"></i>
-                                            </a>
-                                        {% endif %}
-                                    {% endif %}
+    									{% if concepto.contenedor == false %}
+    										<a title="Editar datos" id="edit_button" type="button" data-path="{{ path('envio_edit', { 'id': concepto.id }) }}" href="#" class="btn btn-flat btn-default btn-sm">
+    											<i class="icon-pencil"></i>
+    										</a>
+    										<a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation" data-href="{{ path('envio_delete', { 'id': concepto.id }) }}" data-placement="left" data-btn-ok-label="Continuar" data-btn-cancel-label="Cancelar" data-original-title="¿Está seguro de que desea eliminar?" title="" href="{{ path('envio_delete', { 'id': concepto.id }) }}">
+    											<i class="icon-trash"></i>
+    										</a>
+    									{% else %}
+    										{% if concepto.contenedor.estado != 'CERRADO' %}
+    											<a title="Editar datos" id="edit_button" type="button" data-path="{{ path('envio_edit', { 'id': concepto.id }) }}" href="#" class="btn btn-flat btn-default btn-sm">
+    												<i class="icon-pencil"></i>
+    											</a>
+    											<a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation" data-href="{{ path('envio_delete', { 'id': concepto.id }) }}" data-placement="left" data-btn-ok-label="Continuar" data-btn-cancel-label="Cancelar" data-original-title="¿Está seguro de que desea eliminar?" title="" href="{{ path('envio_delete', { 'id': concepto.id }) }}">
+    												<i class="icon-trash"></i>
+    											</a>
+    										{% endif %}
+    									{% endif %}
 
-                                    {% if concepto.estado == 'HBL' %}
-                                        <a class="btn btn-sm btn-flat btn-default" title="Obtener HBL"
-                                           href="{{ path('concepto_hbl', { 'id': concepto.id }) }}">
-                                            <i class="fa fa-file-excel-o"></i>
-                                        </a>
-                                    {% else %}
-                                        {% if flag_hbl == 'si' %}
-                                            <a class="btn btn-sm btn-flat btn-default" title="Convertir en HBL"
-                                               onclick="startPageLoading()"
-                                               href="{{ path('concepto_to_hbl', { 'id': concepto.id }) }}">
-                                                <i style="color: #008000" class="fa fa-check"></i>
-                                            </a>
-                                        {% endif %}
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+    									{% if concepto.estado == 'HBL' %}
+    										<a class="btn btn-sm btn-flat btn-default" title="Obtener HBL" href="{{ path('concepto_hbl', { 'id': concepto.id }) }}">
+    											<i class="fa fa-file-excel-o"></i>
+    										</a>
+    									{% else %}
+    										{% if flag_hbl == 'si' %}
+    											<a class="btn btn-sm btn-flat btn-default" title="Convertir en HBL" onclick="startPageLoading()" href="{{ path('concepto_to_hbl', { 'id': concepto.id }) }}">
+    												<i style="color: #008000" class="fa fa-check"></i>
+    											</a>
+    										{% endif %}
+    									{% endif %}
+    								</div>
+    							</div>
+    						</td>
+    					</tr>
+    				{% endfor %}
+    			</tbody>
+    		</table>
 
-            <div class="text-right">
-                {{ knp_pagination_render(entities) }}
-            </div>
-        </div>
+    		<div class="text-right">
+    			{{ knp_pagination_render(entities) }}
+    		</div>
+    	</div>
     </div>
-    <div class="modal fade" id="modalNewEnvio" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    <h4 class="modal-title">
-                        Crear Env&iacute;o
-                    </h4>
-                </div>
+    <div class="modal fade" id="modalNewEnvio" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+    		<div
+    			class="modal-content">
+    			<!-- Modal Header -->
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal">
+    					<span aria-hidden="true">&times;</span>
+    					<span class="sr-only">Close</span>
+    				</button>
+    				<h4 class="modal-title">
+    					Crear Env&iacute;o
+    				</h4>
+    			</div>
 
-                <!-- Modal Body -->
-                <div class="modal-body">
-                    {{ include("BackendBundle:Envio:new.html.twig") }}
-                </div>
+    			<!-- Modal Body -->
+    			<div class="modal-body">
+    				{{ include("BackendBundle:Envio:new.html.twig") }}
+    			</div>
 
-                <!-- Modal Footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-flat btn-default"
-                            data-dismiss="modal">
-                        Cerrar
-                    </button>
-                    <button form="newEnvio" type="submit" class="btn btn-flat btn-primary">
-                        Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
+    			<!-- Modal Footer -->
+    			<div class="modal-footer">
+    				<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">
+    					Cerrar
+    				</button>
+    				<button form="newEnvio" type="submit" class="btn btn-flat btn-primary">
+    					Guardar
+    				</button>
+    			</div>
+    		</div>
+    	</div>
     </div>
 
-    <div class="modal fade" id="modalEdit" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    <h4 class="modal-title">
-                        Editar datos
-                    </h4>
-                </div>
+    <div class="modal fade" id="modalEdit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+    		<div
+    			class="modal-content">
+    			<!-- Modal Header -->
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal">
+    					<span aria-hidden="true">&times;</span>
+    					<span class="sr-only">Close</span>
+    				</button>
+    				<h4 class="modal-title">
+    					Editar datos
+    				</h4>
+    			</div>
 
-                <!-- Modal Body -->
-                <div id="modalEditContent" class="modal-body">
+    			<!-- Modal Body -->
+    			<div id="modalEditContent" class="modal-body"></div>
 
-                </div>
-
-                <!-- Modal Footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-flat btn-default"
-                            data-dismiss="modal">
-                        Cerrar
-                    </button>
-                    <button form="edit" type="submit" class="btn btn-flat btn-primary">
-                        Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
+    			<!-- Modal Footer -->
+    			<div class="modal-footer">
+    				<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">
+    					Cerrar
+    				</button>
+    				<button form="edit" type="submit" class="btn btn-flat btn-primary">
+    					Guardar
+    				</button>
+    			</div>
+    		</div>
+    	</div>
     </div>
-    <div class="modal fade" id="modalEditCliente" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    <h4 class="modal-title">
-                        Editar datos
-                    </h4>
-                </div>
+    <div class="modal fade" id="modalEditCliente" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+    		<div
+    			class="modal-content">
+    			<!-- Modal Header -->
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal">
+    					<span aria-hidden="true">&times;</span>
+    					<span class="sr-only">Close</span>
+    				</button>
+    				<h4 class="modal-title">
+    					Editar datos
+    				</h4>
+    			</div>
 
-                <!-- Modal Body -->
-                <div id="modalEditClienteContent" class="modal-body">
+    			<!-- Modal Body -->
+    			<div id="modalEditClienteContent" class="modal-body"></div>
 
-                </div>
-
-                <!-- Modal Footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-flat btn-default"
-                            data-dismiss="modal">
-                        Cerrar
-                    </button>
-                    <button form="editCliente" type="submit" class="btn btn-flat btn-primary">
-                        Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
+    			<!-- Modal Footer -->
+    			<div class="modal-footer">
+    				<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">
+    					Cerrar
+    				</button>
+    				<button form="editCliente" type="submit" class="btn btn-flat btn-primary">
+    					Guardar
+    				</button>
+    			</div>
+    		</div>
+    	</div>
     </div>
 
 {% endblock %}
+
     {% block javascript_inline %}
         <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
                 type="text/javascript"></script>
