@@ -43,6 +43,54 @@ class ContenedorController extends Controller
         ));
     }
 
+
+    public function filtrarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $codigo = null;
+        $sello = null;
+        $tipo = null;
+
+
+        if (array_key_exists('contenedor_codigo', $_GET)) {
+            if ($_GET['contenedor_codigo'] != '') {
+                $codigo = $_GET['contenedor_codigo'];
+            }
+        }
+
+        if (array_key_exists('contenedor_sello', $_GET)) {
+            if ($_GET['contenedor_sello'] != '') {
+                $sello = $_GET['contenedor_sello'];
+            }
+        }
+
+        if (array_key_exists('contenedor_tipo', $_GET)) {
+            if ($_GET['contenedor_tipo'] != '') {
+                $tipo = $_GET['contenedor_tipo'];
+            }
+        }
+
+
+        $contenedores = $em->getRepository('BackendBundle:Contenedor')->findBusquedaAvanzada($codigo, $sello, $tipo);
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $contenedores,
+            $this->get('request')->query->get('page', 1),
+            10);
+
+
+        return $this->render('BackendBundle:Contenedor:filtered.html.twig', array(
+            'entities' => $pagination,
+            'codigo' => $codigo,
+            'sello' => $sello,
+            'tipo' => $tipo
+        ));
+
+    }
+
     /**
      * Creates a new Contenedor entity.
      *
@@ -495,52 +543,6 @@ class ContenedorController extends Controller
         ));
     }
 
-    public function filtrarAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $codigo = null;
-        $sello = null;
-        $tipo = null;
-
-
-        if (array_key_exists('contenedor_codigo', $_GET)) {
-            if ($_GET['contenedor_codigo'] != '') {
-                $codigo = $_GET['contenedor_codigo'];
-            }
-        }
-
-        if (array_key_exists('contenedor_sello', $_GET)) {
-            if ($_GET['contenedor_sello'] != '') {
-                $sello = $_GET['contenedor_sello'];
-            }
-        }
-
-        if (array_key_exists('contenedor_tipo', $_GET)) {
-            if ($_GET['contenedor_tipo'] != '') {
-                $tipo = $_GET['contenedor_tipo'];
-            }
-        }
-
-
-        $contenedores = $em->getRepository('BackendBundle:Contenedor')->findBusquedaAvanzada($codigo, $sello, $tipo);
-
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $contenedores,
-            $this->get('request')->query->get('page', 1),
-            10);
-
-
-        return $this->render('BackendBundle:Contenedor:filtered.html.twig', array(
-            'entities' => $pagination,
-            'codigo' => $codigo,
-            'sello' => $sello,
-            'tipo' => $tipo
-        ));
-
-    }
 
     public function cerrarAction(Request $request, $id)
     {
