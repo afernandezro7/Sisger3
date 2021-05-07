@@ -51,6 +51,46 @@ class ENAController extends Controller
         return $this->render('BackendBundle:ENA:index.html.twig', array(
             'entities' => $pagination,
             'form' => $form->createView(),
+            'query' => '',
+            'flag_hbl' => $flag_hbl,
+            'exp_id' => 0
+        ));
+    }
+
+    public function filtrarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $_GET['query'];
+
+        $activas = array();
+        $entities = $em->getRepository('BackendBundle:ENA')->advanceSearch($query);
+        foreach ($entities as $ena) {
+            if ($ena->getContenedor()) {
+                if ($ena->getContenedor()->getEstado() != 'CERRADO') {
+                    $activas[] = $ena;
+                }
+            }
+        }
+
+        $entity = new ENA();
+        $form = $this->createCreateForm($entity);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $activas,
+            $this->get('request')->query->get('page', 1),
+            15);
+
+        $contenedor = $em->getRepository('BackendBundle:Contenedor')->findContenedorEnUso();
+        $flag_hbl = 'no';
+        if ($contenedor) {
+            $flag_hbl = 'si';
+        }
+
+        return $this->render('BackendBundle:ENA:index.html.twig', array(
+            'entities' => $pagination,
+            'form' => $form->createView(),
+            'query' => $query,
             'flag_hbl' => $flag_hbl,
             'exp_id' => 0
         ));
@@ -95,14 +135,14 @@ class ENAController extends Controller
                 /* if ($_POST['sisgerCode'] != "") {
                      $fecha = $_POST['sisgerCode'];
                      $fecha = date_create($fecha);
- */
+                */
                 $sisgerCode = "BRS". date_format($now, 'y') . "000" . str_pad($entity->getId(), 6, 0, STR_PAD_LEFT);
                 //  $entity->setFechaHBL($fecha);
                 /* } else {
                      $sisgerCode = "LBRS" . date_format($now, 'y')[1] . date_format($now, 'm') . date_format($now, 'd') . str_pad($entity->getId(), 6, 0, STR_PAD_LEFT);
                      $entity->setFechaHBL(new \DateTime());
                  }
- */
+                */
                 $entity->setContenedor($contenedor);
             }
             $entity->setSisgerCode($sisgerCode);
@@ -411,8 +451,7 @@ class ENAController extends Controller
             ->getForm();
     }
 
-    public
-    function batchDeleteAction(Request $request)
+    public function batchDeleteAction(Request $request)
     {
 
         $ids = $request->get('batch_action_checkbox');

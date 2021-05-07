@@ -59,6 +59,51 @@ class EnvioController extends Controller
         ));
     }
 
+    public function filtrarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $_GET['query'];
+
+
+  
+
+
+        $activas = array();
+        $entities = $em->getRepository('BackendBundle:Envio')->advanceSearch($query);
+        // var_dump($entities);
+        // die();
+        foreach ($entities as $ena) {
+            if ($ena->getContenedor()) {
+                if ($ena->getContenedor()->getEstado() != 'CERRADO') {
+                    $activas[] = $ena;
+                }
+            }
+        }
+
+        $entity = new Envio();
+        $form = $this->createCreateForm($entity);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $activas,
+            $this->get('request')->query->get('page', 1),
+            10);
+
+        $contenedor = $em->getRepository('BackendBundle:Contenedor')->findContenedorEnUso();
+        $flag_hbl = 'no';
+        if ($contenedor) {
+            $flag_hbl = 'si';
+        }
+
+        return $this->render('BackendBundle:Envio:filtered.html.twig', array(
+            'entities' => $pagination,
+            'form' => $form->createView(),
+            'query' => $_GET['query'],
+            'flag_hbl' => $flag_hbl,
+            'exp_id' => 0
+        ));
+    }
+
     /**
      * Creates a new Envio entity.
      *

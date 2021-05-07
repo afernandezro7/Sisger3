@@ -90,7 +90,7 @@ class Concepto
     private $fechaHBL;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Belraysa\BackendBundle\Entity\Reply", inversedBy="expedienteConceptos")
+     * @ORM\ManyToOne(targetEntity="Belraysa\BackendBundle\Entity\Reply", inversedBy="conceptos")
      * @ORM\JoinColumn(name="expediente", referencedColumnName="id")
      */
     private $expediente;

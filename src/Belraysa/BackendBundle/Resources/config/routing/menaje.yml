@@ -36,3 +36,7 @@ menaje_batch_delete:
 menaje_exp:
     path:     /{exp_id}/index
     defaults: { _controller: "BackendBundle:Menaje:indexExp" }
+
+menaje_filter:
+    path:     /filtrar
+    defaults: { _controller: "BackendBundle:Menaje:filtrar" }

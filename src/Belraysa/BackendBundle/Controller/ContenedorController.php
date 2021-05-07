@@ -43,6 +43,54 @@ class ContenedorController extends Controller
         ));
     }
 
+
+    public function filtrarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $codigo = null;
+        $sello = null;
+        $tipo = null;
+
+
+        if (array_key_exists('contenedor_codigo', $_GET)) {
+            if ($_GET['contenedor_codigo'] != '') {
+                $codigo = $_GET['contenedor_codigo'];
+            }
+        }
+
+        if (array_key_exists('contenedor_sello', $_GET)) {
+            if ($_GET['contenedor_sello'] != '') {
+                $sello = $_GET['contenedor_sello'];
+            }
+        }
+
+        if (array_key_exists('contenedor_tipo', $_GET)) {
+            if ($_GET['contenedor_tipo'] != '') {
+                $tipo = $_GET['contenedor_tipo'];
+            }
+        }
+
+
+        $contenedores = $em->getRepository('BackendBundle:Contenedor')->findBusquedaAvanzada($codigo, $sello, $tipo);
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $contenedores,
+            $this->get('request')->query->get('page', 1),
+            10);
+
+
+        return $this->render('BackendBundle:Contenedor:filtered.html.twig', array(
+            'entities' => $pagination,
+            'codigo' => $codigo,
+            'sello' => $sello,
+            'tipo' => $tipo
+        ));
+
+    }
+
     /**
      * Creates a new Contenedor entity.
      *
@@ -495,52 +543,6 @@ class ContenedorController extends Controller
         ));
     }
 
-    public function filtrarAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $codigo = null;
-        $sello = null;
-        $tipo = null;
-
-
-        if (array_key_exists('contenedor_codigo', $_GET)) {
-            if ($_GET['contenedor_codigo'] != '') {
-                $codigo = $_GET['contenedor_codigo'];
-            }
-        }
-
-        if (array_key_exists('contenedor_sello', $_GET)) {
-            if ($_GET['contenedor_sello'] != '') {
-                $sello = $_GET['contenedor_sello'];
-            }
-        }
-
-        if (array_key_exists('contenedor_tipo', $_GET)) {
-            if ($_GET['contenedor_tipo'] != '') {
-                $tipo = $_GET['contenedor_tipo'];
-            }
-        }
-
-
-        $contenedores = $em->getRepository('BackendBundle:Contenedor')->findBusquedaAvanzada($codigo, $sello, $tipo);
-
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $contenedores,
-            $this->get('request')->query->get('page', 1),
-            10);
-
-
-        return $this->render('BackendBundle:Contenedor:filtered.html.twig', array(
-            'entities' => $pagination,
-            'codigo' => $codigo,
-            'sello' => $sello,
-            'tipo' => $tipo
-        ));
-
-    }
 
     public function cerrarAction(Request $request, $id)
     {
@@ -595,7 +597,7 @@ class ContenedorController extends Controller
 
 
         // get the XLS
-//aqui se ejecuta el codigo del reader
+        //aqui se ejecuta el codigo del reader
         $uploaddir = $this->container->getParameter('belraysa.route.lbrs');
         $uploadfile = $uploaddir . basename('ManifiestoV.1.xlsx');
 
@@ -723,10 +725,10 @@ class ContenedorController extends Controller
         $objPHPExcel->getActiveSheet()
             ->setCellValue('H' . $indice, '=SUM(H13:H' . $formula . ')');
 
-// Create new PHPExcel object
+        // Create new PHPExcel object
 
 
-// Set document properties
+        // Set document properties
         $objPHPExcel->getProperties()->setCreator("BELRAYSA TOURS & TRAVEL GROUP S.A")
             ->setLastModifiedBy("BELRAYSA TOURS & TRAVEL GROUP S.A")
             ->setTitle("MANIFIESTO_" . $codigo . '_BELRAYSA TOURS & TRAVEL GROUP S.A')
@@ -736,14 +738,14 @@ class ContenedorController extends Controller
             ->setCategory("MANIFIESTO_" . $codigo . '_BELRAYSA TOURS & TRAVEL GROUP S.A');
 
 
-// Redirect output to a client’s web browser (Excel2007)
+        // Redirect output to a client’s web browser (Excel2007)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="MANIFIESTO_' . $codigo . '_BELRAYSA TOURS & TRAVEL GROUP S.A.xlsx"');
         header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
+        // If you're serving to IE 9, then the following may be needed
         header('Cache-Control: max-age=1');
 
-// If you're serving to IE over SSL, then the following may be needed
+        // If you're serving to IE over SSL, then the following may be needed
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
         header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
@@ -784,7 +786,7 @@ class ContenedorController extends Controller
 
 
         // get the XLS
-//aqui se ejecuta el codigo del reader
+        //aqui se ejecuta el codigo del reader
         $uploaddir = $this->container->getParameter('belraysa.route.lbrs');
         $uploadfile = $uploaddir . basename('ManifiestoV.2.xls');
 
@@ -902,10 +904,10 @@ class ContenedorController extends Controller
             $indice += 1;
         }
 
-// Create new PHPExcel object
+        // Create new PHPExcel object
 
 
-// Set document properties
+        // Set document properties
         $objPHPExcel->getProperties()->setCreator("BELRAYSA TOURS & TRAVEL GROUP S.A")
             ->setLastModifiedBy("BELRAYSA TOURS & TRAVEL GROUP S.A")
             ->setTitle("MANIFIESTO_" . $codigo . '_BELRAYSA TOURS & TRAVEL GROUP S.A')
@@ -915,14 +917,14 @@ class ContenedorController extends Controller
             ->setCategory("MANIFIESTO_" . $codigo . '_BELRAYSA TOURS & TRAVEL GROUP S.A');
 
 
-// Redirect output to a client’s web browser (Excel2007)
+        // Redirect output to a client’s web browser (Excel2007)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="MANIFIESTO_' . $codigo . '_BELRAYSA TOURS & TRAVEL GROUP S.A.xlsx"');
         header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
+        // If you're serving to IE 9, then the following may be needed
         header('Cache-Control: max-age=1');
 
-// If you're serving to IE over SSL, then the following may be needed
+        // If you're serving to IE over SSL, then the following may be needed
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
         header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
@@ -963,7 +965,7 @@ class ContenedorController extends Controller
 
 
         // get the XLS
-//aqui se ejecuta el codigo del reader
+        //aqui se ejecuta el codigo del reader
         $uploaddir = $this->container->getParameter('belraysa.route.lbrs');
         $uploadfile = $uploaddir . basename('ManifiestoV.3.xls');
 
@@ -1153,10 +1155,10 @@ class ContenedorController extends Controller
             ->setCellValue('L9', $totalVolumen)
             ->setCellValue('Q9', $totalIngreso);
 
-// Create new PHPExcel object
+        // Create new PHPExcel object
 
 
-// Set document properties
+        // Set document properties
         $objPHPExcel->getProperties()->setCreator("BELRAYSA TOURS & TRAVEL GROUP S.A")
             ->setLastModifiedBy("BELRAYSA TOURS & TRAVEL GROUP S.A")
             ->setTitle("MANIFIESTO_" . $codigo . '_BELRAYSA TOURS & TRAVEL GROUP S.A')
@@ -1166,14 +1168,14 @@ class ContenedorController extends Controller
             ->setCategory("MANIFIESTO_" . $codigo . '_BELRAYSA TOURS & TRAVEL GROUP S.A');
 
 
-// Redirect output to a client’s web browser (Excel2007)
+        // Redirect output to a client’s web browser (Excel2007)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="MANIFIESTO_' . $codigo . '_BELRAYSA TOURS & TRAVEL GROUP S.A.xlsx"');
         header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
+        // If you're serving to IE 9, then the following may be needed
         header('Cache-Control: max-age=1');
 
-// If you're serving to IE over SSL, then the following may be needed
+        // If you're serving to IE over SSL, then the following may be needed
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
         header('Cache-Control: cache, must-revalidate'); // HTTP/1.1

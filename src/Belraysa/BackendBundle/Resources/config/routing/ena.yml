@@ -40,3 +40,7 @@ ena_batch_delete:
 ena_exp:
     path:     /{exp_id}/index
     defaults: { _controller: "BackendBundle:ENA:indexExp" }
+
+ena_filter:
+    path:     /filtrar
+    defaults: { _controller: "BackendBundle:ENA:filtrar" }

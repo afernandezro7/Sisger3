@@ -36,3 +36,7 @@ envio_batch_delete:
 envio_exp:
     path:     /{exp_id}/index
     defaults: { _controller: "BackendBundle:Envio:indexExp" }
+
+envio_filter:
+    path:     /filtrar
+    defaults: { _controller: "BackendBundle:Envio:filtrar" }

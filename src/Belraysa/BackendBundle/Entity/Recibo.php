@@ -103,7 +103,7 @@ class Recibo
     private $tipo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Belraysa\BackendBundle\Entity\Workspace", inversedBy="receipes")
+     * @ORM\ManyToOne(targetEntity="Belraysa\BackendBundle\Entity\Workspace", inversedBy="recibos")
      * @ORM\JoinColumn(name="workspace", referencedColumnName="id")
      */
     private $workspace;

@@ -15,309 +15,284 @@
     {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="table-responsive">
-            <form id="contenedor_filter_form"
-                  action="{{ path('contenedor_filter') }}"
-                  method="get">
-                <table class="table table-striped table-bordered table-hover" id="datatable_orders">
-                    <thead>
-                    <tr role="row" class="heading">
+<div class="row">
+	<div class="table-responsive">
+		<form id="contenedor_filter_form" action="{{ path('contenedor_filter') }}" method="get">
+			<table class="table table-striped table-bordered table-hover" id="datatable_orders">
+				<thead>
+					<tr role="row" class="heading">
 
-                        <th>
-                            C&oacute;digo
-                        </th>
-                        <th>
-                            Sello
-                        </th>
-                        <th>
-                            Tipo
-                        </th>
-                        <th>
-                            Acciones
-                        </th>
-                    </tr>
-                    <tr role="row" class="filter">
-                        <td>
-                            <input value="{{ codigo }}" type="text" class="form-control form-filter input-sm"
-                                   name="contenedor_codigo">
-                        </td>
-                        <td>
-                            <input value="{{ sello }}" type="text" class="form-control form-filter input-sm"
-                                   name="contenedor_sello">
-                        </td>
-                        <td>
-                            <select name="contenedor_tipo" class="form-control select2me form-filter input-sm">
-                                <option value=""></option>
-                                {% for t in tiposcontenedores.getTipos() %}
-                                    <option {% if t.getId() == tipo %}selected="selected" {% endif %}
-                                            value="{{ t.getId() }}">{{ t.nombre }} </option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                        <td>
-                            <div class="btn-group">
+						<th>
+							C&oacute;digo
+						</th>
+						<th>
+							Sello
+						</th>
+						<th>
+							Tipo
+						</th>
+						<th>
+							Acciones
+						</th>
+					</tr>
+					<tr role="row" class="filter">
+						<td>
+							<input value="{{ codigo }}" type="text" class="form-control form-filter input-sm" name="contenedor_codigo">
+						</td>
+						<td>
+							<input value="{{ sello }}" type="text" class="form-control form-filter input-sm" name="contenedor_sello">
+						</td>
+						<td>
+							<select name="contenedor_tipo" class="form-control select2me form-filter input-sm">
+								<option value=""></option>
+								{% for t in tiposcontenedores.getTipos() %}
+									<option {% if t.getId() == tipo %} selected="selected" {% endif %} value="{{ t.getId() }}">{{ t.nombre }}
+									</option>
+								{% endfor %}
+							</select>
+						</td>
+						<td>
+							<div class="btn-group">
 
-                                <button name="buscar" type="submit" class="btn btn-sm blue filter-submit margin-bottom">
-                                    <i
-                                            class="fa fa-search"></i>
-                                </button>
+								<button name="buscar" type="submit" class="btn btn-sm blue filter-submit margin-bottom">
+									<i class="fa fa-search"></i>
+								</button>
 
-                                <button type="reset" class="btn btn-sm gray filter-cancel"><i class="fa fa-times"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="table-responsive">
+								<button type="reset" class="btn btn-sm gray filter-cancel">
+									<i class="fa fa-times"></i>
+								</button>
+							</div>
+						</td>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<div class="table-responsive">
 
-            <table class="table table-striped table-bordered table-advance table-hover"
-                   id="table">
-                <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Mes</th>
-                    <th>C&oacute;digo</th>
-                    <th>Sello</th>
-                    <th>Tipo</th>
-                    <th>Capacidad (M3)</th>
-                    <th>Capacidad (Kgs)</th>
-                    <th>Estado</th>
-                    <th>
-                        <div class="mailbox-controls">
-                            <a class="btn btn-flat btn-default btn-sm" title="Registrar contenedor"
-                               data-toggle="modal" data-backdrop="static" data-keyboard="false"
-                               type="button"
-                               data-target="#myModalHorizontal" tabindex="-1">
-                                <i class="fa fa-plus"></i>
-                            </a>
+		<table class="table table-striped table-bordered table-advance table-hover" id="table">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Mes</th>
+					<th>C&oacute;digo</th>
+					<th>Sello</th>
+					<th>Tipo</th>
+					<th>Capacidad (M3)</th>
+					<th>Capacidad (Kgs)</th>
+					<th>Estado</th>
+					<th>
+						<div class="mailbox-controls">
+							<a class="btn btn-flat btn-default btn-sm" title="Registrar contenedor" data-toggle="modal" data-backdrop="static" data-keyboard="false" type="button" data-target="#myModalHorizontal" tabindex="-1">
+								<i class="fa fa-plus"></i>
+							</a>
 
-                        </div>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for contenedor in entities %}
-                    <tr>
-                        <td>{{ contenedor }}</td>
-                        <td>{{ contenedor.mes.nombre }}/{{ contenedor.mes.anno.nombre }}</td>
-                        <td>{{ contenedor.codigo }}</td>
-                        <td>{% if contenedor.sello %}
-                                {{ contenedor.sello }}
-                            {% else %}
-                                <span class="label label-danger">SIN ESPECIFICAR</span>
-                            {% endif %}</td>
-                        <td>{{ contenedor.tipo }}</td>
-                        <td>{{ contenedor.volumenM3 |round(2) }}</td>
-                        <td>{{ contenedor.maxPesoKg |round(2) }}</td>
-                        <td>{% if contenedor.estado == 'COMPLETANDO' %}
-                                <span class="label label-success">COMPLETANDO</span>
-                            {% elseif contenedor.estado == 'RESERVANDO' %}
-                                <span class="label label-danger">RESERVANDO</span>
-                            {% else %}
-                                <span class="label label-default">CERRADO</span>
-                            {% endif %}</td>
-                        <td>
-                            <div class="mailbox-controls">
-                                <div class="btn-group">
-                                    {% if contenedor.estado != 'CERRADO' %}
-                                        <button type="button"
-                                                class="btn btn-sm btn-flat btn-default dropdown-toggle"
-                                                data-toggle="dropdown">
-                                            <i class="icon-pencil"></i>
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a class="btn btn-flat btn-default btn-sm"
-                                                   title="Editar datos del contenedor"
-                                                   type="button"
-                                                   data-path="{{ path('contenedor_edit', { 'id': contenedor.id }) }}"
-                                                   id="edit_button">
-                                                    <i class="icon-pencil"></i> Editar datos del contenedor
-                                                </a></li>
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for contenedor in entities %}
+					<tr>
+						<td>{{ contenedor }}</td>
+						<td>{{ contenedor.mes.nombre }}/{{ contenedor.mes.anno.nombre }}</td>
+						<td>{{ contenedor.codigo }}</td>
+						<td>
+							{% if contenedor.sello %}
+								{{ contenedor.sello }}
+							{% else %}
+								<span class="label label-danger">SIN ESPECIFICAR</span>
+							{% endif %}
+						</td>
+						<td>{{ contenedor.tipo }}</td>
+						<td>{{ contenedor.volumenM3 |round(2) }}</td>
+						<td>{{ contenedor.maxPesoKg |round(2) }}</td>
+						<td>
+							{% if contenedor.estado == 'COMPLETANDO' %}
+								<span class="label label-success">COMPLETANDO</span>
+							{% elseif contenedor.estado == 'RESERVANDO' %}
+								<span class="label label-danger">RESERVANDO</span>
+							{% else %}
+								<span class="label label-default">CERRADO</span>
+							{% endif %}
+						</td>
+						<td>
+							<div class="mailbox-controls">
+								<div class="btn-group">
+									{% if contenedor.estado != 'CERRADO' %}
+										<button type="button" class="btn btn-sm btn-flat btn-default dropdown-toggle" data-toggle="dropdown">
+											<i class="icon-pencil"></i>
+											<i class="fa fa-angle-down"></i>
+										</button>
+										<ul class="dropdown-menu pull-right">
+											<li>
+												<a class="btn btn-flat btn-default btn-sm" title="Editar datos del contenedor" type="button" data-path="{{ path('contenedor_edit', { 'id': contenedor.id }) }}" id="edit_button">
+													<i class="icon-pencil"></i>
+													Editar datos del contenedor
+												</a>
+											</li>
 
-                                            <li><a class="btn btn-flat btn-default btn-sm"
-                                                   title="Editar datos del manifiesto"
-                                                   type="button"
-                                                   data-path="{{ path('contenedor_edit_manifiesto', { 'id': contenedor.id }) }}"
-                                                   id="edit2_button">
-                                                    <i class="icon-pencil"></i> Editar datos del manifiesto
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    {% endif %}
+											<li>
+												<a class="btn btn-flat btn-default btn-sm" title="Editar datos del manifiesto" type="button" data-path="{{ path('contenedor_edit_manifiesto', { 'id': contenedor.id }) }}" id="edit2_button">
+													<i class="icon-pencil"></i>
+													Editar datos del manifiesto
+												</a>
+											</li>
+										</ul>
+									{% endif %}
 
-                                    {% if contenedor.estado == 'COMPLETANDO' or contenedor.estado == 'RESERVANDO' %}
-                                        {% if contenedor.conceptos|length %}
-                                            <a class="btn btn-flat btn-default btn-sm" title="Ver pre-manifiesto"
-                                               href="{{ path('contenedor_manifiesto', { 'id': contenedor.id }) }}">
-                                                <i class="fa fa-table"></i>
-                                            </a>
-                                        {% endif %}
-                                    {% endif %}
-                                    {% if contenedor.estado == 'CERRADO' %}
-                                        <button aria-expanded="false" type="button"
-                                                class="btn btn-sm btn-flat btn-default dropdown-toggle"
-                                                data-toggle="dropdown">
-                                            <i class="fa fa-table"></i>
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a class="btn btn-flat btn-default btn-sm" title="Ver manifiesto V1"
-                                                   href="{{ path('contenedor_manifiesto_1', { 'id': contenedor.id }) }}">
-                                                    <i class="fa fa-table"></i> Exportar Manifiesto V.1
-                                                </a></li>
+									{% if contenedor.estado == 'COMPLETANDO' or contenedor.estado == 'RESERVANDO' %}
+										{% if contenedor.conceptos|length %}
+											<a class="btn btn-flat btn-default btn-sm" title="Ver pre-manifiesto" href="{{ path('contenedor_manifiesto', { 'id': contenedor.id }) }}">
+												<i class="fa fa-table"></i>
+											</a>
+										{% endif %}
+									{% endif %}
+									{% if contenedor.estado == 'CERRADO' %}
+										<button aria-expanded="false" type="button" class="btn btn-sm btn-flat btn-default dropdown-toggle" data-toggle="dropdown">
+											<i class="fa fa-table"></i>
+											<i class="fa fa-angle-down"></i>
+										</button>
+										<ul class="dropdown-menu pull-right">
+											<li>
+												<a class="btn btn-flat btn-default btn-sm" title="Ver manifiesto V1" href="{{ path('contenedor_manifiesto_1', { 'id': contenedor.id }) }}">
+													<i class="fa fa-table"></i>
+													Exportar Manifiesto V.1
+												</a>
+											</li>
 
-                                            <li><a class="btn btn-flat btn-default btn-sm" title="Ver manifiesto V2"
-                                                   href="{{ path('contenedor_manifiesto_2', { 'id': contenedor.id }) }}">
-                                                    <i class="fa fa-table"></i> Exportar Manifiesto V.2
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    {% endif %}
-                                    {% if contenedor.estado == 'COMPLETANDO' %}
-                                        {% if contenedor.conceptos|length %}
-                                            <a class="btn btn-sm btn-flat btn-default" title="Cerrar"
-                                               href="{{ path('contenedor_cerrar', { 'id': contenedor.id }) }}">
-                                                <i class="fa fa-lock"></i>
-                                            </a>
-                                        {% endif %}
-                                    {% endif %}
-                                    {% if contenedor.estado == 'RESERVANDO' %}
-                                        <a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation"
-                                           data-href="{{ path('contenedor_delete', { 'id': contenedor.id }) }}"
-                                           data-placement="left" data-btn-ok-label="Continuar"
-                                           data-btn-cancel-label="Cancelar"
-                                           data-original-title="¿Está seguro de que desea eliminar?" title=""
-                                           href="{{ path('contenedor_delete', { 'id': contenedor.id }) }}">
-                                            <i class="icon-trash"></i>
-                                        </a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+											<li>
+												<a class="btn btn-flat btn-default btn-sm" title="Ver manifiesto V2" href="{{ path('contenedor_manifiesto_2', { 'id': contenedor.id }) }}">
+													<i class="fa fa-table"></i>
+													Exportar Manifiesto V.2
+												</a>
+											</li>
+										</ul>
+									{% endif %}
+									{% if contenedor.estado == 'COMPLETANDO' %}
+										{% if contenedor.conceptos|length %}
+											<a class="btn btn-sm btn-flat btn-default" title="Cerrar" href="{{ path('contenedor_cerrar', { 'id': contenedor.id }) }}">
+												<i class="fa fa-lock"></i>
+											</a>
+										{% endif %}
+									{% endif %}
+									{% if contenedor.estado == 'RESERVANDO' %}
+										<a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation" data-href="{{ path('contenedor_delete', { 'id': contenedor.id }) }}" data-placement="left" data-btn-ok-label="Continuar" data-btn-cancel-label="Cancelar" data-original-title="¿Está seguro de que desea eliminar?" title="" href="{{ path('contenedor_delete', { 'id': contenedor.id }) }}">
+											<i class="icon-trash"></i>
+										</a>
+									{% endif %}
+								</div>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 
-            <div class="text-right">
-                {{ knp_pagination_render(entities) }}
-            </div>
-        </div>
-    </div>
-    {# modals #}
-    <div class="modal fade" id="myModalHorizontal1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        Editar datos de contenedor
-                    </h4>
-                </div>
+		<div class="text-right">
+			{{ knp_pagination_render(entities) }}
+		</div>
+	</div>
+</div>
+{# modals #}
+<div class="modal fade" id="myModalHorizontal1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div
+			class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+					<span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					Editar datos de contenedor
+				</h4>
+			</div>
 
-                <!-- Modal Body -->
-                <div class="modal-body" id="editContenedorResponse">
+			<!-- Modal Body -->
+			<div class="modal-body" id="editContenedorResponse"></div>
 
-                </div>
+			<!-- Modal Footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">
+					Cerrar
+				</button>
+				<button form="editContenedor" type="submit" class="btn btn-flat btn-primary">
+					Guardar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 
-                <!-- Modal Footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-flat btn-default"
-                            data-dismiss="modal">
-                        Cerrar
-                    </button>
-                    <button form="editContenedor" type="submit" class="btn btn-flat btn-primary">
-                        Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="modal fade" id="myModalHorizontal2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div
+			class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+					<span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					Editar datos de manifiesto
+				</h4>
+			</div>
 
-    <div class="modal fade" id="myModalHorizontal2" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        Editar datos de manifiesto
-                    </h4>
-                </div>
+			<!-- Modal Body -->
+			<div class="modal-body" id="editManifiestoResponse"></div>
 
-                <!-- Modal Body -->
-                <div class="modal-body" id="editManifiestoResponse">
+			<!-- Modal Footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">
+					Cerrar
+				</button>
+				<button form="editManifiesto" type="submit" class="btn btn-flat btn-primary">
+					Guardar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+{# modals #}
+<div class="modal fade" id="myModalHorizontal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div
+			class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+					<span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					Crear contenedor nuevo
+				</h4>
+			</div>
 
-                </div>
+			<!-- Modal Body -->
+			<div class="modal-body">
+				{{ render(controller('BackendBundle:Contenedor:new', {request: app.request})) }}
+			</div>
 
-                <!-- Modal Footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-flat btn-default"
-                            data-dismiss="modal">
-                        Cerrar
-                    </button>
-                    <button form="editManifiesto" type="submit" class="btn btn-flat btn-primary">
-                        Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {# modals #}
-    <div class="modal fade" id="myModalHorizontal" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        Crear contenedor nuevo
-                    </h4>
-                </div>
+			<!-- Modal Footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">
+					Cerrar
+				</button>
+				<button form="newContenedor" type="submit" class="btn btn-flat btn-primary">
+					Guardar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 
-                <!-- Modal Body -->
-                <div class="modal-body">
-                    {{ render(controller('BackendBundle:Contenedor:new', {request: app.request})) }}
-                </div>
-
-                <!-- Modal Footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-flat btn-default"
-                            data-dismiss="modal">
-                        Cerrar
-                    </button>
-                    <button form="newContenedor" type="submit" class="btn btn-flat btn-primary">
-                        Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock %}
     {% block javascript_inline %}
         <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"

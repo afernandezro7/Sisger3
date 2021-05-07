@@ -14,8 +14,10 @@
 {% block title %}Env&iacute;os{% endblock %}
   {% block breadtitle %} <h1>Env&iacute;os</h1> {% endblock %}
     {% block breadcrumb %}
-        <li class="active">Env&iacute;os</li>
+        <li><a href="{{ path('contenedor') }}">Env&iacute;os</a></li>
+        <li class="active">Filtro</li>
     {% endblock %}
+
 
 {% block content %}
     {# Buscador #}
@@ -34,7 +36,7 @@
                         </tr>
                         <tr role="row" class="filter">
                             <td>
-                                <input type="text" class="form-control form-filter input-sm" name="query">
+                                <input type="text" value="{{ query }}" class="form-control form-filter input-sm" name="query">
                             </td>
                             <td>
                                 <div class="btn-group">   
@@ -91,8 +93,10 @@
     						</td>
     						<td>
     							{% set client = concepto.consignado %}
-    							<a title="Editar datos del cliente" id="edit_cliente_button" data-path="{{ path('client_edit2', { 'id': client.id }) }}" href="#">{{ concepto.consignado.firstName }}
-    								{{ concepto.consignado.lastName }}</a>
+    							<a title="Editar datos del cliente" id="edit_cliente_button" data-path="{{ path('client_edit2', { 'id': client.id }) }}" href="#">
+                                    {{ concepto.consignado.firstName }}
+    								{{ concepto.consignado.lastName }}
+                                </a>
     						</td>
     						<td>
     							{{ concepto.fechaCreacion|date('d/M/Y') }}

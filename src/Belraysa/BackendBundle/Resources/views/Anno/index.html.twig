@@ -10,6 +10,15 @@
      <link rel="stylesheet" type="text/css"
            href="{{ asset('bundles/backend/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}"/>
      <!-- END PAGE LEVEL STYLES -->
+    <style>
+        .is_fixed {
+            position: fixed;
+            top: 70px;
+            width: 55%; 
+            overflow-y: auto;
+            max-height: 82vh;
+        }
+    </style>
  {% endblock %}
 {% block title %}Programador{% endblock %}
   {% block breadtitle %} <h1>Programador</h1> {% endblock %}
@@ -19,7 +28,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 portlet_floting_referece">
             <div class="portlet light bordered">
 
                 <div class="portlet-body">
@@ -108,7 +117,7 @@
         </div>
         <div class="col-md-7">
 
-            <div class="portlet light bordered">
+            <div class="portlet light bordered" id="portlet_floting">
                 <div class="portlet-body" id="detalles">
                     <div style="text-align: center" class="well no-margin">
                         <h2 style="color: #6c6159">Haga click en un nodo para ver sus detalles.</h2>
@@ -759,6 +768,27 @@
         function lanzarError(mensaje) {
             Command: toastr["error"](mensaje);
         }
+    </script>
+
+    <script>
+
+        $(document).ready(function(){
+            $(window).scroll(function(){
+
+                console.log($(window).scrollTop())
+                console.log('ref', $('.portlet_floting_referece').offset().top)
+
+
+                if ($(window).scrollTop() > $('.portlet_floting_referece').offset().top) {
+                    $('#portlet_floting').addClass('is_fixed');
+                }
+                if ($(window).scrollTop() <  $('.portlet_floting_referece').offset().top) {
+                    $('#portlet_floting').removeClass('is_fixed');
+                }
+            });
+        });
+
+
     </script>
 
 {% endblock %}
