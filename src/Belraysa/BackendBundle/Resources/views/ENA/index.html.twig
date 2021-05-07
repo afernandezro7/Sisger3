@@ -34,7 +34,7 @@
                         </tr>
                         <tr role="row" class="filter">
                             <td>
-                                <input value={{ query }} type="text" class="form-control form-filter input-sm" name="query">
+                                <input value="{{ query }}" type="text" class="form-control form-filter input-sm" name="query">
                             </td>
                             <td>
                                 <div class="btn-group">   
@@ -90,8 +90,10 @@
                             {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
                             <td>
                                 {% set client = concepto.remitente %}
-                                <a title="Editar datos del cliente" id="edit_cliente_button" data-path="{{ path('client_edit1', { 'id': client.id }) }}" href="#">{{ concepto.remitente.firstName }}
-                                    {{ concepto.remitente.lastName }}</a>
+                                <a title="Editar datos del cliente" id="edit_cliente_button" data-path="{{ path('client_edit1', { 'id': client.id }) }}" href="#">
+                                    {{ concepto.remitente.firstName }}
+                                    {{ concepto.remitente.lastName }}
+                                </a>
                             </td>
 
                             <td>

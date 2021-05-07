@@ -90,7 +90,7 @@ class ENAController extends Controller
         return $this->render('BackendBundle:ENA:index.html.twig', array(
             'entities' => $pagination,
             'form' => $form->createView(),
-            'query' => $_GET['query'],
+            'query' => $query,
             'flag_hbl' => $flag_hbl,
             'exp_id' => 0
         ));
