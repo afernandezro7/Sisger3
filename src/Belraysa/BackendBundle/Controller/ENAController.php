@@ -51,6 +51,46 @@ class ENAController extends Controller
         return $this->render('BackendBundle:ENA:index.html.twig', array(
             'entities' => $pagination,
             'form' => $form->createView(),
+            'query' => '',
+            'flag_hbl' => $flag_hbl,
+            'exp_id' => 0
+        ));
+    }
+
+    public function filtrarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $_GET['query'];
+
+        $activas = array();
+        $entities = $em->getRepository('BackendBundle:ENA')->advanceSearch($query);
+        foreach ($entities as $ena) {
+            if ($ena->getContenedor()) {
+                if ($ena->getContenedor()->getEstado() != 'CERRADO') {
+                    $activas[] = $ena;
+                }
+            }
+        }
+
+        $entity = new ENA();
+        $form = $this->createCreateForm($entity);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $activas,
+            $this->get('request')->query->get('page', 1),
+            15);
+
+        $contenedor = $em->getRepository('BackendBundle:Contenedor')->findContenedorEnUso();
+        $flag_hbl = 'no';
+        if ($contenedor) {
+            $flag_hbl = 'si';
+        }
+
+        return $this->render('BackendBundle:ENA:index.html.twig', array(
+            'entities' => $pagination,
+            'form' => $form->createView(),
+            'query' => $_GET['query'],
             'flag_hbl' => $flag_hbl,
             'exp_id' => 0
         ));
