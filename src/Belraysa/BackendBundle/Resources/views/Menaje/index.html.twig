@@ -18,134 +18,143 @@
     {% endblock %}
 
 {% block content %}
+    {# Buscador #}
+    <div class="row">
+        <div class="table-responsive">
+            <form id="envio_filter_form" action="{{ path('menaje_filter') }}" method="get">
+                <table class="table table-striped table-bordered table-hover" id="datatable_orders">
+                    <thead>
+					    <tr role="row" class="heading">
+                            <th>
+                                Búsqueda
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
+                        </tr>
+                        <tr role="row" class="filter">
+                            <td>
+                                <input value="{{ query }}" type="text" class="form-control form-filter input-sm" name="query">
+                            </td>
+                            <td>
+                                <div class="btn-group">   
+                                    <button name="buscar" type="submit" class="btn btn-sm blue filter-submit margin-bottom">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+    
+                                    <button type="reset" class="btn btn-sm gray filter-cancel">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
     <div class="row">
         <input type="hidden" id="exp_id" value="{{ exp_id }}"/>
         <div class="table-responsive">
             <form id="batch_action_form_delete" action="{{ path('menaje_batch_delete') }}" method="post">
-                <table class="table table-striped table-bordered table-advance table-hover"
-                       id="table">
+                <table class="table table-striped table-bordered table-advance table-hover" id="table">
                     <thead>
-                    <tr>
-                        <th>
-                            <input type="checkbox" class="group-checkable"
-                                   data-set="#table .checkboxes"/>
-                        </th>
-                        <th>C&oacute;digo</th>
-                        <th>RTTE/CSGN</th>
-                        <th>Fecha autorizaci&oacute;n</th>
-                        <th>Cant. bultos</th>
-                        <th>Contenedor</th>
-
-                        <th style="text-align: center">
-                            <div class="mailbox-controls">
-                                <div class="btn-group">
-                                    <a title="Crear Menaje" data-toggle="modal" type="button" data-backdrop="static"
-                                       data-keyboard="false"
-                                       data-target="#modalNewMenaje" data-path="{{ path('menaje_new') }}"
-                                       tabindex="-1" class="btn btn-flat btn-default btn-sm"><i
-                                                class="fa fa-plus"></i>
-                                    </a>
-                                </div>
-
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for concepto in entities %}
                         <tr>
-                            <td>
-                                <input name="batch_action_checkbox[]" type="checkbox" class="checkboxes"
-                                       value="{{ concepto.id }}"/>
-                            </td>
-                            <td>
-                                <img alt="{{ concepto.sisgerCode }}"
-                                     src="{{ path('bulto_barcode', { 'id': concepto.sisgerCode,  'size': 20 }) }}"/>
-                            </td>
-                            {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
-                            <td>
-                                {% set client = concepto.remitente %}
-                                <a title="Editar datos del cliente" id="edit_cliente_button"
-                                   data-path="{{ path('client_edit3', { 'id': client.id }) }}"
-                                   href="#">{{ concepto.remitente.firstName }} {{ concepto.remitente.lastName }}</a>
-                            </td>
+                            <th>
+                                <input type="checkbox" class="group-checkable" data-set="#table .checkboxes"/>
+                            </th>
+                            <th>C&oacute;digo</th>
+                            <th>RTTE/CSGN</th>
+                            <th>Fecha autorizaci&oacute;n</th>
+                            <th>Cant. bultos</th>
+                            <th>Contenedor</th>
 
-                            <td>
-                                {{ concepto.fechaAutorizacion|date('d/M/Y') }}
-                            </td>
-                            <td>
-                                {{ concepto.bultos|length }}
-                            </td>
-                            <td>
-                                {% if concepto.getContenedor() %}
-                                    <span class="label label-default">{{ concepto.getContenedor() }}</span>
-                                {% else %}
-                                    <span class="label label-danger">SIN ASIGNAR</span>
-                                {% endif %}
-
-                            </td>
-
-                            <td style="text-align: center">
+                            <th style="text-align: center">
                                 <div class="mailbox-controls">
                                     <div class="btn-group">
-                                        <a title="Ver bultos" id="show_button"
-                                           type="button" onclick="startPageLoading()"
-                                           href="{{ path('bulto', { 'concepto': concepto.id }) }}"
-                                           class="btn btn-flat btn-default btn-sm"><i
-                                                    class="icon-social-dropbox"></i>
+                                        <a title="Crear Menaje" data-toggle="modal" type="button" data-backdrop="static" data-keyboard="false" data-target="#modalNewMenaje" data-path="{{ path('menaje_new') }}" tabindex="-1" class="btn btn-flat btn-default btn-sm">
+                                            <i class="fa fa-plus"></i>
                                         </a>
+                                    </div>
 
-                                        {% if concepto.contenedor == false %}
-                                            <a title="Editar datos" id="edit_button"
-                                               type="button"
-                                               data-path="{{ path('menaje_edit', { 'id': concepto.id }) }}"
-                                               href="#" class="btn btn-flat btn-default btn-sm"><i
-                                                        class="icon-pencil"></i></a>
-                                            <a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation"
-                                               data-href="{{ path('menaje_delete', { 'id': concepto.id }) }}"
-                                               data-placement="left" data-btn-ok-label="Continuar"
-                                               data-btn-cancel-label="Cancelar"
-                                               data-original-title="¿Está seguro de que desea eliminar?" title=""
-                                               href="{{ path('menaje_delete', { 'id': concepto.id }) }}">
-                                                <i class="icon-trash"></i>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for concepto in entities %}
+                            <tr>
+                                <td>
+                                    <input name="batch_action_checkbox[]" type="checkbox" class="checkboxes" value="{{ concepto.id }}"/>
+                                </td>
+                                <td>
+                                    <img alt="{{ concepto.sisgerCode }}" src="{{ path('bulto_barcode', { 'id': concepto.sisgerCode, 'size': 20 }) }}"/>
+                                </td>
+                                {#los [] al final es para q en el servidor me lo tome como un arreglo y poder hacer todas las acciones de busqueda etc#}
+                                <td>
+                                    {% set client = concepto.remitente %}
+                                    <a title="Editar datos del cliente" id="edit_cliente_button" data-path="{{ path('client_edit3', { 'id': client.id }) }}" href="#">{{ concepto.remitente.firstName }}
+                                        {{ concepto.remitente.lastName }}</a>
+                                </td>
+
+                                <td>
+                                    {{ concepto.fechaAutorizacion|date('d/M/Y') }}
+                                </td>
+                                <td>
+                                    {{ concepto.bultos|length }}
+                                </td>
+                                <td>
+                                    {% if concepto.getContenedor() %}
+                                        <span class="label label-default">{{ concepto.getContenedor() }}</span>
+                                    {% else %}
+                                        <span class="label label-danger">SIN ASIGNAR</span>
+                                    {% endif %}
+
+                                </td>
+
+                                <td style="text-align: center">
+                                    <div class="mailbox-controls">
+                                        <div class="btn-group">
+                                            <a title="Ver bultos" id="show_button" type="button" onclick="startPageLoading()" href="{{ path('bulto', { 'concepto': concepto.id }) }}" class="btn btn-flat btn-default btn-sm">
+                                                <i class="icon-social-dropbox"></i>
                                             </a>
-                                        {% else %}
-                                            {% if concepto.contenedor.estado != 'CERRADO' %}
-                                                <a title="Editar datos" id="edit_button"
-                                                   type="button"
-                                                   data-path="{{ path('menaje_edit', { 'id': concepto.id }) }}"
-                                                   href="#" class="btn btn-flat btn-default btn-sm"><i
-                                                            class="icon-pencil"></i></a>
-                                                <a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation"
-                                                   data-href="{{ path('menaje_delete', { 'id': concepto.id }) }}"
-                                                   data-placement="left" data-btn-ok-label="Continuar"
-                                                   data-btn-cancel-label="Cancelar"
-                                                   data-original-title="¿Está seguro de que desea eliminar?" title=""
-                                                   href="{{ path('menaje_delete', { 'id': concepto.id }) }}">
+
+                                            {% if concepto.contenedor == false %}
+                                                <a title="Editar datos" id="edit_button" type="button" data-path="{{ path('menaje_edit', { 'id': concepto.id }) }}" href="#" class="btn btn-flat btn-default btn-sm">
+                                                    <i class="icon-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation" data-href="{{ path('menaje_delete', { 'id': concepto.id }) }}" data-placement="left" data-btn-ok-label="Continuar" data-btn-cancel-label="Cancelar" data-original-title="¿Está seguro de que desea eliminar?" title="" href="{{ path('menaje_delete', { 'id': concepto.id }) }}">
                                                     <i class="icon-trash"></i>
                                                 </a>
+                                            {% else %}
+                                                {% if concepto.contenedor.estado != 'CERRADO' %}
+                                                    <a title="Editar datos" id="edit_button" type="button" data-path="{{ path('menaje_edit', { 'id': concepto.id }) }}" href="#" class="btn btn-flat btn-default btn-sm">
+                                                        <i class="icon-pencil"></i>
+                                                    </a>
+                                                    <a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation" data-href="{{ path('menaje_delete', { 'id': concepto.id }) }}" data-placement="left" data-btn-ok-label="Continuar" data-btn-cancel-label="Cancelar" data-original-title="¿Está seguro de que desea eliminar?" title="" href="{{ path('menaje_delete', { 'id': concepto.id }) }}">
+                                                        <i class="icon-trash"></i>
+                                                    </a>
+                                                {% endif %}
                                             {% endif %}
-                                        {% endif %}
 
-                                        {% if concepto.estado == 'HBL' %}
-                                            <a class="btn btn-sm btn-flat btn-default" title="Obtener HBL"
-                                               href="{{ path('concepto_hbl', { 'id': concepto.id }) }}">
-                                                <i class="fa fa-file-excel-o"></i>
-                                            </a>
-                                        {% else %}
-                                            {% if flag_hbl == 'si' %}
-                                                <a class="btn btn-sm btn-flat btn-default" title="Convertir en HBL"
-                                                   onclick="startPageLoading()"
-                                                   href="{{ path('concepto_to_hbl', { 'id': concepto.id }) }}">
-                                                    <i style="color: #008000" class="fa fa-check"></i>
+                                            {% if concepto.estado == 'HBL' %}
+                                                <a class="btn btn-sm btn-flat btn-default" title="Obtener HBL" href="{{ path('concepto_hbl', { 'id': concepto.id }) }}">
+                                                    <i class="fa fa-file-excel-o"></i>
                                                 </a>
+                                            {% else %}
+                                                {% if flag_hbl == 'si' %}
+                                                    <a class="btn btn-sm btn-flat btn-default" title="Convertir en HBL" onclick="startPageLoading()" href="{{ path('concepto_to_hbl', { 'id': concepto.id }) }}">
+                                                        <i style="color: #008000" class="fa fa-check"></i>
+                                                    </a>
+                                                {% endif %}
                                             {% endif %}
-                                        {% endif %}
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </form>
@@ -154,14 +163,15 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalNewMenaje" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
+
+    {# modal1--> Crear Menaje #}
+    <div class="modal fade" id="modalNewMenaje" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div
+                class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal">
+                    <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span>
                         <span class="sr-only">Close</span>
                     </button>
@@ -177,8 +187,7 @@
 
                 <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-flat btn-default"
-                            data-dismiss="modal">
+                    <button type="button" class="btn btn-flat btn-default" data-dismiss="modal">
                         Cerrar
                     </button>
                     <button form="newMenaje" type="submit" class="btn btn-flat btn-primary">
@@ -189,14 +198,14 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalEdit" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
+    {# modal2--> Editar Datos confirm #}
+    <div class="modal fade" id="modalEdit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div
+                class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal">
+                    <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span>
                         <span class="sr-only">Close</span>
                     </button>
@@ -206,14 +215,11 @@
                 </div>
 
                 <!-- Modal Body -->
-                <div id="modalEditContent" class="modal-body">
-
-                </div>
+                <div id="modalEditContent" class="modal-body"></div>
 
                 <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-flat btn-default"
-                            data-dismiss="modal">
+                    <button type="button" class="btn btn-flat btn-default" data-dismiss="modal">
                         Cerrar
                     </button>
                     <button form="edit" type="submit" class="btn btn-flat btn-primary">
@@ -223,14 +229,15 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalEditCliente" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
+
+    {# modal3--> Editar Cliente #}
+    <div class="modal fade" id="modalEditCliente" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div
+                class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal">
+                    <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span>
                         <span class="sr-only">Close</span>
                     </button>
@@ -240,14 +247,11 @@
                 </div>
 
                 <!-- Modal Body -->
-                <div id="modalEditClienteContent" class="modal-body">
-
-                </div>
+                <div id="modalEditClienteContent" class="modal-body"></div>
 
                 <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-flat btn-default"
-                            data-dismiss="modal">
+                    <button type="button" class="btn btn-flat btn-default" data-dismiss="modal">
                         Cerrar
                     </button>
                     <button form="editCliente" type="submit" class="btn btn-flat btn-primary">
@@ -257,6 +261,7 @@
             </div>
         </div>
     </div>
+
 {% endblock %}
 {% block javascript_inline %}
     <script src="{{ asset('bundles/backend/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"
