@@ -65,7 +65,7 @@ class MenajeController extends Controller
         $query = $_GET['query'];
 
         $activas = array();
-        $entities = $em->getRepository('BackendBundle:ENA')->advanceSearch($query);
+        $entities = $em->getRepository('BackendBundle:Menaje')->advanceSearch($query);
         foreach ($entities as $ena) {
             if ($ena->getContenedor()) {
                 if ($ena->getContenedor()->getEstado() != 'CERRADO') {
