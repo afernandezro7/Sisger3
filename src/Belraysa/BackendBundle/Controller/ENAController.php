@@ -95,14 +95,14 @@ class ENAController extends Controller
                 /* if ($_POST['sisgerCode'] != "") {
                      $fecha = $_POST['sisgerCode'];
                      $fecha = date_create($fecha);
- */
+                */
                 $sisgerCode = "BRS". date_format($now, 'y') . "000" . str_pad($entity->getId(), 6, 0, STR_PAD_LEFT);
                 //  $entity->setFechaHBL($fecha);
                 /* } else {
                      $sisgerCode = "LBRS" . date_format($now, 'y')[1] . date_format($now, 'm') . date_format($now, 'd') . str_pad($entity->getId(), 6, 0, STR_PAD_LEFT);
                      $entity->setFechaHBL(new \DateTime());
                  }
- */
+                */
                 $entity->setContenedor($contenedor);
             }
             $entity->setSisgerCode($sisgerCode);
@@ -411,8 +411,7 @@ class ENAController extends Controller
             ->getForm();
     }
 
-    public
-    function batchDeleteAction(Request $request)
+    public function batchDeleteAction(Request $request)
     {
 
         $ids = $request->get('batch_action_checkbox');
