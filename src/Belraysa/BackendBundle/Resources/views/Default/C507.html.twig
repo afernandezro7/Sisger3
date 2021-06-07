@@ -120,9 +120,15 @@
                                 <div class="col-md-3">
                                     <div class="sparkline-chart">
                                         <div class="sparkbar" data-color="#00a65a" data-height="50">
-                                            {% for entry in banking.getEntries() %}
-                                                {% if loop.index > 1 %},{% endif %}
-                                                {% if entry.credit > 0 %} {{ entry.credit }} {% else %} {{ entry.debit }} {% endif %}
+                                            {# 1,48,50,-70.2,50,-58,100,-70.2,50,-58,100,1,48,50,-70.2,50 #}
+                                            {% for entry in banking.getLastEntries() %}
+                                                {% if loop.index > 1 %},
+                                                {% endif %}
+                                                {% if entry.credit > 0 %} 
+                                                    {{ entry.credit }} 
+                                                {% else %} 
+                                                    {{ entry.debit }} 
+                                                {% endif %}
                                             {% endfor %}
                                         </div>
                                         <a class="Ver detalles" {% if banking.type == 'Caja Menuda' %}
