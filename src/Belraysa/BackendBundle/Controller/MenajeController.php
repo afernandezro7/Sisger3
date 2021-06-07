@@ -513,6 +513,7 @@ class MenajeController extends Controller
 
         return $this->render('BackendBundle:Menaje:index.html.twig', array(
             'entities' => $pagination,
+            'query' => '',
             'form' => $form->createView(),
             'flag_hbl' => $flag_hbl,
             'exp_id' => $exp_id
