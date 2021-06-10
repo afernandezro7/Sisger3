@@ -162,7 +162,7 @@ class Banking
 
     /**
 
-     * @ORM\OneToMany(targetEntity="Belraysa\BackendBundle\Entity\BankingEntry", mappedBy="banking",cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Belraysa\BackendBundle\Entity\BankingEntry", mappedBy="banking",cascade={"all"}, fetch="LAZY")
      * @ORM\OrderBy({"date" = "DESC"})
 
      */
@@ -224,7 +224,6 @@ class Banking
 
 
     function __construct()
-
     {
 
         $this->entries = new ArrayCollection();
@@ -240,7 +239,6 @@ class Banking
      */
 
     public function getCreatedAt()
-
     {
 
         return $this->createdAt;
@@ -256,7 +254,6 @@ class Banking
      */
 
     public function setCreatedAt($createdAt)
-
     {
 
         $this->createdAt = $createdAt;
@@ -272,7 +269,6 @@ class Banking
      */
 
     public function isEnabled()
-
     {
 
         return $this->enabled;
@@ -288,7 +284,6 @@ class Banking
      */
 
     public function setEnabled($enabled)
-
     {
 
         $this->enabled = $enabled;
@@ -304,54 +299,48 @@ class Banking
      */
 
     public function getEntries()
-
     {
 
-        // for ($i = sizeof($this->entries) - 1; $i >= 0; $i--) {
+        for ($i = sizeof($this->entries) - 1; $i >= 0; $i--) {
 
-        //     $swapped = false;
+            $swapped = false;
 
-        //     for ($j = 0; $j < $i; $j++) {
+            for ($j = 0; $j < $i; $j++) {
 
-        //         if ($this->entries[$j]->getDate() > $this->entries[$j + 1]->getDate()) {
+                if ($this->entries[$j]->getDate() > $this->entries[$j + 1]->getDate()) {
 
-        //             $tmp = $this->entries[$j];
+                    $tmp = $this->entries[$j];
 
-        //             $this->entries[$j] = $this->entries[$j + 1];
+                    $this->entries[$j] = $this->entries[$j + 1];
 
-        //             $this->entries[$j + 1] = $tmp;
+                    $this->entries[$j + 1] = $tmp;
 
-        //             $swapped = true;
+                    $swapped = true;
 
-        //         }
+                }
 
-        //     }
+            }
 
-        //     if (!$swapped) return $this->entries;
+            if (!$swapped) return $this->entries;
 
-        // }
+        }
 
         return $this->entries;
 
     }
 
-    // /**
+    /**
 
-    //  * @return mixed
+     * @return mixed
 
-    //  */
-
-    // public function getEntriesLast()
-
-    // {
-    //     $tmp= array();
-    //     for ($i = sizeof($this->entries) - 1; $i >= sizeof($this->entries) - 10; $i--) {
-    //         $tmp[] = $this->entries[$i];
-    //     }
+     */
+    public function getLastEntries()
+    {
+        $criteria = \Doctrine\Common\Collections\Criteria::create()->setMaxResults(16);
+        return $this->entries->matching($criteria);
 
 
-    //     return $tmp;
-    // }
+    }
 
     /**
 

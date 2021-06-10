@@ -222,24 +222,28 @@
                         <th style="width: 5%">Exp.</th>
                         <th style="width: 5%">Ent.</th>
                         <th style="text-align: center; width:7%">
-                            <a title="Adicionar" type="button" href="#" onclick="
-        addRow();
-         var now = new Date()
-        $('.date-picker').datepicker({
-                autoclose: true,
-                endDate: now
-            });
-            $('.date-picker1').datepicker({
-                autoclose: true,
-                startDate: new Date()
-            });
-
-$('.select2me').select2();"
-                               class="btn btn-flat btn-default btn-sm"><i
-                                        class="fa fa-plus"></i></a>
-                            <button id="guardarbtn" title="Guardar" type="submit"
-                                    class="btn btn-flat btn-success btn-sm"><i
-                                        class="fa fa-save"></i></button>
+                            <a 
+                                class="btn btn-flat btn-default btn-sm" 
+                                title="Adicionar" 
+                                type="button" 
+                                href="#" 
+                                onclick="addRow();
+                                        var now = new Date()
+                                        $('.date-picker').datepicker({
+                                                autoclose: true,
+                                                endDate: now
+                                            });
+                                            $('.date-picker1').datepicker({
+                                                autoclose: true,
+                                                startDate: new Date()
+                                            });
+                                        $('.select2me').select2();"
+                            >
+                                <iclass="fa fa-plus"></i>
+                            </a>
+                            <button id="guardarbtn" title="Guardar" type="submit" class="btn btn-flat btn-success btn-sm">
+                                <i class="fa fa-save"></i>
+                            </button>
                         </th>
                     </tr>
                     </thead>
@@ -281,8 +285,13 @@ $('.select2me').select2();"
                             <td>
                                 {{ receipe.metodoPago }}
                             </td>
-                            <td>{% if receipe.entrada %}{{ receipe.entrada.banking.name }}{% else %}  <span
-                                        class="label label-default">Sin especificar</span>{% endif %}</td>
+                            <td>
+                                {% if receipe.entrada and  receipe.entrada.banking %}
+                                    {{ receipe.entrada.banking.name }}
+                                {% else %}  
+                                    <span class="label label-default">Sin especificar</span>
+                                {% endif %}
+                            </td>
                             <td> {% if receipe.tipo %}
                                     {% if receipe.tipo == 'Gasto' %}
                                         {{ receipe.pagueA }}

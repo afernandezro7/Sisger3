@@ -31,197 +31,209 @@
 
     </form>
 
-    <!-- BEGIN PAGE CONTAINER -->
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <!-- BEGIN PORTLET-->
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="icon-share font-gray-sunglo hide"></i>
-                        <span class="caption-subject font-gray-sunglo bold uppercase">Balance General</span>
-                        <span class="caption-helper">basado en recibos</span>
-                    </div>
-                    <div class="tools">
-                        <a href="" class="collapse">
-                        </a>
-                        <a href="" class="remove">
-                        </a>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div id="site_activities_loading">
-                        <img src="{{ asset('bundles/backend/admin/layout/img/loading.gif') }}" alt="loading"/>
-                    </div>
-                    <div id="site_activities_content" class="display-none">
-                        <div id="site_activities" style="height: 228px;">
-                        </div>
-                    </div>
-                    <div style="margin: 20px 0 10px 30px">
-                        <div class="row">
-                            <div style="text-align: center" class="col-md-4 col-sm-4 col-xs-4 text-stat">
-										<span class="label label-sm label-success">
-										Ingresos </span>
+<!-- BEGIN PAGE CONTAINER -->
+<div class="row">
+	<div
+		class="col-md-12 col-sm-12">
+		<!-- BEGIN PORTLET-->
+		<div class="portlet light bordered">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-share font-gray-sunglo hide"></i>
+					<span class="caption-subject font-gray-sunglo bold uppercase">Balance General</span>
+					<span class="caption-helper">basado en recibos</span>
+				</div>
+				<div class="tools">
+					<a href="" class="collapse"></a>
+					<a href="" class="remove"></a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="site_activities_loading">
+					<img src="{{ asset('bundles/backend/admin/layout/img/loading.gif') }}" alt="loading"/>
+				</div>
+				<div id="site_activities_content" class="display-none">
+					<div id="site_activities" style="height: 228px;"></div>
+				</div>
+				<div style="margin: 20px 0 10px 30px">
+					<div class="row">
+						<div style="text-align: center" class="col-md-4 col-sm-4 col-xs-4 text-stat">
+							<span class="label label-sm label-success">
+								Ingresos
+							</span>
 
-                                <h3>${{ total_ingresos }}</h3>
-                            </div>
-                            <div style="text-align: center" class="col-md-4 col-sm-4 col-xs-4 text-stat">
-										<span class="label label-sm label-warning">
-										Egresos </span>
-                                {% set egresos =  -1*(total_gastos + total_costos + total_costos_recurrentes) %}
-                                <h3>${% if egresos == -0 %}0{% else %}{{ egresos }}{% endif %}</h3>
-                            </div>
+							<h3>${{ total_ingresos }}</h3>
+						</div>
+						<div style="text-align: center" class="col-md-4 col-sm-4 col-xs-4 text-stat">
+							<span class="label label-sm label-warning">
+								Egresos
+							</span>
+							{% set egresos =  -1*(total_gastos + total_costos + total_costos_recurrentes) %}
+							<h3>$
+								{% if egresos == -0 %}0
+								{% else %}
+									{{ egresos }}
+								{% endif %}
+							</h3>
+						</div>
 
-                            <div style="text-align: center" class="col-md-4 col-sm-4 col-xs-4 text-stat">
-										<span class="label label-sm label-info">
-										Balance </span>
+						<div style="text-align: center" class="col-md-4 col-sm-4 col-xs-4 text-stat">
+							<span class="label label-sm label-info">
+								Balance
+							</span>
 
-                                <h3>${{ total_balance }}</h3>
-                            </div>
-                        </div>
+							<h3>${{ total_balance }}</h3>
+						</div>
+					</div>
 
-                    </div>
-                </div>
-            </div>
-            <!-- END PORTLET-->
-        </div>
-    </div>
-    {% if app.user.role.name != 'ROLE_OPERATOR' %}
-    <div class="row">
+				</div>
+			</div>
+		</div>
+		<!-- END PORTLET-->
+	</div>
+</div>
+{% if app.user.role.name != 'ROLE_OPERATOR' %}
+	<div class="row">
 
-        <div class="col-md-12 col-sm-12">
-            <!-- BEGIN PORTLET-->
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption caption-md font-gray-sunglo">
-                        <i class="icon-bar-chart theme-font hide"></i>
-                        <span class="caption-subject theme-font bold uppercase">Movimientos en las cuentas</span>
-                    </div>
-                    <div class="tools">
-                        <a href="" class="collapse">
-                        </a>
-                        <a href="" class="remove">
-                        </a>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    {% set cont = -1 %}
-                    <div class="row">
-                        {% for banking in bankings.getBankings() %}
-                            {% if cont == 4 %}
-                                {% set cont = 1 %}
-                            {% else %}
-                                {% set cont = cont + 1 %}
-                            {% endif %}
-                            {% if cont == 4 %}
-                                <div class="row"></div>
-                            {% endif %}
+		<div
+			class="col-md-12 col-sm-12">
+			<!-- BEGIN PORTLET-->
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption caption-md font-gray-sunglo">
+						<i class="icon-bar-chart theme-font hide"></i>
+						<span class="caption-subject theme-font bold uppercase">Movimientos en las cuentas</span>
+					</div>
+					<div class="tools">
+						<a href="" class="collapse"></a>
+						<a href="" class="remove"></a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					{% set cont = -1 %}
+					<div class="row">
+						{% for banking in bankings.getBankings() %}
+							{% if cont == 4 %}
+								{% set cont = 1 %}
+							{% else %}
+								{% set cont = cont + 1 %}
+							{% endif %}
+							{% if cont == 4 %}
+								<div class="row"></div>
+							{% endif %}
 
-                            <div class="col-md-3">
-                                <div class="sparkline-chart">
-                                    <div class="sparkbar" data-color="#00a65a" data-height="50">
-                                        {% for entry in banking.getEntries() %}
-                                            {% if loop.index > 1 %},{% endif %}
-                                            {% if entry.credit > 0 %} {{ entry.credit }} {% else %} {{ entry.debit }} {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                    <a class="Ver detalles" {% if banking.type == 'Caja Menuda' %}
-                                        href="{{ path('cash_show', { 'id': banking.id }) }}"
-                                    {% elseif banking.type == 'TC' %}
-                                        href="{{ path('card_show', { 'id': banking.id }) }}"
-                                    {% else %}
-                                        href="{{ path('bank_show', { 'id': banking.id }) }}"
-                                            {% endif %}>
-                                        {{ banking.name }} <i class="icon-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <!-- END PORTLET-->
-        </div>
-    </div>
+                            {# {% for entry in banking.getLastEntries() %}
+                            
+                               <strong> {{ entry.credit }}</strong> - {{ entry.date |date('Y-m-d') }},<hr>
+                            
+                            {% endfor %} #}
 
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <!-- BEGIN PORTLET-->
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption caption-md font-gray-sunglo">
-                        <i class="icon-bar-chart theme-font hide"></i>
-                        <span class="caption-subject theme-font bold uppercase">Actividad de los usuarios</span>
-                    </div>
-                    <div class="tools">
-                        <a href="" class="collapse">
-                        </a>
-                        <a href="" class="remove">
-                        </a>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="table-scrollable table-scrollable-borderless">
-                        <table class="table table-hover table-light">
-                            <thead>
-                            <tr class="uppercase">
-                                <th colspan="2">
-                                    USUARIO
-                                </th>
-                                <th>
-                                    Ingresos
-                                </th>
-                                <th>
-                                    EXPEDIENTES
-                                </th>
-                                <th>
-                                    CLIENTES
-                                </th>
-                                <th>
-                                    CONTRIBUCI&Oacute;N
-                                </th>
-                            </tr>
-                            </thead>
-                            {% for user in users.users %}
-                                <tr>
-                                    <td class="fit">
-                                        <img style="width: 30px; height: 30px" class="user-pic"
-                                             src="{{ asset('uploads/usersPhotos/' ~ user.photo) }}">
-                                    </td>
-                                    <td>
-                                        <a href="javascript:;"
-                                           class="primary-link">{{ user.firstName }} {{ user.lastName }}</a>
-                                    </td>
-                                    <td style="text-align: center">
-                                        ${{ users.filtrarImportePorUsuario(user, dash_from, dash_to) }}
-                                    </td>
-                                    <td style="text-align: center">
-                                        {{ users.filtrarExpedientesPorUsuario(user, dash_from, dash_to)|length }}
-                                    </td>
-                                    <td style="text-align: center">
-                                        {{ users.filtrarClientesPorUsuario(user, dash_from, dash_to) }}
-                                    </td>
-                                    <td style="text-align: center">
-                                        {% if total_balance == 0 %}
-                                            {% set contribucion = 0 %}
-                                        {% else %}
-                                            {% set contribucion = (users.filtrarImportePorUsuario(user, dash_from, dash_to) / total_balance)*100 %}
-                                            {% set contribucion = contribucion|round(2) %}
-                                        {% endif %}
-                                        <span class="bold theme-font">{{ contribucion }}%</span>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- END PORTLET-->
-        </div>
-    </div>
-    {% endif %}
+							<div class="col-md-3">
+								<div class="sparkline-chart">
+									<div class="sparkbar" data-color="#00a65a" data-height="50">
+                                        {# 1,48,50,-70.2,50,-58,100,-70.2,50,-58,100,1,48,50,-70.2,50 #}
+										{% for entry in banking.getLastEntries() %}
+											{% if loop.index > 1 %},
+											{% endif %}
+											{% if entry.credit > 0 %}
+												{{ entry.credit }}
+											{% else %}
+												{{ entry.debit }}
+											{% endif %}
+										{% endfor %}
+										
+									</div>
+									<a class="Ver detalles" {% if banking.type == 'Caja Menuda' %} href="{{ path('cash_show', { 'id': banking.id }) }}" {% elseif banking.type == 'TC' %} href="{{ path('card_show', { 'id': banking.id }) }}" {% else %} href="{{ path('bank_show', { 'id': banking.id }) }}" {% endif %}>
+										{{ banking.name }}
+										<i class="icon-arrow-right"></i>
+									</a>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<!-- END PORTLET-->
+		</div>
+	</div>
 
-    <!-- END PAGE CONTAINER -->
+	<div class="row">
+		<div
+			class="col-md-12 col-sm-12">
+			<!-- BEGIN PORTLET-->
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption caption-md font-gray-sunglo">
+						<i class="icon-bar-chart theme-font hide"></i>
+						<span class="caption-subject theme-font bold uppercase">Actividad de los usuarios</span>
+					</div>
+					<div class="tools">
+						<a href="" class="collapse"></a>
+						<a href="" class="remove"></a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="table-scrollable table-scrollable-borderless">
+						<table class="table table-hover table-light">
+							<thead>
+								<tr class="uppercase">
+									<th colspan="2">
+										USUARIO
+									</th>
+									<th>
+										Ingresos
+									</th>
+									<th>
+										EXPEDIENTES
+									</th>
+									<th>
+										CLIENTES
+									</th>
+									<th>
+										CONTRIBUCI&Oacute;N
+									</th>
+								</tr>
+							</thead>
+							{% for user in users.users %}
+								<tr>
+									<td class="fit">
+										<img style="width: 30px; height: 30px" class="user-pic" src="{{ asset('uploads/usersPhotos/' ~ user.photo) }}">
+									</td>
+									<td>
+										<a href="javascript:;" class="primary-link">{{ user.firstName }}
+											{{ user.lastName }}</a>
+									</td>
+									<td style="text-align: center">
+										${{ users.filtrarImportePorUsuario(user, dash_from, dash_to) }}
+									</td>
+									<td style="text-align: center">
+										{{ users.filtrarExpedientesPorUsuario(user, dash_from, dash_to)|length }}
+									</td>
+									<td style="text-align: center">
+										{{ users.filtrarClientesPorUsuario(user, dash_from, dash_to) }}
+									</td>
+									<td style="text-align: center">
+										{% if total_balance == 0 %}
+											{% set contribucion = 0 %}
+										{% else %}
+											{% set contribucion = (users.filtrarImportePorUsuario(user, dash_from, dash_to) / total_balance)*100 %}
+											{% set contribucion = contribucion|round(2) %}
+										{% endif %}
+										<span class="bold theme-font">{{ contribucion }}%</span>
+									</td>
+								</tr>
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- END PORTLET-->
+		</div>
+	</div>
+{% endif %}
+
+<!-- END PAGE CONTAINER -->
+
 
 {% endblock %}
     {% block javascript_inline %}
