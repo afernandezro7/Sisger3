@@ -73,3 +73,7 @@ contenedor_manifiesto_2:
 contenedor_manifiesto_3:
     path:     /{id}/manifiestoV3
     defaults: { _controller: "BackendBundle:Contenedor:manifiestoV3" }
+
+contenedor_hbls:
+    path:     /{id}/hbls
+    defaults: { _controller: "BackendBundle:Contenedor:hblsContainer" }
