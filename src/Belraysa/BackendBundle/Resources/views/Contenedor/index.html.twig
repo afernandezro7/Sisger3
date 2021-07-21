@@ -142,13 +142,13 @@
 									{% endif %}
 
 									{% if contenedor.estado == 'COMPLETANDO' %}
-										{% if contenedor.conceptos|length %}
+										{# {% if contenedor.conceptos|length %} #}
 											{% if contenedor.motonave and contenedor.mbl and contenedor.puertoSalida and contenedor.puertoEntrada and contenedor.fechaSalida and contenedor.fechaEntrada %}
 												<a class="btn btn-sm btn-flat btn-default" title="Cerrar" href="{{ path('contenedor_cerrar', { 'id': contenedor.id }) }}">
 													<i class="fa fa-lock"></i>
 												</a>
 											{% endif %}
-										{% endif %}
+										{# {% endif %} #}
 									{% endif %}
 									{% if contenedor.estado == 'RESERVANDO' %}
 										<a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation" data-href="{{ path('contenedor_delete', { 'id': contenedor.id }) }}" data-placement="left" data-btn-ok-label="Continuar" data-btn-cancel-label="Cancelar" data-original-title="¿Está seguro de que desea eliminar?" title="" href="{{ path('contenedor_delete', { 'id': contenedor.id }) }}">
@@ -211,7 +211,7 @@
 									{#{% endif %}#}
 								</div>
 								{% if contenedor.estado == 'CERRADO' or contenedor.estado == 'COMPLETANDO'  %}
-								{% if contenedor.getsizeOfConceptos() > 0 %}
+								{% if contenedor.conceptos|length %}
 								<div
 									class="btn-group">
 									{#{% if contenedor.estado == 'CERRADO' %}#}
