@@ -1186,4 +1186,296 @@ class ContenedorController extends Controller
         exit;
 
     }
+
+    public function hblsContainerAction($id,$hblPage)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('BackendBundle:Contenedor')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Contenedor entity.');
+        }
+
+        $cantHBL = sizeof($entity->getConceptos());
+        $totalHblPerPage = 100;
+        $fechaSalida = "";
+        $codigo = "";
+
+        if($entity->getFechaSalida())
+            $fechaSalida = date_format($entity->getFechaSalida(), 'd/m/Y');
+        if($entity->getCodigo())
+            $codigo = $entity->getCodigo();
+
+        // get the XLS
+        //aqui se ejecuta el codigo del reader
+        $uploaddir = $this->container->getParameter('belraysa.route.lbrs');
+        $uploadfile = $uploaddir . basename('HBL.xlsx');
+
+        $objPHPExcel = \PHPExcel_IOFactory::load($uploadfile);
+        $sheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+
+        // Set document properties
+        $objPHPExcel->getProperties()->setCreator("BELRAYSA TOURS & TRAVEL GROUP S.A")
+            ->setLastModifiedBy("BELRAYSA TOURS & TRAVEL GROUP S.A")
+            ->setTitle("Contenedor " . $fechaSalida . "-".$codigo."-".$cantHBL)
+            ->setSubject("Contenedor " . $fechaSalida . "-".$codigo)
+            ->setDescription("Contenedor " . $fechaSalida . "-".$codigo)
+            ->setKeywords("Contenedor " . $fechaSalida . "-".$codigo)
+            ->setCategory("Contenedor");
+        
+        /** Error reporting */
+        error_reporting(E_ALL);
+        ini_set('display_errors', TRUE);
+        ini_set('display_startup_errors', TRUE);
+        date_default_timezone_set('Europe/London');
+
+        foreach ($entity->getRangeConceptos( $hblPage , $totalHblPerPage) as $index => $concepto) {
+            $this->hblAction($concepto, $objPHPExcel, $index );
+        }
+
+        
+        // var_dump($objPHPExcel);
+        // die();
+
+        // Redirect output to a client’s web browser (Excel2007)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Contenedor '. $fechaSalida ."-".$codigo."-".$cantHBL. '.xlsx"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+
+        // If you're serving to IE over SSL, then the following may be needed
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+        header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header('Pragma: public'); // HTTP/1.0
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+        exit;
+        
+    }
+
+    public function hblAction($entity, \PHPExcel $objPHPExcel, $ExcelWorkSheetIndex)
+    {
+    
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Concepto entity.');
+        }
+
+        if ($entity->getTipo() == 'Envio') {
+            $exporter = $entity->getRemitenteNombre();
+        } else {
+            $exporter = $entity->getRemitente()->getFirstName() . ' ' . $entity->getRemitente()->getLastName();
+        }
+        if ($entity->getConsignado()->getDni()) {
+            $consigned = $entity->getConsignado()->getFirstName() . ' ' . $entity->getConsignado()->getLastName() . ', ' . $entity->getConsignado()->getDni();
+        } else {
+            $consigned = $entity->getConsignado()->getFirstName() . ' ' . $entity->getConsignado()->getLastName();
+        }
+        if ($entity->getFechaHBL()) {
+            $dia = date_format($entity->getFechaHBL(), 'd');
+            $mes = date_format($entity->getFechaHBL(), 'm');
+            $anno = date_format($entity->getFechaHBL(), 'Y');
+        } else {
+            $dia = '';
+            $mes = '';
+            $anno = '';
+        }
+        $mbl = '';
+        $origen = '';
+        $destino = '';
+        $motonave = '';
+        $contenedor = '';
+        if ($entity->getContenedor()) {
+            $mbl = $entity->getContenedor()->getMbl();
+            $origen = $entity->getContenedor()->getPuertoSalida();
+            $destino = $entity->getContenedor()->getPuertoEntrada();
+            $motonave = $entity->getContenedor()->getMotonave();
+
+            $codigoContenedor = $entity->getContenedor()->getCodigo();
+            $sello = $entity->getContenedor()->getSello();
+            $dirContenedor = array();
+            if ($codigoContenedor) {
+                $dirContenedor[] = $codigoContenedor;
+            }
+            if ($sello) {
+                $dirContenedor[] = $sello;
+            }
+
+            for ($j = 0; $j < sizeof($dirContenedor); $j++) {
+                if ($j == 0) {
+                    $contenedor = $contenedor . $dirContenedor[$j];
+                } else {
+                    $contenedor = $contenedor . ', ' . $dirContenedor[$j];
+                }
+            }
+        }
+
+        $address = $entity->getConsignado()->getAddress();
+        $municipality = $entity->getConsignado()->getMunicipality();
+        $province = $entity->getConsignado()->getProvince();
+        $country = $entity->getConsignado()->getCountry();
+        $telefono = $entity->getConsignado()->getPhones();
+        $cell = $entity->getConsignado()->getCell();
+        $dirArray = array();
+        if ($address) {
+            $dirArray[] = $address;
+        }
+        if ($municipality) {
+            $dirArray[] = $municipality;
+        }
+        if ($province) {
+            $dirArray[] = $province;
+        }
+        if ($country) {
+            $dirArray[] = $country;
+        }
+        if ($telefono) {
+            $dirArray[] = $telefono;
+        }
+        if ($cell) {
+            $dirArray[] = $cell;
+        }
+
+
+        $direccion = '';
+        for ($j = 0; $j < sizeof($dirArray); $j++) {
+            if ($j == 0) {
+                $direccion = $direccion . $dirArray[$j];
+            } else {
+                $direccion = $direccion . ', ' . $dirArray[$j];
+            }
+        }
+
+
+        $code = $entity->getSisgerCode();
+
+        $i = 0;
+        $kilos = 0;
+        $m3 = 0;
+        $packages = sizeof($entity->getBultos());
+
+        $descripcion = '';
+        $descripciones = array();
+
+
+        foreach ($entity->getBultos() as $bulto) {
+            foreach ($bulto->getMercancias() as $mercancia) {
+                $descripciones[] = $mercancia->getDescripcion();
+                $kilos = $kilos + $mercancia->getPesoKg();
+                $m3 = $m3 + $mercancia->getVolumenM3();
+                $i++;
+            }
+        }
+
+        for ($j = 0; $j < sizeof($descripciones); $j++) {
+            if ($j == 0) {
+                $descripcion = $descripcion . $descripciones[$j];
+            } else {
+                $descripcion = $descripcion . ', ' . $descripciones[$j];
+            }
+        }
+        
+        // get the XLS
+       
+
+        if (PHP_SAPI == 'cli')
+            die('This example should only be run from a Web Browser');
+
+
+        if($ExcelWorkSheetIndex > 0 ){ 
+
+            $objClonedWorksheet = clone $objPHPExcel->setActiveSheetIndex(0);
+
+            $objClonedWorksheet->setTitle('HBL_'. $code)
+            ->setCellValue('A3', $exporter)
+            ->setCellValue('E3', 'MBL')
+            ->setCellValue('E5', 'MBL: ' . $mbl)
+            ->setCellValue('A17', $motonave)
+            ->setCellValue('E19', 'BUQUE')
+            ->setCellValue('C17', $origen)
+            ->setCellValue('E10', $origen)
+            ->setCellValue('A19', $destino)
+            ->setCellValue('D19', $destino)
+            ->setCellValue('G3', $code)
+            ->setCellValue('A7', $consigned)
+            ->setCellValue('A8', $direccion)
+            ->setCellValue('A12', $consigned)
+            ->setCellValue('A13', $direccion)
+            ->setCellValue('D22', $descripcion)
+            ->setCellValue('C22', $packages)
+            ->setCellValue('G22', $kilos)
+            ->setCellValue('H22', $m3)
+            ->setCellValue('A22', $contenedor)
+            ->setCellValue('G41', $code)
+            ->setCellValue('F38', $mes)
+            ->setCellValue('G38', $dia)
+            ->setCellValue('H38', $anno)
+            ->setCellValue('G35', $origen);
+
+            $objPHPExcel->addSheet($objClonedWorksheet);
+            
+
+        }else {
+            $objPHPExcel->setActiveSheetIndex(0)->setTitle('HBL_'. $code)
+            ->setCellValue('A3', $exporter)
+            ->setCellValue('E3', 'MBL')
+            ->setCellValue('E5', 'MBL: ' . $mbl)
+            ->setCellValue('A17', $motonave)
+            ->setCellValue('E19', 'BUQUE')
+            ->setCellValue('C17', $origen)
+            ->setCellValue('E10', $origen)
+            ->setCellValue('A19', $destino)
+            ->setCellValue('D19', $destino)
+            ->setCellValue('G3', $code)
+            ->setCellValue('A7', $consigned)
+            ->setCellValue('A8', $direccion)
+            ->setCellValue('A12', $consigned)
+            ->setCellValue('A13', $direccion)
+            ->setCellValue('D22', $descripcion)
+            ->setCellValue('C22', $packages)
+            ->setCellValue('G22', $kilos)
+            ->setCellValue('H22', $m3)
+            ->setCellValue('A22', $contenedor)
+            ->setCellValue('G41', $code)
+            ->setCellValue('F38', $mes)
+            ->setCellValue('G38', $dia)
+            ->setCellValue('H38', $anno)
+            ->setCellValue('G35', $origen);
+        }
+
+        // var_dump($objPHPExcel->getActiveSheet()->getTitle());
+        // die();
+
+        // Create new PHPExcel object
+        // $objPHPExcel->setActiveSheetIndex($ExcelWorkSheetIndex)
+        //     ->setCellValue('A3', $exporter)
+        //     ->setCellValue('E3', 'MBL')
+        //     ->setCellValue('E5', 'MBL: ' . $mbl)
+        //     ->setCellValue('A17', $motonave)
+        //     ->setCellValue('E19', 'BUQUE')
+        //     ->setCellValue('C17', $origen)
+        //     ->setCellValue('E10', $origen)
+        //     ->setCellValue('A19', $destino)
+        //     ->setCellValue('D19', $destino)
+        //     ->setCellValue('G3', $code)
+        //     ->setCellValue('A7', $consigned)
+        //     ->setCellValue('A8', $direccion)
+        //     ->setCellValue('A12', $consigned)
+        //     ->setCellValue('A13', $direccion)
+        //     ->setCellValue('D22', $descripcion)
+        //     ->setCellValue('C22', $packages)
+        //     ->setCellValue('G22', $kilos)
+        //     ->setCellValue('H22', $m3)
+        //     ->setCellValue('A22', $contenedor)
+        //     ->setCellValue('G41', $code)
+        //     ->setCellValue('F38', $mes)
+        //     ->setCellValue('G38', $dia)
+        //     ->setCellValue('H38', $anno)
+        //     ->setCellValue('G35', $origen);
+        
+
+    }
 }

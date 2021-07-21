@@ -360,7 +360,7 @@ class ConceptoController extends Controller
             }
         }
         // get the XLS
-//aqui se ejecuta el codigo del reader
+        //aqui se ejecuta el codigo del reader
         $uploaddir = $this->container->getParameter('belraysa.route.lbrs');
         $uploadfile = $uploaddir . basename('HBL.xlsx');
 
@@ -377,7 +377,7 @@ class ConceptoController extends Controller
             die('This example should only be run from a Web Browser');
 
 
-// Create new PHPExcel object
+        // Create new PHPExcel object
         $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A3', $exporter)
             ->setCellValue('E3', 'MBL')
@@ -404,7 +404,7 @@ class ConceptoController extends Controller
             ->setCellValue('H38', $anno)
             ->setCellValue('G35', $origen);
 
-// Set document properties
+        // Set document properties
         $objPHPExcel->getProperties()->setCreator("BELRAYSA TOURS & TRAVEL GROUP S.A")
             ->setLastModifiedBy("BELRAYSA TOURS & TRAVEL GROUP S.A")
             ->setTitle("HBL_" . $code)
@@ -414,11 +414,11 @@ class ConceptoController extends Controller
             ->setCategory("HBL");
 
 
-// Redirect output to a client’s web browser (Excel2007)
+        // Redirect output to a client’s web browser (Excel2007)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="HBL_' . $code . '.xlsx"');
         header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
+    // If you're serving to IE 9, then the following may be needed
         header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
