@@ -664,3 +664,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Details block `position:fixed;` css style on Programador page in L-BRS workspace.
 - Resolve Invalid Entities conflicts [Entity/Recibo] inversedBy="recibos" insted inversedBy="receipes")
 - Resolve Invalid Entities conflicts [Entity/Concepto] inversedBy="conceptos" insted inversedBy="expedienteConceptos")
+
+### `[1.1.2] - 2021-07-21`
+### Fixed
+- Resolve home charts performance.
+- Fix favicon and fonts
+- Partial solution to Global workpace when BankingEntry is null
+- Change Sisger Logo
+- Add HBL list export to excel service
+- Fix Close empty Contenedor without hardcode hbl
