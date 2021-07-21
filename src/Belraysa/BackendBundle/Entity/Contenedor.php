@@ -521,6 +521,46 @@ class Contenedor
         return $this->conceptos;
 
     }
+    /**
+
+     * @return mixed
+
+     */
+
+    public function getsizeOfConceptos()
+
+    {
+
+        return sizeof($this->conceptos);
+
+    }
+
+    /**
+
+     * @return int
+
+    */
+    public function getConceptosPages($lenght=100)
+    {
+        $totalConceptos = sizeof($this->getConceptos());
+
+       
+       return ceil($totalConceptos/$lenght);
+       
+    }
+
+    /**
+
+     * @return mixed
+
+     */
+    public function getRangeConceptos($start=0 , $lenght=100)
+    {
+        $criteria = \Doctrine\Common\Collections\Criteria::create()->setFirstResult($start*$lenght)->setMaxResults($lenght);
+        return $this->conceptos->matching($criteria);
+
+
+    }
 
 
 
