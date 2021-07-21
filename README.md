@@ -29,18 +29,23 @@ The first thing is to extract all the elements in the `web` folder and copy them
 ```
 
 
-### 2) Load AppKernel location and bootstrap.php.cache in app.php and app_dev.php
+### 3) Load AppKernel location and bootstrap.php.cache in app.php and app_dev.php
+`For dev enviroment`
 ```
-$loader = require_once __DIR__.'/../app/bootstrap.php.cache';  //(development)
-// $loader = require_once __DIR__.'/../sisger3/app/bootstrap.php.cache';  //(production)
-Debug::enable();
-
-require_once __DIR__.'/../app/AppKernel.php';  //(development)
-// require_once __DIR__.'/../sisger3/app/AppKernel.php';  //(production)
+$loader = require_once __DIR__.'/../app/bootstrap.php.cache'; 
+...
+require_once __DIR__.'/../app/AppKernel.php';  
 
 ```
+`For prod enviroment`
+```
+$loader = require_once __DIR__.'/../sisger3/app/bootstrap.php.cache'; 
+...
+require_once __DIR__.'/../sisger3/app/AppKernel.php';  
 
-### 3) Enable production or development environment in app.php and app_dev.php
+```
+
+### 4) Enable production or development environment in app.php and app_dev.php
 ```
 $kernel = new AppKernel('prod', true);
 
@@ -50,13 +55,39 @@ $kernel = new AppKernel('dev', true);
 
 ```
 
-### 4) Configure database parameters in app.php and app_dev.php
+### 5) Configure database parameters in app.php and app_dev.php
 ```
 database_host: 127.0.0.1
 database_port: null
 database_name: sisger_3
 database_user: root
 database_password: null
+```
+
+### 6) Configure route directory parameters in app/config/parameters.yml
+`For dev enviroment`
+```
+belraysa.route.photos_users: %kernel.root_dir%/../web/uploads/usersPhotos/
+belraysa.route.firmas_users: %kernel.root_dir%/../web/uploads/usersFirmas/    
+belraysa.route.aranceles: %kernel.root_dir%/../web/uploads/aranceles/
+belraysa.route.tarifas: %kernel.root_dir%/../web/uploads/tarifas/
+belraysa.route.lbrs: %kernel.root_dir%/../web/uploads/lbrs/
+belraysa.route.barcodes: %kernel.root_dir%/../web/uploads/barcodes/
+belraysa.route.logos: %kernel.root_dir%/../web/uploads/agencyLogos/
+belraysa.route.client_documents: %kernel.root_dir%/../web/uploads/clientDocuments/
+belraysa.route.templates: %kernel.root_dir%/../web/uploads/templates/
+```
+`For prod enviroment`
+```
+belraysa.route.photos_users: %kernel.root_dir%/../../public_html/uploads/usersPhotos/
+belraysa.route.firmas_users: %kernel.root_dir%/../../public_html/uploads/usersFirmas/    
+belraysa.route.aranceles: %kernel.root_dir%/../../public_html/uploads/aranceles/
+belraysa.route.tarifas: %kernel.root_dir%/../../public_html/uploads/tarifas/
+belraysa.route.lbrs: %kernel.root_dir%/../../public_html/uploads/lbrs/
+belraysa.route.barcodes: %kernel.root_dir%/../../public_html/uploads/barcodes/
+belraysa.route.logos: %kernel.root_dir%/../../public_html/uploads/agencyLogos/
+belraysa.route.client_documents: %kernel.root_dir%/../../public_html/uploads/clientDocuments/
+belraysa.route.templates: %kernel.root_dir%/../../public_html/uploads/templates/
 ```
 
 
@@ -673,3 +704,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change Sisger Logo
 - Add HBL list export to excel service
 - Fix Close empty Contenedor without hardcode hbl
+
+## 4) Migrations
+--------------------------------
+### `[1.1.2] - 2021-07-21`
+### Fixed
+- Fix `bigint(20)` type to `int(11)` from:
+    - `Anno->column(id)`
+    - `Contenedor->column(mes)`
+    - `Mes->column(id),column(anno)`
+    - `Nomenclador->column(id)`
+    - `usuario_escritura->column(nomenclador_id)`
+    - `usuario_lectura->column(nomenclador_id)`
+- Fix `BankingEntry->column(Banking)` adding `not null` to column

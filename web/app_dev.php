@@ -17,12 +17,12 @@ use Symfony\Component\Debug\Debug;
     exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
 }*/
 
-$loader = require_once __DIR__.'/../app/bootstrap.php.cache';
-// $loader = require_once __DIR__.'/../sisger3/app/bootstrap.php.cache';
+$loader = require_once __DIR__.'/../app/bootstrap.php.cache';               // development
+// $loader = require_once __DIR__.'/../sisger3/app/bootstrap.php.cache';    // production
 Debug::enable();
 
-require_once __DIR__.'/../app/AppKernel.php';
-// require_once __DIR__.'/../sisger3/app/AppKernel.php';
+require_once __DIR__.'/../app/AppKernel.php';               // development
+// require_once __DIR__.'/../sisger3/app/AppKernel.php';    // production
 
 $kernel = new AppKernel('dev', true);
 $kernel->loadClassCache();
