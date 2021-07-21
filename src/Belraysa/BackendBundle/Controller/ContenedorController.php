@@ -1187,7 +1187,7 @@ class ContenedorController extends Controller
 
     }
 
-    public function hblsContainerAction($id)
+    public function hblsContainerAction($id,$hblPage)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1198,10 +1198,12 @@ class ContenedorController extends Controller
         }
 
         $cantHBL = sizeof($entity->getConceptos());
+        $totalHblPerPage = 100;
         $fechaSalida = "";
+        $codigo = "";
+
         if($entity->getFechaSalida())
             $fechaSalida = date_format($entity->getFechaSalida(), 'd/m/Y');
-        $codigo = "";
         if($entity->getCodigo())
             $codigo = $entity->getCodigo();
 
@@ -1228,7 +1230,7 @@ class ContenedorController extends Controller
         ini_set('display_startup_errors', TRUE);
         date_default_timezone_set('Europe/London');
 
-        foreach ($entity->getConceptos() as $index => $concepto) {
+        foreach ($entity->getRangeConceptos( $hblPage , $totalHblPerPage) as $index => $concepto) {
             $this->hblAction($concepto, $objPHPExcel, $index );
         }
 
@@ -1383,40 +1385,38 @@ class ContenedorController extends Controller
             die('This example should only be run from a Web Browser');
 
 
-        if($ExcelWorkSheetIndex > 0 ){
+        if($ExcelWorkSheetIndex > 0 ){ 
 
-            if($ExcelWorkSheetIndex < 30){
-                $objClonedWorksheet = clone $objPHPExcel->setActiveSheetIndex(0);
-    
-                $objClonedWorksheet->setTitle('HBL_'. $code)
-                ->setCellValue('A3', $exporter)
-                ->setCellValue('E3', 'MBL')
-                ->setCellValue('E5', 'MBL: ' . $mbl)
-                ->setCellValue('A17', $motonave)
-                ->setCellValue('E19', 'BUQUE')
-                ->setCellValue('C17', $origen)
-                ->setCellValue('E10', $origen)
-                ->setCellValue('A19', $destino)
-                ->setCellValue('D19', $destino)
-                ->setCellValue('G3', $code)
-                ->setCellValue('A7', $consigned)
-                ->setCellValue('A8', $direccion)
-                ->setCellValue('A12', $consigned)
-                ->setCellValue('A13', $direccion)
-                ->setCellValue('D22', $descripcion)
-                ->setCellValue('C22', $packages)
-                ->setCellValue('G22', $kilos)
-                ->setCellValue('H22', $m3)
-                ->setCellValue('A22', $contenedor)
-                ->setCellValue('G41', $code)
-                ->setCellValue('F38', $mes)
-                ->setCellValue('G38', $dia)
-                ->setCellValue('H38', $anno)
-                ->setCellValue('G35', $origen);
-    
-                $objPHPExcel->addSheet($objClonedWorksheet);
+            $objClonedWorksheet = clone $objPHPExcel->setActiveSheetIndex(0);
 
-            }
+            $objClonedWorksheet->setTitle('HBL_'. $code)
+            ->setCellValue('A3', $exporter)
+            ->setCellValue('E3', 'MBL')
+            ->setCellValue('E5', 'MBL: ' . $mbl)
+            ->setCellValue('A17', $motonave)
+            ->setCellValue('E19', 'BUQUE')
+            ->setCellValue('C17', $origen)
+            ->setCellValue('E10', $origen)
+            ->setCellValue('A19', $destino)
+            ->setCellValue('D19', $destino)
+            ->setCellValue('G3', $code)
+            ->setCellValue('A7', $consigned)
+            ->setCellValue('A8', $direccion)
+            ->setCellValue('A12', $consigned)
+            ->setCellValue('A13', $direccion)
+            ->setCellValue('D22', $descripcion)
+            ->setCellValue('C22', $packages)
+            ->setCellValue('G22', $kilos)
+            ->setCellValue('H22', $m3)
+            ->setCellValue('A22', $contenedor)
+            ->setCellValue('G41', $code)
+            ->setCellValue('F38', $mes)
+            ->setCellValue('G38', $dia)
+            ->setCellValue('H38', $anno)
+            ->setCellValue('G35', $origen);
+
+            $objPHPExcel->addSheet($objClonedWorksheet);
+            
 
         }else {
             $objPHPExcel->setActiveSheetIndex(0)->setTitle('HBL_'. $code)
