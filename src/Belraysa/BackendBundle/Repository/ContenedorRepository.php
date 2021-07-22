@@ -39,13 +39,16 @@ class ContenedorRepository extends EntityRepository
 
 
         if (sizeof($where) > 0) {
-            $select = $select . ' WHERE ';
+            // JOIN c.mes m JOIN m.anno a WHERE a.nombre <= :anno AND m.numero <= :mes ORDER BY a.nombre, m.numero ASC'
+            $select = $select .' JOIN c.mes m JOIN m.anno a' . ' WHERE ';
             for ($i = 0; $i < sizeof($where); $i++) {
                 if ($i > 0) {
                     $select = $select . ' AND ';
                 }
                 $select = $select . $where[$i];
             }
+
+            $select .= ' ORDER BY a.nombre DESC, m.numero DESC, c.indice DESC';
         }
         // print_r($select);
         // die;
