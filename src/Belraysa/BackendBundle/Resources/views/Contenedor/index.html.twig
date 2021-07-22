@@ -133,6 +133,8 @@
 						<td>
 							<div class="mailbox-controls">
 								<div class="btn-group">
+
+									{# View pre-manifiest button #}
 									{% if contenedor.estado == 'COMPLETANDO' or contenedor.estado == 'RESERVANDO' %}
 										{% if contenedor.conceptos|length %}
 											<a class="btn btn-flat btn-default btn-sm" title="Ver pre-manifiesto" href="{{ path('contenedor_manifiesto', { 'id': contenedor.id }) }}">
@@ -141,6 +143,7 @@
 										{% endif %}
 									{% endif %}
 
+									{# Close Contenedor button #}
 									{% if contenedor.estado == 'COMPLETANDO' %}
 										{# {% if contenedor.conceptos|length %} #}
 											{% if contenedor.motonave and contenedor.mbl and contenedor.puertoSalida and contenedor.puertoEntrada and contenedor.fechaSalida and contenedor.fechaEntrada %}
@@ -150,12 +153,15 @@
 											{% endif %}
 										{# {% endif %} #}
 									{% endif %}
+
+									{# Delete Contenedor button #}
 									{% if contenedor.estado == 'RESERVANDO' %}
 										<a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation" data-href="{{ path('contenedor_delete', { 'id': contenedor.id }) }}" data-placement="left" data-btn-ok-label="Continuar" data-btn-cancel-label="Cancelar" data-original-title="¿Está seguro de que desea eliminar?" title="" href="{{ path('contenedor_delete', { 'id': contenedor.id }) }}">
 											<i class="icon-trash"></i>
 										</a>
 									{% endif %}
 
+									{# Edit button #}
 									{% if contenedor.estado != 'CERRADO' %}
 										<button type="button" class="btn btn-sm btn-flat btn-default dropdown-toggle" data-toggle="dropdown">
 											<i class="icon-pencil"></i>
@@ -177,6 +183,8 @@
 										</ul>
 									{% endif %}
 								</div>
+
+								{# Export Manifest button #}
 								<div
 									class="btn-group">
 									{#{% if contenedor.estado == 'CERRADO' %}#}
@@ -210,7 +218,8 @@
 									</ul>
 									{#{% endif %}#}
 								</div>
-								
+
+								{# Export  HBL list button #}
 								{% if contenedor.conceptos|length %}
 								<div
 									class="btn-group">
