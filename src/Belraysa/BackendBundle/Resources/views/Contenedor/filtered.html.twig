@@ -172,13 +172,13 @@
 											</li>
 										</ul>
 									{% endif %}
-									{% if contenedor.estado == 'COMPLETANDO' %}
-										{% if contenedor.conceptos|length %}
-											<a class="btn btn-sm btn-flat btn-default" title="Cerrar" href="{{ path('contenedor_cerrar', { 'id': contenedor.id }) }}">
-												<i class="fa fa-lock"></i>
-											</a>
-										{% endif %}
+
+									{% if contenedor.estado == 'COMPLETANDO' %}					
+										<a class="btn btn-sm btn-flat btn-default" title="Cerrar" href="{{ path('contenedor_cerrar', { 'id': contenedor.id }) }}">
+											<i class="fa fa-lock"></i>
+										</a>										
 									{% endif %}
+                                    
 									{% if contenedor.estado == 'RESERVANDO' %}
 										<a class="btn btn-sm btn-flat btn-default" data-toggle="confirmation" data-href="{{ path('contenedor_delete', { 'id': contenedor.id }) }}" data-placement="left" data-btn-ok-label="Continuar" data-btn-cancel-label="Cancelar" data-original-title="¿Está seguro de que desea eliminar?" title="" href="{{ path('contenedor_delete', { 'id': contenedor.id }) }}">
 											<i class="icon-trash"></i>
