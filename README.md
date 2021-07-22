@@ -705,6 +705,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add HBL list export to excel service
 - Fix Close empty Contenedor without hardcode hbl
 - Fix enable export hbl list button for every Contenedor with hbls inside 
+- Fix order by DESC on contenedor filter view
 
 ## 4) Migrations
 --------------------------------

@@ -106,7 +106,7 @@ class ContenedorRepository extends EntityRepository
     public function findContenedoresAnteriores($anno, $mes)
     {
         $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT c FROM BackendBundle:Contenedor c JOIN c.mes m JOIN m.anno a WHERE a.nombre <= :anno AND m.numero <= :mes ORDER BY a.nombre, m.numero ASC');
+        $query = $em->createQuery('SELECT c FROM BackendBundle:Contenedor c JOIN c.mes m JOIN m.anno a WHERE a.nombre <= :anno AND m.numero <= :mes ORDER BY a.nombre ASC, m.numero ASC');
         $query->setParameter('anno', $anno);
         $query->setParameter('mes', $mes);
         return $query->getResult();
@@ -115,7 +115,7 @@ class ContenedorRepository extends EntityRepository
     public function findContenedoresPosteriores($anno, $mes)
     {
         $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT c FROM BackendBundle:Contenedor c JOIN c.mes m JOIN m.anno a WHERE a.nombre >= :anno AND m.numero > :mes ORDER BY a.nombre, m.numero ASC');
+        $query = $em->createQuery('SELECT c FROM BackendBundle:Contenedor c JOIN c.mes m JOIN m.anno a WHERE a.nombre >= :anno AND m.numero > :mes ORDER BY a.nombre ASC, m.numero ASC');
         $query->setParameter('anno', $anno);
         $query->setParameter('mes', $mes);
         return $query->getResult();
