@@ -704,6 +704,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change Sisger Logo
 - Add HBL list export to excel service
 - Fix Close empty Contenedor without hardcode hbl
+- Fix enable export hbl list button for every Contenedor with hbls inside 
 
 ## 4) Migrations
 --------------------------------
@@ -717,3 +718,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `usuario_escritura->column(nomenclador_id)`
     - `usuario_lectura->column(nomenclador_id)`
 - Fix `BankingEntry->column(Banking)` adding `not null` to column
+- 

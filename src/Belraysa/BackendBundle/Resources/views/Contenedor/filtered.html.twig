@@ -185,11 +185,9 @@
 										</a>
 									{% endif %}
 								</div>
-                                {% if contenedor.estado == 'CERRADO' or contenedor.estado == 'COMPLETANDO'  %}
-								{% if contenedor.getsizeOfConceptos() > 0 %}
+                                {% if contenedor.conceptos|length %}
 								<div
 									class="btn-group">
-									{#{% if contenedor.estado == 'CERRADO' %}#}
 									<button aria-expanded="false" type="button" class="btn btn-sm btn-flat btn-default dropdown-toggle" data-toggle="dropdown">
 										<i class="fa fa-file"></i>
 										<i class="fa fa-angle-down"></i>
@@ -201,13 +199,12 @@
 										<li>
 											<a class="btn btn-flat btn-default btn-sm" title="Exportar lista HBLs" href="{{ path('contenedor_hbls', { 'id': contenedor.id, 'hblPage': i }) }}">
 												<i class="fa fa-table"></i>
-												Exportar HBLs ({{i*100+1}} - {{100*(i+1)}})
+												Exportar HBLs ({{i*100+1}} - {{ loop.last ? contenedor.conceptos|length : 100*(i+1)}})
 											</a>
 										</li>
 										{% endfor %}
 									</ul>
 								</div>
-								{% endif %}
 								{% endif %}
 							</div>
 						</td>
